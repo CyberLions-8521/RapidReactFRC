@@ -4,11 +4,39 @@
 
 package frc.robot;
 
+//Import examples
+// import edu.wpi.first.wpilibj.GenericHID;
+// import edu.wpi.first.wpilibj.XboxController;
+// import frc.robot.commands.ExampleCommand;
+// import frc.robot.subsystems.ExampleSubsystem;
+// import edu.wpi.first.wpilibj2.command.Command;
+
+
+//true Impiorts
+
+import java.sql.DriverPropertyInfo;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
+// import frc.robot.commands.Rotate90;
+import frc.robot.Constants.XBOX;
+
+import frc.robot.commands.Drive;
+import frc.robot.subsystems.Drivebase;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,13 +46,23 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  
+  public static Drivebase m_drivebase = new Drivebase();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final Drive m_driveSystem = new Drive(m_drivebase);
+   // Controller
+  public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
+  public static final Joystick m_aux = new Joystick(1);
 
+
+
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+    m_drivebase.setDefaultCommand(m_driveSystem);
     configureButtonBindings();
     //Robot
   }
@@ -44,6 +82,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //return new SequentialCommandGroup();
+    return new SequentialCommandGroup();
+    //return m_autoCommand;
   }
 }
