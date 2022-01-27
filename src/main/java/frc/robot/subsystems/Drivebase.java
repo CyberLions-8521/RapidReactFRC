@@ -74,10 +74,10 @@ public class Drivebase extends SubsystemBase {
 
 
       //Slaves following Slave Master
-      m_leftMiddleSlave.follow(m_leftMaster);
       m_leftSlave.follow(m_leftMaster);
-      m_rightMiddleSlave.follow(m_rightMaster);
+      m_leftMiddleSlave.follow(m_leftMaster);
       m_rightSlave.follow(m_rightMaster);
+      m_rightMiddleSlave.follow(m_rightMaster);
   
 
 
