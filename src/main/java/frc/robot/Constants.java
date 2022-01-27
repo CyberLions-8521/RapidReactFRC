@@ -37,13 +37,21 @@ public final class Constants
 
     public static class CAN
     {
+        //Left + right Cim Motors Slave Masters
         public static final int kLeftMaster = 2;
         public static final int kRightMaster = 3;
+        //Entirely Left Side Gear Box
         public static final int kLeftSlave = 1;
+        public static final int kLeftMiddleSlave = 7; //Find new CANSparkMotor and SetValue to 7
+        //Entirely Right Side Gear Box
         public static final int kRightSlave = 4;
-        public static final int kIntake = 5;
+        public static final int kRightMiddleSlave = 6; //Find new CANSparkMotor and SetValue to 6
+        //Intake motor775
+        //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
+
     }
 
+    //Thien Please Check what IO means in WPI
     public static class IO 
     {
         

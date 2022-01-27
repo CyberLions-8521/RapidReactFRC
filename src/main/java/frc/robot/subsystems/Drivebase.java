@@ -39,13 +39,18 @@ public class Drivebase extends SubsystemBase {
     double SPEED_REDUCER = 0.5;
     double TURN_REDUCER = 0.5;
   
-  
+    //Setting triple Motors DONE
     // Motors
     CANSparkMax m_leftMaster = new CANSparkMax(Constants.CAN.kLeftMaster, MotorType.kBrushed);
     CANSparkMax m_rightMaster = new CANSparkMax(Constants.CAN.kRightMaster, MotorType.kBrushed);
+    //Left Gearbox Midd + lower slave cim motors
+    CANSparkMax m_leftMiddleSlave = new CANSparkMax(Constants.CAN.kLeftMiddleSlave, MotorType.kBrushed);
     CANSparkMax m_leftSlave = new CANSparkMax(Constants.CAN.kLeftSlave, MotorType.kBrushed);
+    //Right Gearbox Midd + lower slave cim motors
+    CANSparkMax m_rightMiddleSlave = new CANSparkMax(Constants.CAN.kRightMiddleSlave, MotorType.kBrushed);
     CANSparkMax m_rightSlave = new CANSparkMax(Constants.CAN.kRightSlave, MotorType.kBrushed);
   
+
     // Differential drive class
     DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
   
@@ -66,20 +71,39 @@ public class Drivebase extends SubsystemBase {
       m_gyro.calibrate();
       // m_gyro.reset();
   
+
+
+      //Slaves following Slave Master
+      m_leftMiddleSlave.follow(m_leftMaster);
       m_leftSlave.follow(m_leftMaster);
+      m_rightMiddleSlave.follow(m_rightMaster);
       m_rightSlave.follow(m_rightMaster);
   
+
+
+
+
       // Invert the motors
       m_leftMaster.setInverted(false);
       m_rightMaster.setInverted(false);
+
+      //Setting all Motors Idle mode
       m_leftMaster.setIdleMode(CANSparkMax.IdleMode.kBrake);
       m_rightMaster.setIdleMode(CANSparkMax.IdleMode.kBrake);
       m_leftSlave.setIdleMode(CANSparkMax.IdleMode.kBrake);
+      m_leftMiddleSlave.setIdleMode(CANSparkMax.IdleMode.kBrake);
       m_rightSlave.setIdleMode(CANSparkMax.IdleMode.kBrake);
+      m_rightMiddleSlave.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
+      /*Set the minimum time in seconds that it will take for the Spark Max to change from neutral to full throttle. */
+      //Therefore higher values give slower acceleration. 
       m_leftMaster.setOpenLoopRampRate(0.2);
       m_rightMaster.setOpenLoopRampRate(0.2);
       m_leftSlave.setOpenLoopRampRate(0.2);
+      m_leftMiddleSlave.setOpenLoopRampRate(0.2);
       m_rightSlave.setOpenLoopRampRate(0.2);
+      m_rightMiddleSlave.setOpenLoopRampRate(0.2);
+
       // If we want to set max output
       // m_drive.setMaxOutput(1.0);
     }
