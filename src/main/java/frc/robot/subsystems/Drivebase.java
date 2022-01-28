@@ -75,9 +75,15 @@ public class Drivebase extends SubsystemBase {
 
       //Slaves following Slave Master
       m_leftSlave.follow(m_leftMaster);
-      m_leftMiddleSlave.follow(m_leftMaster);
+
+
+      m_leftMiddleSlave.follow(m_leftMaster); //Inverse it 
+
+
       m_rightSlave.follow(m_rightMaster);
-      m_rightMiddleSlave.follow(m_rightMaster);
+
+
+      m_rightMiddleSlave.follow(m_rightMaster); // inversse it 
   
 
 
@@ -86,6 +92,10 @@ public class Drivebase extends SubsystemBase {
       // Invert the motors
       m_leftMaster.setInverted(false);
       m_rightMaster.setInverted(false);
+      
+      m_rightMiddleSlave.setInverted(true); //Yes
+      m_leftMiddleSlave.setInverted(true); 
+
 
       //Setting all Motors Idle mode
       m_leftMaster.setIdleMode(CANSparkMax.IdleMode.kBrake);
