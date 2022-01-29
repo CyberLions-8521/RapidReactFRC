@@ -22,8 +22,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
+import frc.robot.commands.ToggleIntakeArms;
+import frc.robot.commands.ToggleIntakeMotor;
+import frc.robot.commands.CompressorControl;
+import frc.robot.subsystems.Intake;
 // import frc.robot.commands.Rotate90;
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
@@ -50,10 +52,13 @@ public class RobotContainer {
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
   public static final Joystick m_aux = new Joystick(1);
 
+
+	CompressorControl ctest = new CompressorControl(m_intake);	
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     m_drivebase.setDefaultCommand(m_driveSystem);
+		m_intake.setDefaultCommand(ctest);
     configureButtonBindings();
     //Robot
   }
@@ -64,7 +69,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+		new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArms(m_intake));
+	}
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
