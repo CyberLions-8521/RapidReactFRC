@@ -26,7 +26,8 @@ import frc.robot.commands.ToggleIntakeArms;
 import frc.robot.commands.ToggleIntakeMotor;
 import frc.robot.commands.CompressorControl;
 import frc.robot.subsystems.Intake;
-// import frc.robot.commands.Rotate90;
+
+import frc.robot.commands.MoveForwardNSeconds;
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
 import frc.robot.subsystems.Drivebase;
@@ -47,7 +48,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Drivebase m_drivebase = new Drivebase();  //Calling Drivebase.java Subsystem class
   private final Drive m_driveSystem = new Drive(m_drivebase); //Calling Drive.java Command class
-  
+  private final Intake m_intake = new Intake();
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
   public static final Joystick m_aux = new Joystick(1);
