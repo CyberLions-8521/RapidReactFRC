@@ -15,16 +15,15 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Solenoid;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   CANSparkMax m_IntakeMotor = new CANSparkMax(Constants.CAN.kIntake, MotorType.kBrushed);
 
-  DoubleSolenoid m_leftDS = new DoubleSolenoid(5, 4);
-  DoubleSolenoid m_rightDS = new DoubleSolenoid(0, 1);
+  DoubleSolenoid m_leftDS = new DoubleSolenoid(null, 5, 4);
+  DoubleSolenoid m_rightDS = new DoubleSolenoid(null, 0, 1);
 
-  Compressor m_compressor = new Compressor();
+  //Compressor m_compressor = new Compressor();
   boolean m_isExtended;
   boolean m_isOn;
 
