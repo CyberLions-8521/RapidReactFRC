@@ -45,7 +45,6 @@ y = m_kVision.getTy();
 m_Y=y.getDouble(0.0);
 // Use addRequirements() here to declare subsystem dependencies.
 addRequirements(vision);
-
 }
 
 
