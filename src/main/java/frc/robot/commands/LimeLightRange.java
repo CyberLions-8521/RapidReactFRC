@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Math;
 import java.time.Year;
 
+import com.revrobotics.SparkMaxAlternateEncoder.Type;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -36,14 +38,13 @@ public double m_Y;
  */
 
 public LimeLightRange(KevinLimelight vision) {
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  m_kVision = vision;
-  y = table.getEntry("ty");
-  m_Y = y.getDouble(0.0);
-
-
-  // Use addRequirements() here to declare subsystem dependencies.
-  addRequirements(vision);
+// NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+m_kVision = vision;
+//y = table.getEntry("ty");
+y = m_kVision.getTy();
+m_Y=y.getDouble(0.0);
+// Use addRequirements() here to declare subsystem dependencies.
+addRequirements(vision);
 
 }
 
@@ -53,7 +54,7 @@ public LimeLightRange(KevinLimelight vision) {
 // {
 //   return ty.getDouble(0.0);
 // }
-  
+
 
 
 
@@ -80,7 +81,7 @@ public final double HeightOfTarget=0;
 
 
 //Math Equation
-public double distance = ((HeightOfTarget-HeightOfCamera)/Math.tan(angleOfCamera+m_Y));
+public double distance; 
 
 //How to get the data
 
@@ -100,13 +101,16 @@ public double distance = ((HeightOfTarget-HeightOfCamera)/Math.tan(angleOfCamera
 // Called when the command is initially scheduled.
 @Override
 public void initialize() {
-  //Smart dashboard 
-  SmartDashboard.getNumber("Distance", distance);
+//Smart dashboard 
+SmartDashboard.getNumber("Distance", distance);
 }
 
 // Called every time the scheduler runs while the command is scheduled.
 @Override
-public void execute() {}
+public void execute() {
+distance= ((HeightOfTarget-HeightOfCamera)/Math.tan(angleOfCamera+m_Y));
+
+}
 
 // Called once the command ends or is interrupted.
 @Override
@@ -115,7 +119,7 @@ public void end(boolean interrupted) {}
 // Returns true when the command should end.
 @Override
 public boolean isFinished() {
-  return false;
+return false;
 }
 
 }

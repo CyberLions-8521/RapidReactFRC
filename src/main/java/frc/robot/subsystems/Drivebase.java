@@ -54,7 +54,7 @@ public class Drivebase extends SubsystemBase {
     // Differential drive class
     DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
   
-    double speed;
+    public double speed;
     double turnRate;
     // Gyro
     AHRS m_gyro = new AHRS(SPI.Port.kMXP);

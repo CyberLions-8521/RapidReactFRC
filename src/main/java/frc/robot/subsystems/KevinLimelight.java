@@ -38,6 +38,10 @@ public class KevinLimelight extends SubsystemBase {
 
     // Math calculation
   }
+
+  public NetworkTableEntry getTy() {
+      return ty;
+  }
   
   @Override
   public void simulationPeriodic() {
