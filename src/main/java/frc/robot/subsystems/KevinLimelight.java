@@ -20,8 +20,8 @@ public class KevinLimelight extends SubsystemBase {
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
-double Y;
   @Override
+
   public void periodic() {
     // This method will be called once per scheduler run
     // read values periodically
@@ -37,21 +37,8 @@ double Y;
     // distanceToTarget=(Math.tan())
 
     // Math calculation
-
   }
-public class vision{
-  public NetworkTableEntry getTY(){
-    return ty;
-  }
-
-
-
-  public double getTy()
-  {
-    return ty.getDouble(0.0);
-  }
-
-}
+  
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
