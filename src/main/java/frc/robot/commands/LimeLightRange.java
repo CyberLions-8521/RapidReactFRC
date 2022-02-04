@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LimeLightRange extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final KevinLimelight m_kVision;
-    double m_Y;
+    private double m_Y;
     /**
      * Creates a new ExampleCommand.
      *
@@ -36,32 +36,16 @@ public class LimeLightRange extends CommandBase {
      */
 
     public LimeLightRange(KevinLimelight vision) {
-        // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
         m_kVision=vision;
         
     
 
-        //y = m_kVision.getY();
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(vision);
     }
 
-    // public double getTy()
-    // {
-    // return ty.getDouble(0.0);
-    // }
-
-    // public void setTx(NetworkTableEntry a){
-    // this.a = a;
-    // }
-
-    // pls = m_Yvalue.getDouble();
-
-    // private double NetworkTableEntry.getDouble(String string) {
-    // return 0;}
-
+  //Parameters(use meter for height)
     public final double angleOfCamera = 30;
-    // Meters change
     public final double HeightOfCamera = 0.4;
     public final double HeightOfTarget = 0.6;
 
@@ -73,9 +57,7 @@ public class LimeLightRange extends CommandBase {
     }
 
    
-    // How to get the data
-
-    // Called when the command is initially scheduled.
+    
     @Override
     public void initialize() {
         
