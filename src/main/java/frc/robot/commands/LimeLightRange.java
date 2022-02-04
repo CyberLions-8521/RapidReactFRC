@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LimeLightRange extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final KevinLimelight m_kVision;
-    
+    double m_Y;
     /**
      * Creates a new ExampleCommand.
      *
@@ -37,11 +37,8 @@ public class LimeLightRange extends CommandBase {
 
     public LimeLightRange(KevinLimelight vision) {
         // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-        NetworkTableEntry y;
-        double m_Y;
-
-        m_kVision = vision;
-        y=m_kVision.getTy();
+        m_kVision=vision;
+        
     
 
         //y = m_kVision.getY();
@@ -63,29 +60,34 @@ public class LimeLightRange extends CommandBase {
     // private double NetworkTableEntry.getDouble(String string) {
     // return 0;}
 
-    public final double angleOfCamera = 15;
+    public final double angleOfCamera = 30;
     // Meters change
-    public final double HeightOfCamera = 0.394;
-    public final double HeightOfTarget = 2.5;
+    public final double HeightOfCamera = 0.4;
+    public final double HeightOfTarget = 0.6;
 
     // Math Equation
     public double distance;
 
-    public double setDistance() {
-        return distance = ((HeightOfTarget - HeightOfCamera) / Math.tan(angleOfCamera +m_kVision.getY()
-        ));
+    public void setDistance() {
+
     }
+
+   
     // How to get the data
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        
 
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        //setDistance();
+        m_Y=m_kVision.getTy();
+        distance = ((HeightOfTarget - HeightOfCamera) / Math.tan(angleOfCamera+m_Y));
         SmartDashboard.putNumber("Distance", getDistance());
 
     }
@@ -100,8 +102,9 @@ public class LimeLightRange extends CommandBase {
     public boolean isFinished() {
         return false;
     }
+    public double getDistance(){
 
-    public double getDistance() {
         return distance;
     }
+    
 }

@@ -34,14 +34,20 @@ public class KevinLimelight extends SubsystemBase {
     SmartDashboard.putNumber("LimelightArea", area);
     
 
-
+  }
     // distanceToTarget=(Math.tan())
 
     // Math calculation
+
+    public double getTy(){
+      return ty.getDouble(0.0);
+
+
+    
   }
-  public NetworkTableEntry getTy() {
-    return ty;
-}
+ // public NetworkTableEntry getTy() {
+   // return ty;
+//}
   
   
   @Override

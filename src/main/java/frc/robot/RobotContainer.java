@@ -27,7 +27,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import frc.robot.commands.Rotate90;
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
+import frc.robot.commands.LimeLightRange;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.KevinLimelight;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -45,6 +47,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Drivebase m_drivebase = new Drivebase();  //Calling Drivebase.java Subsystem class
   private final Drive m_driveSystem = new Drive(m_drivebase); //Calling Drive.java Command class
+  public static KevinLimelight m_KevinLimelight = new KevinLimelight();  //Calling Drivebase.java Subsystem class
+  private final LimeLightRange m_range = new LimeLightRange(m_KevinLimelight); //Calling Drive.java Command class
   
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
@@ -54,6 +58,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     m_drivebase.setDefaultCommand(m_driveSystem);
+    m_KevinLimelight.setDefaultCommand(m_range);
     configureButtonBindings();
     //Robot
   }
