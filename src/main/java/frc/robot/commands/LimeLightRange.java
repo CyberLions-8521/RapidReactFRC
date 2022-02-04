@@ -23,102 +23,85 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** An example command that uses an example subsystem. */
 public class LimeLightRange extends CommandBase {
-@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-private final KevinLimelight m_kVision;
-private final NetworkTableEntry y;
-public double m_Y;
+    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
+    private final KevinLimelight m_kVision;
+    
+    /**
+     * Creates a new ExampleCommand.
+     *
+     * 
+     * 
+     * 
+     * @param subsystem The subsystem used by this command.
+     */
 
-/**
- * Creates a new ExampleCommand.
- *
- * 
- * 
- * 
- * @param subsystem The subsystem used by this command.
- */
+    public LimeLightRange(KevinLimelight vision) {
+        // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        NetworkTableEntry y;
+        double m_Y;
 
-public LimeLightRange(KevinLimelight vision) {
-// NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-m_kVision = vision;
-//y = table.getEntry("ty");
-y = m_kVision.getTy();
-m_Y=y.getDouble(0.0);
-// Use addRequirements() here to declare subsystem dependencies.
-addRequirements(vision);
-}
+        m_kVision = vision;
+        y=m_kVision.getTy();
+    
 
+        //y = m_kVision.getY();
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(vision);
+    }
 
+    // public double getTy()
+    // {
+    // return ty.getDouble(0.0);
+    // }
 
-// public double getTy()
-// {
-//   return ty.getDouble(0.0);
-// }
+    // public void setTx(NetworkTableEntry a){
+    // this.a = a;
+    // }
 
+    // pls = m_Yvalue.getDouble();
 
+    // private double NetworkTableEntry.getDouble(String string) {
+    // return 0;}
 
+    public final double angleOfCamera = 15;
+    // Meters change
+    public final double HeightOfCamera = 0.394;
+    public final double HeightOfTarget = 2.5;
 
+    // Math Equation
+    public double distance;
 
-//  public void setTx(NetworkTableEntry a){
-//    this.a = a;
-//  }
+    public double setDistance() {
+        return distance = ((HeightOfTarget - HeightOfCamera) / Math.tan(angleOfCamera +m_kVision.getY()
+        ));
+    }
+    // How to get the data
 
-// pls = m_Yvalue.getDouble();
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {
 
+    }
 
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+        SmartDashboard.putNumber("Distance", getDistance());
 
-// private double NetworkTableEntry.getDouble(String string) {
-//  return 0;}
+    }
 
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+    }
 
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 
-public final double angleOfCamera=0;
-//Meters change
-public final double HeightOfCamera=0;
-public final double HeightOfTarget=0;
-
-
-
-
-//Math Equation
-public double distance; 
-
-//How to get the data
-
-
-
-
-//Methods getData()
-
-
-
-
-
-
-
-
-
-// Called when the command is initially scheduled.
-@Override
-public void initialize() {
-//Smart dashboard 
-SmartDashboard.getNumber("Distance", distance);
-}
-
-// Called every time the scheduler runs while the command is scheduled.
-@Override
-public void execute() {
-distance= ((HeightOfTarget-HeightOfCamera)/Math.tan(angleOfCamera+m_Y));
-
-}
-
-// Called once the command ends or is interrupted.
-@Override
-public void end(boolean interrupted) {}
-
-// Returns true when the command should end.
-@Override
-public boolean isFinished() {
-return false;
-}
-
+    public double getDistance() {
+        return distance;
+    }
 }

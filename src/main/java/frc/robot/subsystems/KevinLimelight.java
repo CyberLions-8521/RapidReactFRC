@@ -32,16 +32,17 @@ public class KevinLimelight extends SubsystemBase {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
+    
 
 
     // distanceToTarget=(Math.tan())
 
     // Math calculation
   }
-
   public NetworkTableEntry getTy() {
-      return ty;
-  }
+    return ty;
+}
+  
   
   @Override
   public void simulationPeriodic() {
