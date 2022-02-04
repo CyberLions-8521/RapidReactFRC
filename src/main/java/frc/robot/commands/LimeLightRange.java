@@ -52,10 +52,7 @@ public class LimeLightRange extends CommandBase {
     // Math Equation
     public double distance;
 
-    public void setDistance() {
-
-    }
-
+   
    
     
     @Override
