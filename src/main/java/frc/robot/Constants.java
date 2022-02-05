@@ -17,11 +17,11 @@ public final class Constants
     public static class DriveConstants
     {
         // Just a coefficient to dampen how fast the robot turns
-        public static final double STEER_K = 0.1;
+        public static final double STEER_K = 2;
         // Highest the robot can turn autonomously
-        public static final double MAX_OUTPUT = 0.5;
-        public static final double DRIVE_SLOW = 0.4;
-        public static final double TURN_SLOW = 0.5;
+        public static final double MAX_OUTPUT = 3;
+        public static final double DRIVE_SLOW = 1;
+        public static final double TURN_SLOW = 2;
         // Steering adjust is never zero, so we choose a number where the robot is basically centered on the target
         public static final double STEER_THRESHOLD = 3;
         // Constant for the slew rate limiter

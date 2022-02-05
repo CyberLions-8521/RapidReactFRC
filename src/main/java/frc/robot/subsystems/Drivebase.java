@@ -13,7 +13,7 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveMode;
 import frc.robot.Constants.XBOX;
 // import frc.robot.commands.Drive;
-
+import frc.robot.commands.LimeLightRange;
 import edu.wpi.first.wpilibj.SPI;
 //import edu.wpi.first.wpilibj.SlewRateLimiter; OLD
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -275,6 +275,9 @@ public class Drivebase extends SubsystemBase {
     public AHRS getGyro()
     {
       return m_gyro;
+    }
+
+    public void setAutonomousCommand(LimeLightRange m_range) {
     }
   }
   

@@ -9,49 +9,77 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.LimeLightRange;
 
 public class KevinLimelight extends SubsystemBase {
 
-  /** Creates a new ExampleSubsystem. */
-  public KevinLimelight() {
-  }
+/** Creates a new ExampleSubsystem. */
+public KevinLimelight() {
+}
 
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  NetworkTableEntry tx = table.getEntry("tx");
-  NetworkTableEntry ty = table.getEntry("ty");
-  NetworkTableEntry ta = table.getEntry("ta");
-  @Override
+NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+NetworkTableEntry tx = table.getEntry("tx");
+NetworkTableEntry ty = table.getEntry("ty");
+NetworkTableEntry ta = table.getEntry("ta");
+NetworkTableEntry tv = table.getEntry("tv");
 
-  public void periodic() {
-    // This method will be called once per scheduler run
-    // read values periodically
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
-    // post to smart dashboard periodically
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
-    
+@Override
 
-  }
-    // distanceToTarget=(Math.tan())
+public void periodic() {
+  // This method will be called once per scheduler run
+  // read values periodically
+  double x = tx.getDouble(0.0);
+  double y = ty.getDouble(0.0);
+  double area = ta.getDouble(0.0);
+  // post to smart dashboard periodically
+  SmartDashboard.putNumber("LimelightX", x);
+  SmartDashboard.putNumber("LimelightY", y);
+  SmartDashboard.putNumber("LimelightArea", area);
+  
 
-    // Math calculation
+}
+  // distanceToTarget=(Math.tan())
 
-    public double getTy(){
-      return ty.getDouble(0.0);
+  // Math calculation
+
+  public double getTy(){
+    return ty.getDouble(0.0);
 
 
-    
-  }
- // public NetworkTableEntry getTy() {
-   // return ty;
+  
+}
+
+public double getTx(){
+  return ty.getDouble(0.0);
+
+
+
+}
+
+public double getTa(){
+return ta.getDouble(0.0);
+
+
+
+
+}
+
+public boolean getHasTarget(){
+return tv.getBoolean(false);
+
+
+
+}
+// public NetworkTableEntry getTy() {
+  // return ty;
 //}
-  
-  
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
+
+
+@Override
+public void simulationPeriodic() {
+  // This method will be called once per scheduler run during simulation
+}
+
+public void setAutonomousCommand(LimeLightRange m_range) {
+}
 }
