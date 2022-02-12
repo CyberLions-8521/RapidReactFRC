@@ -15,6 +15,7 @@ import frc.robot.Constants.XBOX;
 // import frc.robot.commands.Drive;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.math.controller.PIDController;
 //import edu.wpi.first.wpilibj.SlewRateLimiter; OLD
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
@@ -154,6 +155,18 @@ public class Drivebase extends SubsystemBase {
     double REDUCTION = 0.05;
     // m_drive.tankDrive(speed, speed*corrector, false);
     arcadeDrive(speed, -angle * REDUCTION, false);
+  }
+
+  private double KpD = 0.1;
+  private double KiD = 0;
+  private double KlD = 0;
+  public PIDController MoveFowardPID = new PIDController(KpD, KiD, KlD);
+
+  // PID drive straight for auto fby Kevin
+  public void moveForwardStraight(double speed) {
+
+    double output = MoveFowardPID.calculate(-getTurnRate(), 0);
+    arcadeDrive(speed, output, false);
   }
 
   public double getThrottle() {
