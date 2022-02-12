@@ -11,9 +11,7 @@ public class SolenoidsSystem extends SubsystemBase {
     DoubleSolenoid m_leftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 5, 4);
     DoubleSolenoid m_rightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
     
-    public SolenoidsSystem() {
-        disableArms();
-    }
+    public SolenoidsSystem() {}
 
     public void extendArms() {
         m_leftDS.set(kForward);
