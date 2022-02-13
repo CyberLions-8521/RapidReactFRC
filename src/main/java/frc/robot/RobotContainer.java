@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
+import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.ToggleIntakeArm;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
@@ -22,13 +23,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
   // Subsystems
-  public static Drivebase m_drivebase = new Drivebase();  //Calling Drivebase.java Subsystem class
-  private final Drive m_driveSystem = new Drive(m_drivebase); //Calling Drive.java Command class
+  public static Drivebase m_drivebase = new Drivebase();
   public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
   public static final CompressorSystem m_compressor = new CompressorSystem();
 
   // Commands
-
+  private final Drive m_driveSystem = new Drive(m_drivebase);
   
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
@@ -50,6 +50,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleCompressor(m_compressor));
   }
 
   /**
