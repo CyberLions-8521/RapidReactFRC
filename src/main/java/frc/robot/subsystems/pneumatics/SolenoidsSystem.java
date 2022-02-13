@@ -58,7 +58,7 @@ public class SolenoidsSystem extends SubsystemBase {
     @Override
     public void periodic() {
         //TODO: thien fix later
-        SmartDashboard.putString("Arm Status", getArmStatus().toString()); 
-        SmartDashboard.putNumber("Gear Status", getGearStatus());
+        SmartDashboard.putString("Arm", getArmStatus().toString()); 
+        SmartDashboard.putNumber("Gear", getGearStatus());
     }
 }
