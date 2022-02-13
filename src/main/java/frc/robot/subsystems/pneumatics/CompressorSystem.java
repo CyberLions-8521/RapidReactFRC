@@ -22,12 +22,8 @@ public class CompressorSystem extends SubsystemBase {
         m_compressor.enableDigital();
     }
 
-    public double getPressure() {
-        return m_compressor.getPressure();
-    }
-
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Compressor Pressure", getPressure());
+        SmartDashboard.putBoolean("Compressor On", enabled());
     }
 }
