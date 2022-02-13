@@ -8,33 +8,57 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 public class SolenoidsSystem extends SubsystemBase {
-    DoubleSolenoid m_leftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 5, 4);
-    DoubleSolenoid m_rightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+    DoubleSolenoid m_leftArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 5, 4);
+    DoubleSolenoid m_rightArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
+    DoubleSolenoid m_transLeftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 7, 8);
+    DoubleSolenoid m_transRightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
     
-    public SolenoidsSystem() {}
+    public SolenoidsSystem() {
+        retractArms();
+        setGear1();
+    }
 
     public void extendArms() {
-        m_leftDS.set(kForward);
-        m_rightDS.set(kForward);
+        m_leftArmDS.set(kForward);
+        m_rightArmDS.set(kForward);
     }
 
     public void retractArms() {
-        m_leftDS.set(kReverse);
-        m_rightDS.set(kReverse);
+        m_leftArmDS.set(kReverse);
+        m_rightArmDS.set(kReverse);
     }
 
     public void disableArms() {
-        m_leftDS.set(kOff);
-        m_rightDS.set(kOff);
+        m_leftArmDS.set(kOff);
+        m_rightArmDS.set(kOff);
     }
 
-    public Value get() {
-        return m_rightDS.get();
+    public void setGear1() {
+        m_transLeftDS.set(kForward);
+        m_transRightDS.set(kForward);
+    }
+
+    public void setGear2() {
+        m_transLeftDS.set(kReverse);
+        m_transRightDS.set(kReverse);
+    }
+
+    public Value getArmStatus() {
+        return m_rightArmDS.get();
+    }
+
+    public int getGearStatus() {
+        if (m_transRightDS.get().equals(kForward)) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 
     @Override
     public void periodic() {
         //TODO: thien fix later
-        SmartDashboard.putString("Solenoid Status", get().toString()); 
+        SmartDashboard.putString("Arm Status", getArmStatus().toString()); 
+        SmartDashboard.putNumber("Gear Status", getGearStatus());
     }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ToggleCompressor;
+import frc.robot.commands.ToggleGear;
 import frc.robot.commands.ToggleIntakeArm;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
@@ -50,7 +51,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleCompressor(m_compressor));
+    new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
+    new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
   }
 
   /**

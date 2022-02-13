@@ -16,7 +16,7 @@ public class ToggleIntakeArm extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_solenoids.get().equals(kOff) || m_solenoids.get().equals(kReverse)) {
+    if (m_solenoids.getArmStatus().equals(kOff) || m_solenoids.getArmStatus().equals(kReverse)) {
         m_solenoids.extendArms();
     } else {
         m_solenoids.retractArms();
