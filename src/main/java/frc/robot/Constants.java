@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalSource;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -27,6 +29,20 @@ public final class Constants
         // Constant for the slew rate limiter
         // Limits the rate of change of a signal (joystick input) to 0.5 units per second
         public static final double RATE_LIMIT = 0.5;
+        
+    }
+
+    //ayo
+
+    public static class EncodersConstants{
+    //encoders right
+    public static final DigitalSource[] m_RightSlaveEncoderPorts = null;
+    public static final DigitalSource m_RightSlaveEncoderReversed = null;
+
+    //encoders left 
+    public static final DigitalSource[] m_LeftSlaveEncoderPorts = null;
+    public static final DigitalSource m_LeftSlaveEncoderReversed = null;
+
     }
 
     public static class VisionConstants
