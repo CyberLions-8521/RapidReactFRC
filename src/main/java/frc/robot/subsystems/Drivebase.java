@@ -11,17 +11,21 @@ import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveMode;
+import frc.robot.Constants.EncodersConstants;
 import frc.robot.Constants.XBOX;
 // import frc.robot.commands.Drive;
-
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
 //import edu.wpi.first.wpilibj.SlewRateLimiter; OLD
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.math.geometry.Pose2d;
 //import edu.wpi.first.wpilibj.geometry.Rotation2d; OLD
 import edu.wpi.first.math.geometry.Rotation2d; // new import
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -54,6 +58,77 @@ public class Drivebase extends SubsystemBase {
   // Differential drive class
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
+  //DifferentialDriveOdometry drive class
+  private final DifferentialDriveOdometry m_odometry;
+
+
+  // Encoders stuff
+  private final Encoder m_RightEncoder = new Encoder(
+      EncodersConstants.m_RightSlaveEncoderPorts[0],
+      EncodersConstants.m_RightSlaveEncoderPorts[1],
+      EncodersConstants.m_RightSlaveEncoderReversed);
+
+  private final Encoder m_LeftEncoder = new Encoder(
+      EncodersConstants.m_LeftSlaveEncoderPorts[0],
+      EncodersConstants.m_LeftSlaveEncoderPorts[1],
+      EncodersConstants.m_LeftSlaveEncoderReversed);
+
+  // Reset Encoders
+  public void resetEncoders() {
+    m_RightEncoder.reset();
+    m_LeftEncoder.reset();
+  }
+
+  //Returns for encoder
+  public Encoder getLeftEncoder() {
+    return m_LeftEncoder;
+  }
+
+  public Encoder getRightEncoder() {
+    return m_RightEncoder;
+  }
+
+  //Get distance from both encoders and avg them
+  public double getAverageEncoderDistance() {
+    return (m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0;
+  }
+
+  //go boom
+  public void setMaxOutput(double maxOutput) {
+    m_drive.setMaxOutput(maxOutput);
+  }
+
+  //reset
+  public void zeroHeading() {
+    m_gyro.reset();
+  }
+
+  //Tank drive volts
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_leftMaster.setVoltage(leftVolts);
+    m_rightMaster.setVoltage(rightVolts);
+    m_drive.feed();
+  }
+
+  //Odometry
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  //reset postions
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(), m_RightEncoder.getRate());
+  }
+
+
+
+
+
   // Arcade Drive
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
     m_drive.arcadeDrive(zRotation, xSpeed, squareInputs);
@@ -61,6 +136,7 @@ public class Drivebase extends SubsystemBase {
 
   double speed;
   double turnRate;
+  DifferentialDriveOdometry odometry;
   // Gyro
   AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
@@ -68,13 +144,13 @@ public class Drivebase extends SubsystemBase {
   public static DriveMode m_mode;
 
   public Drivebase() {
+
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
     speed = 0.0;
     turnRate = 0.0;
     m_gyro.calibrate();
     // m_gyro.reset();
-
     // Slaves following Slave Master
     m_leftSlave.follow(m_leftMaster);
 
@@ -113,12 +189,18 @@ public class Drivebase extends SubsystemBase {
 
     // If we want to set max output
     // m_drive.setMaxOutput(1.0);
+
+    resetEncoders();
+    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+  
   }
+
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     double tHeading = getHeading().getDegrees();
+    m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(), m_RightEncoder.getDistance());
 
     // SmartDashboard.putNumber("Applied Output LM",
     // m_leftMaster.getAppliedOutput());
