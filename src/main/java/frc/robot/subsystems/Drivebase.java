@@ -59,6 +59,7 @@ public class Drivebase extends SubsystemBase {
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
   //DifferentialDriveOdometry drive class
+  //owo Odometry
   private final DifferentialDriveOdometry m_odometry;
 
 
@@ -88,7 +89,7 @@ public class Drivebase extends SubsystemBase {
     return m_RightEncoder;
   }
 
-  //Get distance from both encoders and avg them
+  //Get distance from both encoders and avg them for best accuracy
   public double getAverageEncoderDistance() {
     return (m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0;
   }
@@ -98,12 +99,12 @@ public class Drivebase extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-  //reset
+  //reset gyro
   public void zeroHeading() {
     m_gyro.reset();
   }
 
-  //Tank drive volts
+  //Tank drive volts for pathplanner
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     m_leftMaster.setVoltage(leftVolts);
     m_rightMaster.setVoltage(rightVolts);
@@ -121,6 +122,7 @@ public class Drivebase extends SubsystemBase {
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
+  //WheelSpeed stuff
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(), m_RightEncoder.getRate());
   }
@@ -190,6 +192,7 @@ public class Drivebase extends SubsystemBase {
     // If we want to set max output
     // m_drive.setMaxOutput(1.0);
 
+    //reset odometry in drive mode
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   
