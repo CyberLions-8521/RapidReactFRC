@@ -39,7 +39,6 @@ public class Drivebase extends SubsystemBase {
   // Filter thing pew pew pew
   // trying a smaller value for the rate limit
   SlewRateLimiter filter = new SlewRateLimiter(0.2);
-<<<<<<< HEAD
 
   // Constants to control joystick input
   double SPEED_REDUCER = 0.5;
@@ -62,14 +61,8 @@ public class Drivebase extends SubsystemBase {
   //DifferentialDriveOdometry drive class
   //owo Odometry
   private final DifferentialDriveOdometry m_odometry;
-=======
->>>>>>> 1c135c79c300450fe31625ba14840e49e7ae6ba5
 
-  // Constants to control joystick input
-  double SPEED_REDUCER = 0.5;
-  double TURN_REDUCER = 0.5;
 
-<<<<<<< HEAD
   // Encoders stuff
   private final Encoder m_RightEncoder = new Encoder(
       EncodersConstants.m_RightSlaveEncoderPorts[0],
@@ -146,29 +139,6 @@ public class Drivebase extends SubsystemBase {
   double speed;
   double turnRate;
   DifferentialDriveOdometry odometry;
-=======
-  // Setting triple Motors DONE
-  // Motors
-  CANSparkMax m_leftMaster = new CANSparkMax(Constants.CAN.kLeftMaster, MotorType.kBrushed);
-  CANSparkMax m_rightMaster = new CANSparkMax(Constants.CAN.kRightMaster, MotorType.kBrushed);
-  // Left Gearbox Midd + lower slave cim motors
-  CANSparkMax m_leftMiddleSlave = new CANSparkMax(Constants.CAN.kLeftMiddleSlave, MotorType.kBrushed);
-  CANSparkMax m_leftSlave = new CANSparkMax(Constants.CAN.kLeftSlave, MotorType.kBrushed);
-  // Right Gearbox Midd + lower slave cim motors
-  CANSparkMax m_rightMiddleSlave = new CANSparkMax(Constants.CAN.kRightMiddleSlave, MotorType.kBrushed);
-  CANSparkMax m_rightSlave = new CANSparkMax(Constants.CAN.kRightSlave, MotorType.kBrushed);
-
-  // Differential drive class
-  DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
-
-  // Arcade Drive
-  public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
-    m_drive.arcadeDrive(zRotation, xSpeed, squareInputs);
-  }
-
-  double speed;
-  double turnRate;
->>>>>>> 1c135c79c300450fe31625ba14840e49e7ae6ba5
   // Gyro
   AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
@@ -176,20 +146,13 @@ public class Drivebase extends SubsystemBase {
   public static DriveMode m_mode;
 
   public Drivebase() {
-<<<<<<< HEAD
 
-=======
->>>>>>> 1c135c79c300450fe31625ba14840e49e7ae6ba5
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
     speed = 0.0;
     turnRate = 0.0;
     m_gyro.calibrate();
     // m_gyro.reset();
-<<<<<<< HEAD
-=======
-
->>>>>>> 1c135c79c300450fe31625ba14840e49e7ae6ba5
     // Slaves following Slave Master
     m_leftSlave.follow(m_leftMaster);
 
@@ -228,7 +191,6 @@ public class Drivebase extends SubsystemBase {
 
     // If we want to set max output
     // m_drive.setMaxOutput(1.0);
-<<<<<<< HEAD
 
     //reset odometry in drive mode
     resetEncoders();
@@ -237,18 +199,11 @@ public class Drivebase extends SubsystemBase {
   }
 
 
-=======
-  }
-
->>>>>>> 1c135c79c300450fe31625ba14840e49e7ae6ba5
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     double tHeading = getHeading().getDegrees();
-<<<<<<< HEAD
     m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(), m_RightEncoder.getDistance());
-=======
->>>>>>> 1c135c79c300450fe31625ba14840e49e7ae6ba5
 
     // SmartDashboard.putNumber("Applied Output LM",
     // m_leftMaster.getAppliedOutput());
