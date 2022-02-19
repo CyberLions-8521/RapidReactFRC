@@ -11,10 +11,10 @@ import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveMode;
-import frc.robot.Constants.EncodersConstants;
+//import frc.robot.Constants.EncodersConstants;
 import frc.robot.Constants.XBOX;
 // import frc.robot.commands.Drive;
-import edu.wpi.first.wpilibj.Encoder;
+//import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
 //import edu.wpi.first.wpilibj.SlewRateLimiter; OLD
@@ -64,35 +64,35 @@ public class Drivebase extends SubsystemBase {
 
 
   // Encoders stuff
-  private final Encoder m_RightEncoder = new Encoder(
-      EncodersConstants.m_RightSlaveEncoderPorts[0],
-      EncodersConstants.m_RightSlaveEncoderPorts[1],
-      EncodersConstants.m_RightSlaveEncoderReversed);
+  // private final Encoder m_RightEncoder = new Encoder(
+  //     EncodersConstants.m_RightSlaveEncoderPorts[0],
+  //     EncodersConstants.m_RightSlaveEncoderPorts[1],
+  //     EncodersConstants.m_RightSlaveEncoderReversed);
 
-  private final Encoder m_LeftEncoder = new Encoder(
-      EncodersConstants.m_LeftSlaveEncoderPorts[0],
-      EncodersConstants.m_LeftSlaveEncoderPorts[1],
-      EncodersConstants.m_LeftSlaveEncoderReversed);
+  // private final Encoder m_LeftEncoder = new Encoder(
+  //     EncodersConstants.m_LeftSlaveEncoderPorts[0],
+  //     EncodersConstants.m_LeftSlaveEncoderPorts[1],
+  //     EncodersConstants.m_LeftSlaveEncoderReversed);
 
-  // Reset Encoders
-  public void resetEncoders() {
-    m_RightEncoder.reset();
-    m_LeftEncoder.reset();
-  }
+  // // Reset Encoders
+  // public void resetEncoders() {
+  //   m_RightEncoder.reset();
+  //   m_LeftEncoder.reset();
+  // }
 
-  //Returns for encoder
-  public Encoder getLeftEncoder() {
-    return m_LeftEncoder;
-  }
+  // //Returns for encoder
+  // public Encoder getLeftEncoder() {
+  //   return m_LeftEncoder;
+  // }
 
-  public Encoder getRightEncoder() {
-    return m_RightEncoder;
-  }
+  // public Encoder getRightEncoder() {
+  //   return m_RightEncoder;
+  // }
 
-  //Get distance from both encoders and avg them for best accuracy
-  public double getAverageEncoderDistance() {
-    return (m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0;
-  }
+  // //Get distance from both encoders and avg them for best accuracy
+  // public double getAverageEncoderDistance() {
+  //   return (m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0;
+  // }
 
   //go boom
   public void setMaxOutput(double maxOutput) {
@@ -118,14 +118,14 @@ public class Drivebase extends SubsystemBase {
 
   //reset postions
   public void resetOdometry(Pose2d pose) {
-    resetEncoders();
+    //resetEncoders();
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
   //WheelSpeed stuff
-  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(), m_RightEncoder.getRate());
-  }
+  // public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+  //   return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(), m_RightEncoder.getRate());
+  // }
 
 
 
@@ -193,7 +193,7 @@ public class Drivebase extends SubsystemBase {
     // m_drive.setMaxOutput(1.0);
 
     //reset odometry in drive mode
-    resetEncoders();
+    //resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   
   }
@@ -203,7 +203,7 @@ public class Drivebase extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     double tHeading = getHeading().getDegrees();
-    m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(), m_RightEncoder.getDistance());
+    //m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(), m_RightEncoder.getDistance());
 
     // SmartDashboard.putNumber("Applied Output LM",
     // m_leftMaster.getAppliedOutput());
@@ -238,7 +238,7 @@ public class Drivebase extends SubsystemBase {
     // Decrease to make it move more to the right
     // double corrector = 0.93;
     double REDUCTION = 0.05;
-    // m_drive.tankDrive(speed, speed*corrector, false);
+    // m_drivze.tankDrive(speed, speed*corrector, false);
     arcadeDrive(speed, -angle * REDUCTION, false);
   }
 

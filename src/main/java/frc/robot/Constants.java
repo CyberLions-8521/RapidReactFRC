@@ -34,16 +34,16 @@ public final class Constants
 
     //ayo
 
-    public static class EncodersConstants{
-    //encoders right
-    public static final DigitalSource[] m_RightSlaveEncoderPorts = null;
-    public static final DigitalSource m_RightSlaveEncoderReversed = null;
+    // public static class EncodersConstants{
+    // //encoders right
+    // public static final DigitalSource[] m_RightSlaveEncoderPorts = null;
+    // public static final DigitalSource m_RightSlaveEncoderReversed = null;
 
-    //encoders left 
-    public static final DigitalSource[] m_LeftSlaveEncoderPorts = null;
-    public static final DigitalSource m_LeftSlaveEncoderReversed = null;
+    // //encoders left 
+    // public static final DigitalSource[] m_LeftSlaveEncoderPorts = null;
+    // public static final DigitalSource m_LeftSlaveEncoderReversed = null;
 
-    }
+    // }
 
     public static class VisionConstants
     {
@@ -54,14 +54,14 @@ public final class Constants
     public static class CAN
     {
         //Left + right Cim Motors Slave Masters
-        public static final int kLeftMaster = 2;
-        public static final int kRightMaster = 3;
+        public static final int kLeftMaster = 3;
+        public static final int kRightMaster = 44;
         //Entirely Left Side Gear Box
-        public static final int kLeftSlave = 1;
-        public static final int kLeftMiddleSlave = 7; //Find new CANSparkMotor and SetValue to 7
+        public static final int kLeftSlave = 5;
+        public static final int kLeftMiddleSlave = 1; //Find new CANSparkMotor and SetValue to 7
         //Entirely Right Side Gear Box
-        public static final int kRightSlave = 4;
-        public static final int kRightMiddleSlave = 6; //Find new CANSparkMotor and SetValue to 6
+        public static final int kRightSlave = 6;
+        public static final int kRightMiddleSlave = 2; //Find new CANSparkMotor and SetValue to 6
         //Intake motor775
         //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
 
