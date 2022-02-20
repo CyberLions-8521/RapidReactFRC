@@ -2,25 +2,32 @@ package frc.robot;
 
 import java.sql.DriverPropertyInfo;
 
+//Additional imports
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+// Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.ToggleGear;
 import frc.robot.commands.ToggleIntakeArm;
+
+// Subsystems
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
 import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 import edu.wpi.first.wpilibj2.command.Command;
+
+// Autonomous Mode Imports 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 public class RobotContainer {
   // Subsystems

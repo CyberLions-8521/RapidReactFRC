@@ -1,18 +1,6 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 import java.lang.Math;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants 
 {
     public static class DriveConstants
@@ -20,7 +8,7 @@ public final class Constants
         // Just a coefficient to dampen how fast the robot turns
         public static final double STEER_K = 0.5;
         // Highest the robot can turn autonomously
-        public static final double MAX_OUTPUT = 1;
+        public static final double MAX_OUTPUT = 0.5; //originally 0.5
         public static final double AutoMAX_OUTPUT = 0.3;
         public static final double Speedlimit=0.5;
 
@@ -33,8 +21,28 @@ public final class Constants
         public static final double RATE_LIMIT = 0.5;
     }
 
+    public static class PIDConstants {
+        // Drivebase PID
+        public static final double KpD = 0.1;
+        public static final double KiD = 0;
+        public static final double KlD = 0;
+
+        // Shooter PID
+        public static final double Kp_shooter = 0.0;
+        public static final double Ki_shooter = 0.0;
+        public static final double Kl_shooter = 0.0;
+
+        // Elevator {Climber} PID
+        public static final double Kp_climber = 0.0;
+        public static final double Ki_climber = 0.0;
+        public static final double Kl_climber = 0.0;
+
+        
+
+    }
+
     public static class VisionConstants
-    {   //change to rapid react
+    {  
         // Area of the ball in the camera view when the robot stops approaching it
         public static final double BALL_AREA = 0.7;
         public static final double CameraAngle = Math.toRadians(35);
