@@ -18,18 +18,12 @@ public final class Constants
     public static class DriveConstants
     {
         // Just a coefficient to dampen how fast the robot turns
-<<<<<<< HEAD
-        public static final double STEER_K = 2;
-        // Highest the robot can turn autonomously
-        public static final double MAX_OUTPUT = 3;
-=======
         public static final double STEER_K = 0.5;
         // Highest the robot can turn autonomously
         public static final double MAX_OUTPUT = 1;
         public static final double AutoMAX_OUTPUT = 0.3;
         public static final double Speedlimit=0.5;
 
->>>>>>> 0f17830e4931ecd8d7249072c528be37954f442a
         public static final double DRIVE_SLOW = 1;
         public static final double TURN_SLOW = 2;
         // Steering adjust is never zero, so we choose a number where the robot is basically centered on the target
@@ -61,7 +55,7 @@ public final class Constants
         public static final int kRightMiddleSlave =2; //Find new CANSparkMotor and SetValue to 6
         //Intake motor775
         //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
-        //public static final int shooter_motor = 0;
+        public static final int shooter_motor = 8;
 
     }
 
