@@ -11,7 +11,6 @@ public final class Constants
         public static final double MAX_OUTPUT = 0.5; //originally 0.5
         public static final double AutoMAX_OUTPUT = 0.3;
         public static final double Speedlimit=0.5;
-
         public static final double DRIVE_SLOW = 1;
         public static final double TURN_SLOW = 2;
         // Steering adjust is never zero, so we choose a number where the robot is basically centered on the target
@@ -19,6 +18,13 @@ public final class Constants
         // Constant for the slew rate limiter;
         // Limits the rate of change of a signal (joystick input) to 0.5 units per second
         public static final double RATE_LIMIT = 0.5;
+
+
+        
+    }
+
+    public static class ShooterConstants {
+        public static final double Shooter_speed = 0.0; // use just in case
     }
 
     public static class PIDConstants {
@@ -61,9 +67,12 @@ public final class Constants
         //Entirely Right Side Gear Box
         public static final int kRightSlave = 6;
         public static final int kRightMiddleSlave =2; //Find new CANSparkMotor and SetValue to 6
-        //Intake motor775
-        //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
-        //public static final int shooter_motor = 0;
+   
+        //Intake / Shooter Motors
+        public static final int kIntake = 7; 
+        public static final int shooter_motor = 8;
+        public static final int kIndexorBottom = 9;
+        public static final int kIndexorTop = 10;
 
     }
 
