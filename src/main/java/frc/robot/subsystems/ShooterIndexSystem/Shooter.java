@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
+
+    private boolean m_shootStatus;
   
 
 
@@ -18,28 +20,42 @@ public class Shooter extends SubsystemBase {
     }
 
 
+    public boolean getShooterStatus() {
+        return m_shootStatus;
+    }
+
+
+
+
+
+
     public void setSpeed(double speed){
         m_ShooterMotor.set(speed);
+
+    }
+
+
+
+    public void startShooter() {
+        m_ShooterMotor.set(0.2);
+        m_shootStatus = true;
+
+
+    }
+
+
+
+
+    public void stopShooter() {
+        m_ShooterMotor.set(0.0);
+        m_shootStatus = false;
     }
 
     //toggle and switch between functions
-
-
-
-        
-
-
-
-
-
-
-
-
-
     @Override
     public void periodic() {
-        
-        //return SmartDashboard Value here
+        SmartDashboard.putBoolean("Shooter Status", getShooterStatus());
+       
     }
 
     @Override

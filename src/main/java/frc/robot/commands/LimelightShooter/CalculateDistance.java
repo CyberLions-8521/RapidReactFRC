@@ -1,40 +1,25 @@
 package frc.robot.commands.LimelightShooter;
 
-import frc.robot.Constants.VisionConstants;
-
-
-
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import java.lang.Math;
-import java.time.Year;
-
 import com.revrobotics.SparkMaxAlternateEncoder.Type;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.lang.Math;
+import java.time.Year;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.VisionConstants;
+import frc.robot.subsystems.Limelight;
 
 /** An example command that uses an example subsystem. */
 public class CalculateDistance extends CommandBase {
     private final Limelight m_kVision;
     private double m_Y;
 
-    /**
-     * Creates a new ExampleCommand.
-     *
-     * 
-     * 
-     * 
-     * @param subsystem The subsystem used by this command.
-     */
-
-    public CalculateDistance(Limelight.java vision) {
+    public CalculateDistance(Limelight vision) {
         m_kVision = vision;
 
         // Use addRequirements() here to declare subsystem dependencies.

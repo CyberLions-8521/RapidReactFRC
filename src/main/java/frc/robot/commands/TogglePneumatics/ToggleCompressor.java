@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
 import frc.robot.RobotContainer;
 
-
 public class ToggleCompressor extends CommandBase {
     private final CompressorSystem m_compressor;
     private boolean m_isDone = false;

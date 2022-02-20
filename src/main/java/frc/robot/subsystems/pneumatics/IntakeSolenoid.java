@@ -58,7 +58,7 @@ public class IntakeSolenoid extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //TODO: thien fix later
+ 
         SmartDashboard.putString("Arm", getArmStatus().toString()); 
         SmartDashboard.putNumber("Gear", getGearStatus());
     }
