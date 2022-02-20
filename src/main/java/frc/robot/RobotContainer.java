@@ -13,14 +13,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
-import frc.robot.commands.ToggleCompressor;
-import frc.robot.commands.ToggleGear;
-import frc.robot.commands.ToggleIntakeArm;
-
+import frc.robot.commands.TogglePneumatics.ToggleCompressor;
+import frc.robot.commands.TogglePneumatics.ToggleGear;
+import frc.robot.commands.TogglePneumatics.ToggleIntakeArm;
 // Subsystems
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+import frc.robot.subsystems.pneumatics.IntakeSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
 
 // Autonomous Mode Imports 
@@ -32,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
-  public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
+  public static final IntakeSolenoid m_solenoids = new IntakeSolenoid();
   public static final CompressorSystem m_compressor = new CompressorSystem();
 
   // Commands
