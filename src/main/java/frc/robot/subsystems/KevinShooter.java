@@ -10,6 +10,7 @@ import com.revrobotics.EncoderType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAlternateEncoder.Type;
 
@@ -28,7 +29,7 @@ public class KevinShooter extends SubsystemBase {
     m_ShooterMotor = new CANSparkMax(CAN.shooter_motor, MotorType.kBrushed);
     m_pidController = m_ShooterMotor.getPIDController();
     // Encoder object created to display position values
-    m_encoder = m_ShooterMotor.getEncoder();
+    m_encoder = m_ShooterMotor.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature,8192);
 
     // PID coefficients
     kP = 0.0001; 
