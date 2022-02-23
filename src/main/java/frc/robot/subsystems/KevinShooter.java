@@ -20,19 +20,19 @@ import frc.robot.Constants.CAN;
 
 public class KevinShooter extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
-    public CANSparkMax m_ShooterMotor;
+    //public CANSparkMax m_ShooterMotor;
     public SparkMaxPIDController m_pidController;
     public RelativeEncoder m_encoder;
     public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
+    public CANSparkMax m_ShooterMotor = new CANSparkMax(CAN.shooter_motor, MotorType.kBrushed);
 
-  public void Shooter(double velocity){
-    m_ShooterMotor = new CANSparkMax(CAN.shooter_motor, MotorType.kBrushed);
+    public void Shooter(double velocity){
     m_pidController = m_ShooterMotor.getPIDController();
     // Encoder object created to display position values
-    m_encoder = m_ShooterMotor.getEncoder(SparkMaxRelativeEncoder.Type.kQuadrature,8192);
+    m_encoder = m_ShooterMotor.getEncoder();
 
     // PID coefficients
-    kP = 0.0001; 
+    kP = 0.001; 
     kI = 0;
     kD = 0.00001; 
     kIz = 0; 
