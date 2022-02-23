@@ -20,12 +20,13 @@ public class EncoderTest extends SubsystemBase {
   }
   //private Joystick m_stick;
   private static final int deviceID = 7;
-  private CANSparkMax m_motor;
+ // private CANSparkMax m_motor;
   private RelativeEncoder m_encoder;
   public CANSparkMax EncoderMotor = new CANSparkMax(deviceID, MotorType.kBrushless);
 
   public void EncoderMotor(XboxController controller){
-    EncoderMotor.set(controller.getRawAxis(XBOX.LEFT_STICK_Y));
+    m_encoder = EncoderMotor.getEncoder();
+    EncoderMotor.set(controller.getRawAxis(XBOX.RIGHT_STICK_X)+2);
 
   }
   
@@ -34,8 +35,8 @@ public class EncoderTest extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
-    m_encoder = m_motor.getEncoder();
+    //m_encoder = m_motor.getEncoder();
+    m_encoder = EncoderMotor.getEncoder();
     SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
 

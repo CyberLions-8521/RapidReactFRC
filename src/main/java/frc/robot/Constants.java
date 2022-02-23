@@ -63,7 +63,7 @@ public final class Constants
         public static final int kRightMiddleSlave =2; //Find new CANSparkMotor and SetValue to 6
         //Intake motor775
         //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
-        public static final int shooter_motor = 8;
+        public static final int shooter_motor = 7;
 
     }
 

@@ -13,18 +13,20 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
-import frc.robot.commands.EncoderTesting;
+//import frc.robot.commands.EncoderTesting;
 import frc.robot.commands.LimeLightRange;
-import frc.robot.commands.ToggleCompressor;
-import frc.robot.commands.ToggleGear;
-import frc.robot.commands.ToggleIntakeArm;
+import frc.robot.commands.ShootBallTest;
+//import frc.robot.commands.ToggleCompressor;
+//import frc.robot.commands.ToggleGear;
+//import frc.robot.commands.ToggleIntakeArm;
 
 // Subsystems
 import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.EncoderTest;
+//import frc.robot.subsystems.EncoderTest;
 import frc.robot.subsystems.KevinLimelight;
-import frc.robot.subsystems.pneumatics.CompressorSystem;
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+import frc.robot.subsystems.KevinShooter;
+//import frc.robot.subsystems.pneumatics.CompressorSystem;
+//import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 // Autonomous Mode Imports 
@@ -40,14 +42,17 @@ public class RobotContainer {
   public static KevinLimelight m_KevinLimelight = new KevinLimelight();  //Calling Drivebase.java Subsystem class
   private final LimeLightRange m_range = new LimeLightRange(m_KevinLimelight); //Calling Drive.java Command class
  // private final LimelightSeek m_seek = new LimelightSeek(m_drivebase, m_KevinLimelight); //Calling Drive.java Command class
+ //Shooter
+public static KevinShooter m_KevinShooter =new KevinShooter();
+private final ShootBallTest m_shoot = new ShootBallTest(m_KevinShooter);
 
-public static EncoderTest m_EncoderTest = new EncoderTest();
-private final EncoderTesting m_EncoderTesting = new EncoderTesting(m_EncoderTest); 
+//public static EncoderTest m_EncoderTest = new EncoderTest();
+//private final EncoderTesting m_EncoderTesting = new EncoderTesting(m_EncoderTest); 
 
   // Subsystems
   //public static Drivebase m_drivebase = new Drivebase();
-  public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
-  public static final CompressorSystem m_compressor = new CompressorSystem();
+ // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
+  //public static final CompressorSystem m_compressor = new CompressorSystem();
 
   
   // Controller
@@ -59,7 +64,10 @@ private final EncoderTesting m_EncoderTesting = new EncoderTesting(m_EncoderTest
     // Configure the button bindings
    // m_drivebase.setDefaultCommand(m_driveSystem);
     m_KevinLimelight.setDefaultCommand(m_range);
-    m_EncoderTest.setDefaultCommand(m_EncoderTesting);
+    m_KevinShooter.setDefaultCommand(m_shoot);
+
+   // m_EncoderTest.setDefaultCommand(m_EncoderTesting);
+    
   
 
 
@@ -74,9 +82,9 @@ private final EncoderTesting m_EncoderTesting = new EncoderTesting(m_EncoderTest
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
-    new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
-    new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
+   // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
+    //new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
+    //new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
   }
 
   /**

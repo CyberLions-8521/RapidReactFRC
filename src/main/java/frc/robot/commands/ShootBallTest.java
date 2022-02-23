@@ -29,7 +29,7 @@ public class ShootBallTest extends CommandBase {
     public void execute()
     {
       //for testing
-      m_Shoot.Shooter(500);
+      m_Shoot.Shooter(2000);
     }
   
     // Called once the command ends or is interrupted.

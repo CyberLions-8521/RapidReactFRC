@@ -4,10 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.AlternateEncoderType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.EncoderType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAlternateEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAlternateEncoder.Type;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,20 +25,20 @@ public class KevinShooter extends SubsystemBase {
     public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
 
   public void Shooter(double velocity){
-    m_ShooterMotor = new CANSparkMax(CAN.shooter_motor, MotorType.kBrushless);
+    m_ShooterMotor = new CANSparkMax(CAN.shooter_motor, MotorType.kBrushed);
     m_pidController = m_ShooterMotor.getPIDController();
     // Encoder object created to display position values
     m_encoder = m_ShooterMotor.getEncoder();
 
     // PID coefficients
-    kP = 5e-7; 
+    kP = 0.0001; 
     kI = 0;
     kD = 0.00001; 
     kIz = 0; 
     kFF = 0.000015; 
     kMaxOutput = 1; 
     kMinOutput = -1;
-    maxRPM = 5700;
+    maxRPM = 4000;
     double setPoint = velocity;
 
     // set PID coefficients
@@ -66,8 +70,8 @@ public class KevinShooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    double velocity = m_encoder.getVelocity();
-    SmartDashboard.putNumber("Encoder Values",velocity);
+    //double velocity = m_encoder.getVelocity();
+    SmartDashboard.putNumber("Encoder Values",3);
     SmartDashboard.putNumber("P Gain", kP);
     SmartDashboard.putNumber("I Gain", kI);
     SmartDashboard.putNumber("D Gain", kD);
