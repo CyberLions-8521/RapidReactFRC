@@ -120,12 +120,12 @@ public class Drivebase extends SubsystemBase {
 
   // Arcade Drive
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
-    m_drive.arcadeDrive(zRotation, xSpeed, squareInputs);
+    m_drive.arcadeDrive(xSpeed, zRotation, squareInputs);
   }
 
   double speed;
   double turnRate;
-  DifferentialDriveOdometry odometry;
+  // DifferentialDriveOdometry odometry;
   // Gyro
   AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
@@ -168,7 +168,7 @@ public class Drivebase extends SubsystemBase {
     m_rightMiddleSlave.setOpenLoopRampRate(0.2);
 
     // If we want to set max output
-    // m_drive.setMaxOutput(1.0);
+    //m_drive.setMaxOutput(0.5);
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
@@ -192,7 +192,7 @@ public class Drivebase extends SubsystemBase {
   }
 
   public void turnInPlace(double adjust) {
-    arcadeDrive(0.0, adjust, true);
+    m_drive.arcadeDrive(0.0, adjust, true);
     // m_drive.tankDrive(adjust, -adjust, true);
   }
 
@@ -208,7 +208,7 @@ public class Drivebase extends SubsystemBase {
     // double corrector = 0.93;
     double REDUCTION = 0.05;
     // m_drivze.tankDrive(speed, speed*corrector, false);
-    arcadeDrive(speed, -angle * REDUCTION, false);
+    m_drive.arcadeDrive(speed, -angle * REDUCTION, false);
   }
 
   // PID drive straight for auto fby Kevin
@@ -227,7 +227,7 @@ public class Drivebase extends SubsystemBase {
   }
 
   public void moveForward(double speed) {
-    arcadeDrive(speed, 0.0, true);
+    m_drive.arcadeDrive(speed, 0.0, true);
   }
 
   public CANSparkMax getLeftMotor() {
@@ -286,7 +286,7 @@ public class Drivebase extends SubsystemBase {
   }
 
   public void autoArcade(double speed, double turn) {
-    arcadeDrive(speed, turn, false);
+    m_drive.arcadeDrive(speed, turn, false);
   }
 
   public double limitSpeed(double speed) {

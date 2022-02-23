@@ -32,8 +32,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
-  public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
-  public static final CompressorSystem m_compressor = new CompressorSystem();
+  // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
+  // public static final CompressorSystem m_compressor = new CompressorSystem();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
@@ -57,9 +57,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
-    new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
-    new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
+    // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
+    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
+    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
   }
 
   /**
