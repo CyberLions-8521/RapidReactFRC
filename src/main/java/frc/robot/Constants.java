@@ -93,6 +93,11 @@ public final class Constants
         public static final int LOGO_RIGHT = 8;
         public static final int LEFT_STICK_BUTTON = 9;
         public static final int RIGHT_STICK_BUTTON = 10;
+        //need to be check
+        public static final int DPAD_X= 5;
+        public static final int DPAD_Y = 6;
+
+        
     }
 
     public enum DriveMode
