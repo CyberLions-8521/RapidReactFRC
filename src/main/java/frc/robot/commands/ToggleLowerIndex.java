@@ -5,22 +5,22 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 
-public class ToggleIndex extends CommandBase {
-  private final ToggleGeneralMotors m_motorsUpper;
+public class ToggleLowerIndex extends CommandBase {
+  private final ToggleGeneralMotors m_motorsLower;
   private boolean m_isDone;
 
-  public ToggleIndex(ToggleGeneralMotors subsystem) {
-    m_motorsUpper = subsystem;
+  public ToggleLowerIndex(ToggleGeneralMotors subsystem) {
+    m_motorsLower = subsystem;
     m_isDone = false;
     addRequirements(subsystem);
   }
 
   @Override
   public void initialize() {
-    if (m_motorsUpper.getIndexStatus()) {
-        m_motorsUpper.IndexorOn();
+    if (m_motorsLower.getIndexStatus()) {
+        m_motorsLower.LowerIndexOn();
     } else {
-        m_motorsUpper.IndexorOff();
+        m_motorsLower.LowerIndexOff();
     }
     m_isDone = true;
   }

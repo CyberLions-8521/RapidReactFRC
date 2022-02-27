@@ -20,14 +20,14 @@ import frc.robot.Constants.CAN;
 import frc.robot.Constants.SubsystemConstants;
 
 public class ToggleGeneralMotors extends SubsystemBase {
-    boolean m_intakeStatus;
+    boolean m_lowindexorStatus;
     boolean m_indexorStatus;
   
 
     CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless); //Neos Front
     CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushless); //Neos Back
     CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushed); //Lower 775 Indexor
-    CANSparkMax m_Intake = new CANSparkMax(Constants.CAN.kIntake, MotorType.kBrushed); //775 Intake System
+  
 
     public ToggleGeneralMotors() {
 
@@ -43,41 +43,44 @@ public class ToggleGeneralMotors extends SubsystemBase {
     }
 
 
-    public void intakeOn() {
-        //setting motors here
 
-
-
-        m_intakeStatus = true;
+    public boolean getIndexStatus() {
+        return m_indexorStatus;
     }
 
-    public void intakeOff() {
-
-
-
-        m_intakeStatus = false;
+    public boolean getLowIndexStatus() {
+        return m_lowindexorStatus;
     }
 
     public void IndexorOn() {
         m_FrontIndexor.set(0.2);
         m_BackIndexor.set(0.2);
-
-        m_indexorStatus = false;
+        m_indexorStatus = true;
 
     }
 
     public void IndexorOff() {
-
+        m_FrontIndexor.set(0.0);
+        m_BackIndexor.set(0.0);
         m_indexorStatus = false;
-
     }
+
+    public void LowerIndexOn() {
+        m_LowIndexor.set(0.2);
+        m_lowindexorStatus = true;
+    }
+    
+    public void LowerIndexOff() {
+        m_LowIndexor.set(0.2);
+        m_lowindexorStatus = false;
+    }
+
 
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
-
-        // SmartDashboard Stuff here
-
+        SmartDashboard.putBoolean("Index Status",getIndexStatus());
+        SmartDashboard.putBoolean("Index Status",getLowIndexStatus());
+      
     }
 
 }
