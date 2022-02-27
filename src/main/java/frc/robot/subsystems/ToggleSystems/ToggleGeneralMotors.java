@@ -24,8 +24,8 @@ public class ToggleGeneralMotors extends SubsystemBase {
     boolean m_indexorStatus;
   
 
-    CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless); //Neos Front
-    CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushless); //Neos Back
+    CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless); //Neos Front 9
+    CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushless); //Neos Back 10
     CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushed); //Lower 775 Indexor
   
 
