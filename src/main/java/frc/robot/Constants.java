@@ -41,6 +41,14 @@ public final class Constants
 
     }
 
+
+
+    public static class SubsystemConstants {
+        public static final double intakeSpeed = 0.5;
+        public static final double IndexSpeed = 0.3; //For both front and back indexors
+        public static final double IndexLower = 0.2; //Lower indexor intake (Optional Usage)
+    }
+
     public static class VisionConstants
     {  
         // Area of the ball in the camera view when the robot stops approaching it
@@ -61,9 +69,13 @@ public final class Constants
         //Entirely Right Side Gear Box
         public static final int kRightSlave = 6;
         public static final int kRightMiddleSlave =2; //Find new CANSparkMotor and SetValue to 6
-        //Intake motor775
-        //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
-        //public static final int shooter_motor = 0;
+      
+
+
+        public static final int kIntake = 7; //Find new CANSparkMotor and SetValue to 5
+        public static final int kIndexorLower = 8; // 775 Motor
+        public static final int kIndexorFront = 9; //This is inversed motors Neo
+        public static final int kIndexorBack = 10; //Default motor SpinRate Neo
 
     }
 
