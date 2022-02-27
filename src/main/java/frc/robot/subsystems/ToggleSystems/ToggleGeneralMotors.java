@@ -35,7 +35,6 @@ public class ToggleGeneralMotors extends SubsystemBase {
 
 
         //set it to default stop motor mode unless toggled
-
     }
 
     public void setMotor(double speed){
