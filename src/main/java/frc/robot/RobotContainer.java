@@ -17,7 +17,7 @@ import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.ToggleGear;
 import frc.robot.commands.ToggleIntakeArm;
 import frc.robot.commands.ToggleIndex;
-import frc.robot.commands.ToggleLowerIndex;
+//import frc.robot.commands.ToggleLowerIndex;
 // Subsystems
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
@@ -40,7 +40,7 @@ public class RobotContainer {
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  private final ToggleIndex m_index = new ToggleIndex(m_Index);
+  //private final ToggleIndex m_index = new ToggleIndex(m_Index);
   
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
@@ -50,7 +50,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     m_drivebase.setDefaultCommand(m_driveSystem);
-    m_Index.setDefaultCommand(m_index);
+    //m_Index.setDefaultCommand(m_index);
     //m_Index.setDefaultCommand(m_LowerIndex);
 
     configureButtonBindings();
@@ -68,7 +68,7 @@ public class RobotContainer {
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
     //new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
 
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleLowerIndex(m_Index));
+    //new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleLowerIndex(m_Index));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIndex(m_Index));
     
 

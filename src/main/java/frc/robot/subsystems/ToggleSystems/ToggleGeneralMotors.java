@@ -26,10 +26,12 @@ public class ToggleGeneralMotors extends SubsystemBase {
 
     CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless); //Neos Front 9
     CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushless); //Neos Back 10
-    CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushed); //Lower 775 Indexor
+    //CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushed); //Lower 775 Indexor
   
 
     public ToggleGeneralMotors() {
+        IndexorOff();
+        //LowerIndexOff();
 
 
         //set it to default stop motor mode unless toggled
@@ -39,7 +41,7 @@ public class ToggleGeneralMotors extends SubsystemBase {
     public void setMotor(double speed){
         m_FrontIndexor.set(speed);
         m_BackIndexor.set(speed);
-        m_LowIndexor.set(speed);
+      //  m_LowIndexor.set(speed);
     }
 
 
@@ -65,15 +67,15 @@ public class ToggleGeneralMotors extends SubsystemBase {
         m_indexorStatus = false;
     }
 
-    public void LowerIndexOn() {
-        m_LowIndexor.set(0.2);
-        m_lowindexorStatus = true;
-    }
+    // public void LowerIndexOn() {
+    //     m_LowIndexor.set(0.2);
+    //     m_lowindexorStatus = true;
+    // }
     
-    public void LowerIndexOff() {
-        m_LowIndexor.set(0.2);
-        m_lowindexorStatus = false;
-    }
+    // public void LowerIndexOff() {
+    //     m_LowIndexor.set(0.2);
+    //     m_lowindexorStatus = false;
+    // }
 
 
     @Override
