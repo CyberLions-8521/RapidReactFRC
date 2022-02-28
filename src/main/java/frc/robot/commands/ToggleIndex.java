@@ -17,7 +17,7 @@ public class ToggleIndex extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_motorsUpper.getIndexStatus()) {
+    if (m_motorsUpper.getIndexStatus() == false) {
         m_motorsUpper.IndexorOn();
     } else {
         m_motorsUpper.IndexorOff();
