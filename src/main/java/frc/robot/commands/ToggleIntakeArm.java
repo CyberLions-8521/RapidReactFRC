@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+import frc.robot.subsystems.pneumatics.SolenoidsIntakeSystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 public class ToggleIntakeArm extends CommandBase {
-  private final SolenoidsSystem m_solenoids;
+  private final SolenoidsIntakeSystem m_solenoids;
   private boolean m_isDone;
 
-  public ToggleIntakeArm(SolenoidsSystem subsystem) {
+  public ToggleIntakeArm(SolenoidsIntakeSystem subsystem) {
     m_solenoids = subsystem;
     m_isDone = false;
     addRequirements(subsystem);
@@ -16,7 +16,7 @@ public class ToggleIntakeArm extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_solenoids.getArmStatus().equals(kOff) || m_solenoids.getArmStatus().equals(kReverse)) {
+    if (m_solenoids.getArmStatus() == false) {
         m_solenoids.extendArms();
     } else {
         m_solenoids.retractArms();

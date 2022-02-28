@@ -18,10 +18,11 @@ import frc.robot.commands.ToggleGear;
 import frc.robot.commands.ToggleIntakeArm;
 import frc.robot.commands.ToggleIndex;
 //import frc.robot.commands.ToggleLowerIndex;
+
 // Subsystems
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+import frc.robot.subsystems.pneumatics.SolenoidsIntakeSystem;
 import frc.robot.subsystems.ToggleSystems.ToggleGeneralMotors;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -31,45 +32,36 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
+
+
+
+
+
 public class RobotContainer {
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
-  // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
-  public static final CompressorSystem m_compressor = new CompressorSystem();
   public static final ToggleGeneralMotors m_Index = new ToggleGeneralMotors();
+  // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
+  // public static final CompressorSystem m_compressor = new CompressorSystem();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  //private final ToggleIndex m_index = new ToggleIndex(m_Index);
   
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
   public static final Joystick m_aux = new Joystick(1);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     m_drivebase.setDefaultCommand(m_driveSystem);
-    //m_Index.setDefaultCommand(m_index);
-    //m_Index.setDefaultCommand(m_LowerIndex);
-
     configureButtonBindings();
-    //Robot
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
   private void configureButtonBindings() {
     // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
     //new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
-
-    //new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleLowerIndex(m_Index));
-    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIndex(m_Index));
+    //new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleIndex(m_Index));
     
 
   }
@@ -80,8 +72,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    //return new SequentialCommandGroup();
     return new SequentialCommandGroup();
     //return m_autoCommand;
   }
