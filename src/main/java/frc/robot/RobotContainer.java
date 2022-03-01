@@ -17,7 +17,7 @@ import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.ToggleGear;
 import frc.robot.commands.ToggleIntakeArm;
 import frc.robot.commands.ToggleIndex;
-//import frc.robot.commands.ToggleLowerIndex;
+import frc.robot.commands.ToggleIntakeMotors;
 
 // Subsystems
 import frc.robot.subsystems.Drivebase;
@@ -61,7 +61,8 @@ public class RobotContainer {
     // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
     //new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
-    //new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleIndex(m_Index));
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleIndex(m_Index));
+    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeMotors(m_Index));
     
 
   }
