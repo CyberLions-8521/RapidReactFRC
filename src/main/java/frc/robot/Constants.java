@@ -71,7 +71,7 @@ public final class Constants {
         public static final int kIndexorFront = 9; // This is inversed motors Neo // Make ths 775
         public static final int kIndexorBack = 10; // Default motor SpinRate Neo
         public static final int kShooter = 11; // 775 Motors
-        public static final int kElevator = 12; // Neo Motors Brushless with PID 
+        public static final int kElevator = 12; // Neo Motors Brushless with PID
 
     }
 

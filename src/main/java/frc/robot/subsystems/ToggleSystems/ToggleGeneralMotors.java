@@ -26,8 +26,8 @@ public class ToggleGeneralMotors extends SubsystemBase {
 
     CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless); // Neos Front 9
     CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushed); // 775 Back 10
-    CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushless); //Lower 775 Indexor
-    CANSparkMax m_IntakeMotor = new CANSparkMax(Constants.CAN.kIntake, MotorType.kBrushed); // 775 Intake 
+    CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushless); //Lower Neo Indexor
+    CANSparkMax m_IntakeMotor = new CANSparkMax(Constants.CAN.kIntake, MotorType.kBrushed); // 775 Intake 7
     // CANSparkMax m_shooter = new CANSparkMax(Constants.CAN.kShooter, MotorType.kBrushless);
 
     public ToggleGeneralMotors() {
@@ -46,14 +46,15 @@ public class ToggleGeneralMotors extends SubsystemBase {
     public boolean getIndexStatus() {
         return m_indexorStatus;
     }
+
     public boolean getIntakeStatus() {
         return m_intakeStatus;
     }
 
     public void IndexorOn() {
         m_FrontIndexor.set(0.60);
-        m_BackIndexor.set(0.60);
-        m_LowIndexor.set(0.40);
+        m_BackIndexor.set(0.50);
+        m_LowIndexor.set(0.60);
         m_indexorStatus = true;
     }
 
