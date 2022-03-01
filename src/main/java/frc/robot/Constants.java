@@ -1,6 +1,8 @@
 package frc.robot;
 import java.lang.Math;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 public final class Constants 
 {
     public static class DriveConstants
@@ -19,6 +21,33 @@ public final class Constants
         // Constant for the slew rate limiter;
         // Limits the rate of change of a signal (joystick input) to 0.5 units per second
         public static final double RATE_LIMIT = 0.5;
+
+    }
+
+    public static class TrajectoryConstants{
+    // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
+    // values for your robot.
+    //Feedforward/Feedback Gains
+    public static final double ksVolts = 0.22;
+    public static final double kvVoltSecondsPerMeter = 1.98;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.2;
+    public static final double kTrackwidthMeters = 0.69;
+
+    //DifferentialDriveKinematics
+    public static final DifferentialDriveKinematics kDriveKinematics =
+        new DifferentialDriveKinematics(kTrackwidthMeters);
+
+     //Max Trajectory Velocity/Acceleration   
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    
+    //Rameste Parameter
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
+
+    // Example value only - as above, this must be tuned for your drive!
+    public static final double kPDriveVel = 8.5;
+
     }
 
     public static class PIDConstants {
@@ -74,6 +103,21 @@ public final class Constants
         public static final int kXBOX = 0;
         public static final int kAuxCtrl = 1;
     }
+
+    public static class EncodersConstant 
+    {
+        public static final int LeftEncoderPort = 0;
+        public static final int RightEncoderPort = 1;
+        public static final double DistancePerPulse = 0.25;
+        //Inches
+        public static final int Circumference = 6;
+
+
+
+
+    }
+
+
 
     public static class XBOX
     {

@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 //Additional Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import java.util.function.DoubleBinaryOperator;
+
 import com.kauailabs.navx.frc.AHRS;
 import frc.robot.RobotContainer;
 
@@ -17,6 +20,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 // Constants
 import frc.robot.Constants;
 import frc.robot.Constants.DriveMode;
+import frc.robot.Constants.EncodersConstant;
 import frc.robot.Constants.DriveConstants;
 
 //Drivebase Motor-Speed Configurations
@@ -25,7 +29,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Counter;
 // import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 // Encoder / PID Only 
 // import frc.robot.Constants.EncodersConstants;
@@ -36,6 +41,7 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Drivebase extends SubsystemBase {
 
+  private static final double EncodersConstants = 0;
   String driveMode = "Drive Mode";
   // trying a smaller value for the rate limit
   SlewRateLimiter filter = new SlewRateLimiter(0.2);
@@ -62,35 +68,48 @@ public class Drivebase extends SubsystemBase {
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
   // Encoders stuff
-  // private final Encoder m_RightEncoder = new Encoder(
-  // EncodersConstants.m_RightSlaveEncoderPorts[0],
-  // EncodersConstants.m_RightSlaveEncoderPorts[1],
-  // EncodersConstants.m_RightSlaveEncoderReversed);
+   private final Counter m_RightEncoder = new Counter();
+   private final Counter m_LeftEncoder = new Counter();
 
+     public void initializeEncoder(){
+       m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+       m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+       m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
+       m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
+     }
+  
   // private final Encoder m_LeftEncoder = new Encoder(
   // EncodersConstants.m_LeftSlaveEncoderPorts[0],
   // EncodersConstants.m_LeftSlaveEncoderPorts[1],
   // EncodersConstants.m_LeftSlaveEncoderReversed);
 
   // // Reset Encoders
-  // public void resetEncoders() {
-  // m_RightEncoder.reset();
-  // m_LeftEncoder.reset();
-  // }
+   public void resetEncoders() {
+    m_RightEncoder.reset();
+    m_LeftEncoder.reset();
+    }
 
   // //Returns for encoder
-  // public Encoder getLeftEncoder() {
-  // return m_LeftEncoder;
-  // }
+   public Counter getLeftEncoder() {
+   return m_LeftEncoder;
+   }
 
-  // public Encoder getRightEncoder() {
-  // return m_RightEncoder;
-  // }
+   public Counter getRightEncoder() {
+   return m_RightEncoder;
+   }
 
   // //Get distance from both encoders and avg them for best accuracy
-  // public double getAverageEncoderDistance() {
-  // return (m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0;
-  // }
+   public double getAverageEncoderDistance() {
+   return ((m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0)*(Math.PI*EncodersConstant.Circumference);
+   }
+
+   public double getLeftEncoderDistance() {
+    return ((m_LeftEncoder.getDistance())*(Math.PI*EncodersConstant.Circumference));
+  }
+
+    public double getRightEncoderDistance() {
+      return ((m_RightEncoder.getDistance())*(Math.PI*EncodersConstant.Circumference));
+      }
 
   public void setMaxOutput(double maxOutput) {
     m_drive.setMaxOutput(maxOutput);
@@ -113,10 +132,10 @@ public class Drivebase extends SubsystemBase {
   }
 
   // Wheel-Speed stuff
-  // public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-  // return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(),
-  // m_RightEncoder.getRate());
-  // }
+   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+   return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(),
+   m_RightEncoder.getRate());
+   }
 
   // Arcade Drive
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
@@ -177,10 +196,15 @@ public class Drivebase extends SubsystemBase {
 
   @Override
   public void periodic() {
+     double Distance = getAverageEncoderDistance();
+     SmartDashboard.putNumber("Distance", Distance);
+     SmartDashboard.putNumber("LeftEncoderDistance",getLeftEncoderDistance());
+     SmartDashboard.putNumber("RightEncoderDistance",getRightEncoderDistance());
     // m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(),
     // m_RightEncoder.getDistance());
     double tHeading = getHeading().getDegrees();
     SmartDashboard.putNumber("Heading", tHeading);
+
   }
 
   public Rotation2d getHeading() {
@@ -301,6 +325,12 @@ public class Drivebase extends SubsystemBase {
 
   public AHRS getGyro() {
     return m_gyro;
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_leftMaster.setVoltage(leftVolts);
+    m_rightMaster.setVoltage(rightVolts);
+    m_drive.feed();
   }
 
 }
