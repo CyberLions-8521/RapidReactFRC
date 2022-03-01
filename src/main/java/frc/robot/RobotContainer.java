@@ -81,7 +81,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     //ayo?
     //DO NOT
-      /*// Create a voltage constraint to ensure we don't accelerate too fast
+      // Create a voltage constraint to ensure we don't accelerate too fast
       var autoVoltageConstraint =
       new DifferentialDriveVoltageConstraint(
           new SimpleMotorFeedforward(
@@ -130,6 +130,20 @@ public class RobotContainer {
           m_drivebase::tankDriveVolts,
           m_drivebase);
 
+  String trajectoryJSON = "deploy/redTarmac1.wpilib.json"; //this is where outjson file goes
+  Trajectory trajectory = new Trajectory();
+
+  //???????????????????? just added, will need it
+  @Override
+  public void robotInit() {
+    try {
+        Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+        trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    } catch (IOException ex) {
+        DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+    }
+  }
+
  // Reset odometry to the starting pose of the trajectory.
   m_drivebase.resetOdometry(exampleTrajectory.getInitialPose());
 
@@ -138,7 +152,7 @@ public class RobotContainer {
 
 
     // An ExampleCommand will run in autonomous
-    */
+    
     return new SequentialCommandGroup();
     //return new SequentialCommandGroup();
     //return m_autoCommand;
