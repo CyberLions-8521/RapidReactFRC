@@ -65,9 +65,10 @@ public final class Constants {
         public static final int kRightSlave = 6;
         public static final int kRightMiddleSlave = 2; // Find new CANSparkMotor and SetValue to 6
 
+        // Rest of the Subsystems...
         public static final int kIntake = 7; // Find new CANSparkMotor and SetValue to 5
         public static final int kIndexorLower = 8; // 775 Motor
-        public static final int kIndexorFront = 9; // This is inversed motors Neo
+        public static final int kIndexorFront = 9; // This is inversed motors Neo // Make ths 775
         public static final int kIndexorBack = 10; // Default motor SpinRate Neo
         public static final int kShooter = 11; // 775 Motors
         public static final int kElevator = 12; // Neo Motors Brushless with PID 
