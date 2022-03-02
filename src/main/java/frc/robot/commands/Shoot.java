@@ -15,15 +15,23 @@ public class Shoot extends CommandBase {
 
     @Override
     public void initialize() {
-        m_shooter.setSpeed(1);
+        // m_shooter.setSpeed(1);
+        if (m_shooter.getShooterStatus() == false) {
+            m_shooter.shooterOn();
+        } else {
+            m_shooter.stopShooter();
+        }
+        m_isDone = true;
     }
+
+    
 
     @Override
     public void execute() {
-        if (m_shooter.getSpeed() >= 0.95) {
-            m_shooter.stopShooter();
-            m_isDone = true;
-        }
+        // if (m_shooter.getSpeed() >= 0.95) {
+        //     m_shooter.stopShooter();
+        //     m_isDone = true;
+        // }
     }
 
     @Override
