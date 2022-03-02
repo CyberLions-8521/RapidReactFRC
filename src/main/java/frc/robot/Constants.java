@@ -21,6 +21,14 @@ public final class Constants
         public static final double RATE_LIMIT = 0.5;
     }
 
+
+    public static class ElevatorOutput{
+        public static final double PositionMin =0;
+        public static final double PositionMax =100;
+        public static final double ElevatorUp =12;
+        public static final double ElevatorDown =6;
+
+
     public static class PIDConstants {
         // Drivebase PID
         public static final double KpD = 0.1;
@@ -38,6 +46,7 @@ public final class Constants
         public static final double Kl_climber = 0.0;
 
         
+
 
     }
 
@@ -63,7 +72,11 @@ public final class Constants
         public static final int kRightMiddleSlave =2; //Find new CANSparkMotor and SetValue to 6
         //Intake motor775
         //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
+
+        public static final int kElevator = 0;
+
         //public static final int shooter_motor = 0;
+
 
     }
 
