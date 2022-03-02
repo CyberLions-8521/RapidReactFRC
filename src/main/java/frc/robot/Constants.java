@@ -28,7 +28,7 @@ public final class Constants
         public static final double KlD = 0;
 
         // Shooter PID
-        public static final double Kp_shooter = 0.1;
+        public static final double Kp_shooter = 1;
         public static final double Ki_shooter = 0.0;
         public static final double Kd_shooter = 0.0;
 

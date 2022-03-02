@@ -26,8 +26,8 @@ import static frc.robot.Constants.PIDConstants.*;
 
 public class Shooter extends SubsystemBase {
     boolean m_shooterStatus;
-    int deviceID = 8;
-    CANSparkMax m_shooter = new CANSparkMax(8, MotorType.kBrushed);
+    int deviceID = 11;
+    CANSparkMax m_shooter = new CANSparkMax(deviceID, MotorType.kBrushed);
     //SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
     RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
 
@@ -43,11 +43,19 @@ public class Shooter extends SubsystemBase {
     //PID controller to compute output for motor
     PIDController ShooterPID = new PIDController(PIDConstants.Kp_shooter, PIDConstants.Ki_shooter, PIDConstants.Kd_shooter);
 
+    public void ControllerBind(XboxController controller){
+        if(controller.getRawButton(XBOX.RB)){
+            setSpeed(500);
+        } else if(controller.getRawButton(XBOX.RB)==false)
+            stopShooter(); 
+    }
+
     public void setSpeed(double setpoint) {
         //config whatever setpoint and calulcate through the PID
         double output=ShooterPID.calculate(m_encoder.getVelocity(), setpoint);
         //put calulcated output from PID into motor output
-        m_shooter.set(output);        
+        m_shooter.set(output); 
+        SmartDashboard.putNumber("Output", output);       
     }
 
     public void stopShooter() {
