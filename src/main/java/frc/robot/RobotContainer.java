@@ -26,7 +26,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // import frc.robot.commands.Rotate90;
 import frc.robot.Constants.XBOX;
+import frc.robot.commands.Climb;
 import frc.robot.commands.Drive;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivebase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -45,6 +47,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Drivebase m_drivebase = new Drivebase();  //Calling Drivebase.java Subsystem class
   private final Drive m_driveSystem = new Drive(m_drivebase); //Calling Drive.java Command class
+  //calling the elevator
+  private Climber m_Climber = new Climber();
+  private final Climb m_Climb = new Climb(m_Climber);
+  
   
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
@@ -54,6 +60,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     m_drivebase.setDefaultCommand(m_driveSystem);
+    m_Climber.setDefaultCommand(m_Climb);
     configureButtonBindings();
     //Robot
   }

@@ -29,6 +29,15 @@ public final class Constants
         public static final double RATE_LIMIT = 0.5;
     }
 
+    public static class ElevatorOutput{
+        public static final double PositionMin =0;
+        public static final double PositionMax =100;
+        public static final double ElevatorUp =12;
+        public static final double ElevatorDown =6;
+
+
+    }
+
     public static class VisionConstants
     {
         // Area of the ball in the camera view when the robot stops approaching it
@@ -48,6 +57,7 @@ public final class Constants
         public static final int kRightMiddleSlave = 6; //Find new CANSparkMotor and SetValue to 6
         //Intake motor775
         //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
+        public static final int kElevator = 0;
 
     }
 
