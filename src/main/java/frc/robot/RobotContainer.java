@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.ToggleGear;
 import frc.robot.commands.ToggleIntakeArm;
@@ -23,7 +24,8 @@ import frc.robot.commands.ToggleIntakeMotors;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
 import frc.robot.subsystems.pneumatics.SolenoidsIntakeSystem;
-import frc.robot.subsystems.ToggleSystems.ToggleGeneralMotors;
+import frc.robot.subsystems.togglesystems.Shooter;
+import frc.robot.subsystems.togglesystems.ToggleGeneralMotors;
 import edu.wpi.first.wpilibj2.command.Command;
 
 // Autonomous Mode Imports 
@@ -31,16 +33,11 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-
-
-
-
-
-
 public class RobotContainer {
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
-  public static final ToggleGeneralMotors m_Index = new ToggleGeneralMotors();
+  public static final ToggleGeneralMotors m_index = new ToggleGeneralMotors();
+  public static final Shooter m_shooter = new Shooter();
   // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
   // public static final CompressorSystem m_compressor = new CompressorSystem();
 
@@ -61,10 +58,9 @@ public class RobotContainer {
     // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
     //new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleIndex(m_Index));
-    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeMotors(m_Index));
-    
-
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new ToggleIndex(m_index));
+    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeMotors(m_index));
+    new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_shooter));
   }
 
   /**

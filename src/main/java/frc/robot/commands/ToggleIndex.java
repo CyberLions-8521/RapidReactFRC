@@ -1,6 +1,6 @@
 package frc.robot.commands;
-import frc.robot.subsystems.ToggleSystems.ToggleGeneralMotors;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.togglesystems.ToggleGeneralMotors;
 
 
 

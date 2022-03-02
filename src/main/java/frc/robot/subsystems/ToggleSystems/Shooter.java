@@ -1,4 +1,4 @@
-package frc.robot.subsystems.ToggleSystems;
+package frc.robot.subsystems.togglesystems;
 
 //Additional Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,58 +12,60 @@ import edu.wpi.first.wpilibj.XboxController;
 // Rev Robotics Imports
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 
 // Constants
-import frc.robot.Constants;
-import frc.robot.Constants.DriveMode;
-import frc.robot.Constants.DriveConstants;
-
-//Drivebase Motor-Speed Configurations
-import edu.wpi.first.math.filter.SlewRateLimiter;
-
+import static frc.robot.Constants.CAN.*;
+import static frc.robot.Constants.PIDConstants.*;
 
 public class Shooter extends SubsystemBase {
-	boolean m_ShooterStatus;
-	CANSparkMax m_shooter = new CANSparkMax(Constants.CAN.kShooter, MotorType.kBrushed);
-	m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); //Allows wheels to move when motor is active
+	boolean m_shooterStatus;
+	CANSparkMax m_shooter = new CANSparkMax(kShooter, MotorType.kBrushed);
+	SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
+	RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
 
+	double m_targetSpeed = 0;
 
-
-	//PId
-
-	//method for stopping motor at cetain RPM
-
-
-	//Get started on PID Controllers here...
-	
-
-	
 	public Shooter() {
-		//execute command methods here
+		m_shooter.restoreFactoryDefaults();
+
+		m_shooterPID.setP(kShooterP);
+		m_shooterPID.setI(kShooterI);
+		m_shooterPID.setD(kShooterD);
+		m_shooterPID.setIZone(kShooterIz);
+		m_shooterPID.setFF(kShooterFF);
+		m_shooterPID.setOutputRange(-1, 1);
+
+		m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); // Allows wheels to move when motor is active
+		m_encoder.setPositionConversionFactor(0.25);
+		m_encoder.setVelocityConversionFactor(0.25);
+
 		stopShooter();
-		
-		
-		
 	}
 
-	public void getSpeed(double speed){
-		m_shooter.set(speed);
-	}
-
-	public boolean getShooterStatus() {
-		return m_ShooterStatus;
-		
+	public void setSpeed(double speed) {
+		m_targetSpeed = speed;
 	}
 
 	public void stopShooter() {
-		m_shooter.set(0.0)
+		m_shooter.disable();
 	}
 
-  @Override
-  public void periodic() {
+	public boolean getShooterStatus() {
+		return m_shooterStatus;
+	}
 
-  }
+	public double getSpeed() {
+		return m_shooter.get();
+	}
+
+	@Override
+	public void periodic() {
+		m_shooterPID.setReference(m_targetSpeed, ControlType.kVelocity);
+		SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
+		SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
+	}
 }
-
-
-

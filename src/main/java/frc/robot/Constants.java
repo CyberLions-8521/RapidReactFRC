@@ -29,9 +29,12 @@ public final class Constants {
         public static final double KlD = 0;
 
         // Shooter PID
-        public static final double Kp_shooter = 0.0;
-        public static final double Ki_shooter = 0.0;
-        public static final double Kl_shooter = 0.0;
+        // TODO: Tune coefficients; coefficients taken from example https://github.com/REVrobotics/SPARK-MAX-Examples/blob/master/Java/Velocity%20Closed%20Loop%20Control/src/main/java/frc/robot/Robot.java
+        public static final double kShooterP = 6e-5;
+        public static final double kShooterI = 0.0;
+        public static final double kShooterD = 0.0;
+        public static final double kShooterIz = 0.0;
+        public static final double kShooterFF = 0.000015;
 
         // Elevator {Climber} PID
         public static final double Kp_climber = 0.0;
@@ -72,6 +75,7 @@ public final class Constants {
         public static final int kIndexorBack = 10; // Default motor SpinRate Neo
         public static final int kShooter = 11; // 775 Motors
         public static final int kElevator = 12; // Neo Motors Brushless with PID
+        public static final int kShaftEncoder = 13;
 
     }
 

@@ -1,4 +1,4 @@
-package frc.robot.subsystems.ToggleSystems;
+package frc.robot.subsystems.togglesystems;
 
 //imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
