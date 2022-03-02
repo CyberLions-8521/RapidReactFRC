@@ -30,12 +30,12 @@ public final class Constants
         // Shooter PID
         public static final double Kp_shooter = 0.0;
         public static final double Ki_shooter = 0.0;
-        public static final double Kl_shooter = 0.0;
+        public static final double Kd_shooter = 0.0;
 
         // Elevator {Climber} PID
         public static final double Kp_climber = 0.0;
         public static final double Ki_climber = 0.0;
-        public static final double Kl_climber = 0.0;
+        public static final double Kd_climber = 0.0;
 
         
 
