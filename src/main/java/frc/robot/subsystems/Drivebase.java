@@ -1,14 +1,15 @@
 package frc.robot.subsystems;
 
-
-
-
+//Additional Imports
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.kauailabs.navx.frc.AHRS;
+import frc.robot.RobotContainer;
 // Constants
-
-
 import frc.robot.Constants.XBOX;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveMode;
+import frc.robot.Constants.EncodersConstant;
 import frc.robot.Constants.DriveConstants;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.XboxController;
@@ -21,6 +22,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.Counter;
+// import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+// Encoder / PID Only 
+// import frc.robot.Constants.EncodersConstants;
+// import frc.robot.commands.Drive;
+// import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.RobotContainer;
@@ -51,6 +59,50 @@ public class Drivebase extends SubsystemBase {
   // Differential drive class
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
+  // Encoders stuff
+   private final Counter m_RightEncoder = new Counter();
+   private final Counter m_LeftEncoder = new Counter();
+
+     public void initializeEncoder(){
+       m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+       m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+       m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
+       m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
+     }
+  
+  // private final Encoder m_LeftEncoder = new Encoder(
+  // EncodersConstants.m_LeftSlaveEncoderPorts[0],
+  // EncodersConstants.m_LeftSlaveEncoderPorts[1],
+  // EncodersConstants.m_LeftSlaveEncoderReversed);
+
+  // // Reset Encoders
+   public void resetEncoders() {
+    m_RightEncoder.reset();
+    m_LeftEncoder.reset();
+    }
+
+  // //Returns for encoder
+   public Counter getLeftEncoder() {
+   return m_LeftEncoder;
+   }
+
+   public Counter getRightEncoder() {
+   return m_RightEncoder;
+   }
+
+  // //Get distance from both encoders and avg them for best accuracy
+   public double getAverageEncoderDistance() {
+   return ((m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0)*(Math.PI*EncodersConstant.Circumference);
+   }
+
+   public double getLeftEncoderDistance() {
+    return ((m_LeftEncoder.getDistance())*(Math.PI*EncodersConstant.Circumference));
+  }
+
+    public double getRightEncoderDistance() {
+      return ((m_RightEncoder.getDistance())*(Math.PI*EncodersConstant.Circumference));
+      }
+
   public void setMaxOutput(double maxOutput) {
     m_drive.setMaxOutput(maxOutput);
   }
@@ -69,6 +121,12 @@ public class Drivebase extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
+
+  // Wheel-Speed stuff
+   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+   return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(),
+   m_RightEncoder.getRate());
+   }
 
   // Arcade Drive
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
@@ -128,10 +186,14 @@ public class Drivebase extends SubsystemBase {
 
   @Override
   public void periodic() {
+     SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
+     SmartDashboard.putNumber("LeftEncoderDistance",getLeftEncoderDistance());
+     SmartDashboard.putNumber("RightEncoderDistance",getRightEncoderDistance());
     // m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(),
     // m_RightEncoder.getDistance());
     double tHeading = getHeading().getDegrees();
     SmartDashboard.putNumber("Heading", tHeading);
+
   }
 
   public Rotation2d getHeading() {
@@ -252,6 +314,12 @@ public class Drivebase extends SubsystemBase {
 
   public AHRS getGyro() {
     return m_gyro;
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    m_leftMaster.setVoltage(leftVolts);
+    m_rightMaster.setVoltage(rightVolts);
+    m_drive.feed();
   }
 
 }

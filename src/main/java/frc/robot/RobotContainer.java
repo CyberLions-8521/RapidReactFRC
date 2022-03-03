@@ -1,12 +1,24 @@
 package frc.robot;
 
 import java.sql.DriverPropertyInfo;
+import java.util.List;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 //Additional imports
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.TrajectoryConstants;
 // Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
@@ -23,6 +35,7 @@ import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
 import edu.wpi.first.wpilibj2.command.Command;
 // Autonomous Mode Imports 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -73,9 +86,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // return new SequentialCommandGroup();
+  
+    
     return new SequentialCommandGroup();
-    // return m_autoCommand;
+    //return new SequentialCommandGroup();
+    //return m_autoCommand;
   }
 }

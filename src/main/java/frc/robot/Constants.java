@@ -2,8 +2,12 @@ package frc.robot;
 
 import java.lang.Math;
 
-public final class Constants {
-    public static class DriveConstants {
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
+public final class Constants 
+{
+    public static class DriveConstants
+    {
         // Just a coefficient to dampen how fast the robot turns
         public static final double STEER_K = 0.1;
         // Highest the robot can turn autonomously
@@ -19,6 +23,33 @@ public final class Constants {
         // Limits the rate of change of a signal (joystick input) to 0.5 units per
         // second
         public static final double RATE_LIMIT = 0.5;
+
+    }
+
+    public static class TrajectoryConstants{
+    // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
+    // values for your robot.
+    //Feedforward/Feedback Gains
+    public static final double ksVolts = 0.22;
+    public static final double kvVoltSecondsPerMeter = 1.98;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.2;
+    public static final double kTrackwidthMeters = 0.69;
+
+    //DifferentialDriveKinematics
+    public static final DifferentialDriveKinematics kDriveKinematics =
+        new DifferentialDriveKinematics(kTrackwidthMeters);
+
+     //Max Trajectory Velocity/Acceleration   
+    public static final double kMaxSpeedMetersPerSecond = 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    
+    //Rameste Parameter
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
+
+    // Example value only - as above, this must be tuned for your drive!
+    public static final double kPDriveVel = 8.5;
+
     }
     public static class PIDConstants {
         // Drivebase PID
@@ -54,7 +85,15 @@ public final class Constants {
         public static final double ElevatorUp = 12;
         public static final double ElevatorDown = 6;
     }
-    public static class CAN {
+
+    public static class EncodersConstant 
+    {
+        public static final int LeftEncoderPort = 0;
+        public static final int RightEncoderPort = 1;
+        public static final double DistancePerPulse = 0.25;
+        //Inches
+        public static final int Circumference = 6;
+    }    public static class CAN {
         // Left + right Cim Motors Slave Masters
         public static final int kLeftMaster = 3;
         public static final int kRightMaster = 4;
