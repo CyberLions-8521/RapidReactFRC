@@ -96,6 +96,7 @@ public final class Constants {
                 new Pose2d(3, 0, new Rotation2d(0)),
                 // Pass config
                 config);
+        
 
         public static Trajectory getTrajectory(String path) {
             try {
