@@ -47,6 +47,7 @@ public class RobotContainer {
  
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_shooter.setDefaultCommand(m_shoot);
+    m_genmotor.setDefaultCommand(m_index); // double check
     configureButtonBindings();
   
   }
@@ -56,6 +57,7 @@ public class RobotContainer {
     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_solenoids, m_genmotor));
     new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_shooter , m_genmotor));
+    new JoystickButton(m_controller, XBOX.LB).whenPressed(new LowerIndexor(m_genmotor));
     
   }
 
