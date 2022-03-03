@@ -13,11 +13,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.ToggleCompressor;
-import frc.robot.commands.ToggleGear;
-import frc.robot.commands.ToggleIntakeArm;
-
+import frc.robot.commands.dstoggle.ToggleCompressor;
+import frc.robot.commands.dstoggle.ToggleGear;
+import frc.robot.commands.dstoggle.ToggleIntakeArm;
+import frc.robot.commands.motortoggle.Shoot;
 // Subsystems
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Shooter;

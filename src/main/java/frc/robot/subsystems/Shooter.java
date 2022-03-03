@@ -8,7 +8,7 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.PIDConstants;
 //XBOX Controller Imports
 import frc.robot.Constants.XBOX;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.motortoggle.Shoot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 
