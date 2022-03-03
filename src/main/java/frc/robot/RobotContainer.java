@@ -25,6 +25,7 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.dstoggle.ToggleGear;
 import frc.robot.commands.dstoggle.ToggleIntakeSystem;
 import frc.robot.commands.subtoggle.Shoot;
+import frc.robot.commands.subtoggle.Climb;
 import frc.robot.commands.subtoggle.LowerIndexor;
 // Subsystems
 import frc.robot.subsystems.Drivebase;
@@ -42,7 +43,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 // Climber stuff
 import frc.robot.subsystems.Climber;
-import frc.robot.commands.Climb;
 
 public class RobotContainer {
 
