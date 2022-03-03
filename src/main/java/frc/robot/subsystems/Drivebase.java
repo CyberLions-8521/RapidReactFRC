@@ -3,27 +3,20 @@ package frc.robot.subsystems;
 //Additional Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import java.util.function.DoubleBinaryOperator;
-
 import com.kauailabs.navx.frc.AHRS;
 import frc.robot.RobotContainer;
-
-//XBOX Controller Imports
-import frc.robot.Constants.XBOX;
-import edu.wpi.first.wpilibj.XboxController;
-
-// Rev Robotics Imports
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 // Constants
+import frc.robot.Constants.XBOX;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveMode;
 import frc.robot.Constants.EncodersConstant;
 import frc.robot.Constants.DriveConstants;
-
-//Drivebase Motor-Speed Configurations
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -38,7 +31,7 @@ import edu.wpi.first.wpilibj.Counter;
 // import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
-
+import frc.robot.RobotContainer;
 public class Drivebase extends SubsystemBase {
 
   String driveMode = "Drive Mode";
@@ -126,7 +119,6 @@ public class Drivebase extends SubsystemBase {
 
   // reset postions
   public void resetOdometry(Pose2d pose) {
-    // resetEncoders();
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 
@@ -185,8 +177,7 @@ public class Drivebase extends SubsystemBase {
     m_rightSlave.setOpenLoopRampRate(0.2);
     m_rightMiddleSlave.setOpenLoopRampRate(0.2);
 
-    // If we want to set max output
-    //m_drive.setMaxOutput(0.5);
+  
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
