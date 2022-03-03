@@ -2,6 +2,8 @@
 package frc.robot.subsystems.togglesystem;
 
 import frc.robot.Constants;
+import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -81,6 +83,9 @@ public class ToggleGeneralMotors extends SubsystemBase {
         SmartDashboard.putBoolean("Lower Index Status", getLowerIndexStatus());
         SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
 
+    }
+
+    public void ToggleIntakeSystem(SolenoidsSystem mSolenoids, ToggleGeneralMotors mGenmotor) {
     }
 
 }
