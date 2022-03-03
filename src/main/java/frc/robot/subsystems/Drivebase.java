@@ -342,21 +342,6 @@ public class Drivebase extends SubsystemBase {
     m_drive.feed();
   }
 
-  // PATHWEABNJDEOWIJDJIUONKL JWDMSNDSK DKOSDM LS
-
-  // /**
-  //   * Returns a {@code RamseteCommand} object. Used to follow the specified
-  //   * {@link Trajectory}.
-  //   *
-  //   * @param path the {@code Trajectory} to follow
-  //   * @return a {@link RamseteCommand} object
-  //   */
-  //   public RamseteCommand ramseteCommand(Trajectory path) {
-  //     return new RamseteCommand(path, m_odometry::getPoseMeters, new RamseteController(),
-  //     Constants.PIDConstants.Somethinghere, Constants.PIDConstants.something here,
-  //       this::getWheelSpeeds, MoveFowardPID, MoveFowardPID, this::voltDrive, this);
-  //   }
-
       /**
     * Returns a {@code RamseteCommand} object. Used to follow the specified
     * {@link Trajectory}.
