@@ -20,12 +20,13 @@ public class ToggleIntakeSystem extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_solenoids.getArmStatus().equals(kOff) || m_solenoids.getArmStatus().equals(kReverse) && m_intakeMotor.getIntakeStatus() == false) {
-        m_intakeMotor.IntakeOn();
-        m_solenoids.extendArms();
+    if (m_solenoids.getArmStatus().equals(kOff)
+        || m_solenoids.getArmStatus().equals(kReverse) && m_intakeMotor.getIntakeStatus() == false) {
+      m_intakeMotor.IntakeOn();
+      m_solenoids.extendArms();
     } else {
-        m_solenoids.retractArms();
-        m_intakeMotor.IntakeOff();
+      m_solenoids.retractArms();
+      m_intakeMotor.IntakeOff();
     }
     m_isDone = true;
   }

@@ -17,12 +17,14 @@ public class Shoot extends CommandBase {
         addRequirements(index);
     }
 
-    private final int targetSpeed= 500;
+    private final int targetSpeed = 500;
     private final int maxtargetSpeed = 600;
+
     @Override
     public void initialize() {
 
-        if (m_shooter.getShooterStatus() == false && m_index.getIndexStatus() == false && m_shooter.getSpeed() > targetSpeed && targetSpeed < maxtargetSpeed) {
+        if (m_shooter.getShooterStatus() == false && m_index.getIndexStatus() == false
+                && m_shooter.getSpeed() > targetSpeed && targetSpeed < maxtargetSpeed) {
             m_shooter.setSpeed(565);
             m_index.IndexOn();
         } else {

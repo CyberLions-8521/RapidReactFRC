@@ -13,7 +13,7 @@ public class SolenoidsSystem extends SubsystemBase {
     DoubleSolenoid m_rightArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
     DoubleSolenoid m_transLeftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 7, 8);
     DoubleSolenoid m_transRightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
-    
+
     public SolenoidsSystem() {
         retractArms();
         setGear1();
@@ -58,8 +58,8 @@ public class SolenoidsSystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //TODO: thien fix later
-        SmartDashboard.putString("Arm", getArmStatus().toString()); 
+        // TODO: thien fix later
+        SmartDashboard.putString("Arm", getArmStatus().toString());
         SmartDashboard.putNumber("Gear", getGearStatus());
     }
 }

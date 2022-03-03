@@ -4,18 +4,17 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants.CAN;
+import frc.robot.Constants.XBOX;
+import frc.robot.Constants.ElevatorOutput;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.CAN;
-import frc.robot.Constants.ElevatorOutput;
-import frc.robot.Constants.XBOX;
 
 public class Climber extends SubsystemBase {
     public Climber() {

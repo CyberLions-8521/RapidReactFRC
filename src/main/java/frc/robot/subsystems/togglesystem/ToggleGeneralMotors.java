@@ -1,14 +1,11 @@
 
 package frc.robot.subsystems.togglesystem;
 
-//imports
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// Rev Robotics Imports
+import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-// Constants filter later
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ToggleGeneralMotors extends SubsystemBase {
     boolean m_lowindexorStatus;
@@ -39,7 +36,7 @@ public class ToggleGeneralMotors extends SubsystemBase {
     public boolean getLowerIndexStatus() {
         return m_lowindexorStatus;
     }
-    
+
     public boolean getIntakeStatus() {
         return m_intakeStatus;
     }
@@ -47,7 +44,7 @@ public class ToggleGeneralMotors extends SubsystemBase {
     public void IndexOn() {
         m_FrontIndexor.set(0.60);
         m_BackIndexor.set(0.50);
-        
+
         m_indexorStatus = true;
     }
 
