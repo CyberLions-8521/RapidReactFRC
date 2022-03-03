@@ -1,14 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.togglesystems.Shooter;
+import frc.robot.subsystems.Shooter;
+import frc.robot.RobotContainer;
 
 public class Shoot extends CommandBase {
     private final Shooter m_shooter;
     private boolean m_isDone;
-
     private double speed;
 
     public Shoot(Shooter shooter) {
@@ -19,22 +18,15 @@ public class Shoot extends CommandBase {
 
     @Override
     public void initialize() {
-
       /*  m_shooter.setSpeed(-500);
         if (m_shooter.getShooterStatus() == false) {
-
-        // m_shooter.setSpeed(1);
-        if (m_shooter.getShooterStatus() == false) {
-            m_shooter.shooterOn();
-
         } else {
             m_shooter.stopShooter();
         }
         m_isDone = true;
-
     */}
 
-   
+    
     @Override
     public void execute() {
         m_shooter.ControllerBind(RobotContainer.m_controller);
@@ -42,14 +34,6 @@ public class Shoot extends CommandBase {
 
         
        // m_shooter.setSpeed(-500);
-
-    }
-
-    
-
-    @Override
-    public void execute() {
-
         // if (m_shooter.getSpeed() >= 0.95) {
         //     m_shooter.stopShooter();
         //     m_isDone = true;
@@ -60,7 +44,4 @@ public class Shoot extends CommandBase {
     public boolean isFinished() {
         return m_isDone;
     }
-
-}
-
 }
