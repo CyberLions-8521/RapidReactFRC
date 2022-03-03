@@ -56,11 +56,11 @@ public class Drivebase extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
   //public PIDController MoveFowardPID = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
   public PIDController ramseteController = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
-  private final DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-      TrajectoryConstants.SIMPLE_MOTOR_FEED_FOrWARD, TrajectoryConstants.DRIVE_KINEMATICS, 5);
-  private final TrajectoryConfig config = new TrajectoryConfig(TrajectoryConstants.MAX_VELOCITY,
-      TrajectoryConstants.MAX_ACCELERATION).setKinematics(TrajectoryConstants.DRIVE_KINEMATICS)
-          .addConstraint(autoVoltageConstraint);
+  // private final DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+  //     TrajectoryConstants.SIMPLE_MOTOR_FEED_FOrWARD, TrajectoryConstants.DRIVE_KINEMATICS, 5);
+  // private final TrajectoryConfig config = new TrajectoryConfig(TrajectoryConstants.MAX_VELOCITY,
+  //     TrajectoryConstants.MAX_ACCELERATION).setKinematics(TrajectoryConstants.DRIVE_KINEMATICS)
+  //         .addConstraint(autoVoltageConstraint);
 
   // Left GearBox
   CANSparkMax m_leftMaster = new CANSparkMax(Constants.CAN.kLeftMaster, MotorType.kBrushed);
@@ -88,7 +88,7 @@ public class Drivebase extends SubsystemBase {
   // Drive Mode
   public static DriveMode m_mode;
 
-  public final List<Trajectory> pathList;
+  //public final List<Trajectory> pathList;
 
   public Drivebase() {
 
@@ -101,13 +101,13 @@ public class Drivebase extends SubsystemBase {
 
    
 
-    // Pathlist
-    pathList = List.of(
-        TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(1, 0)), new Pose2d(3, 0, new Rotation2d(0)), config),
-        TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(2, 0)), new Pose2d(4, 0, new Rotation2d(0)), config));
-    resetEncoders();
+    // // Pathlist
+    // pathList = List.of(
+    //     TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
+    //         List.of(new Translation2d(1, 0)), new Pose2d(3, 0, new Rotation2d(0)), config),
+    //     TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
+    //         List.of(new Translation2d(2, 0)), new Pose2d(4, 0, new Rotation2d(0)), config));
+    // resetEncoders();
 
     // follow​(CANSparkMax leader, boolean invert) (Slave Followers)
     m_leftSlave.follow(m_leftMaster, false);
@@ -364,11 +364,11 @@ public class Drivebase extends SubsystemBase {
     * @param path the {@code Trajectory} to follow
     * @return a {@link RamseteCommand} object
     */
-  public RamseteCommand ramseteCommand(Trajectory path) {
-    return new RamseteCommand(path, m_odometry::getPoseMeters, new RamseteController(),
-      TrajectoryConstants.SIMPLE_MOTOR_FEED_FOrWARD, TrajectoryConstants.DRIVE_KINEMATICS,
-      this::getWheelSpeeds, ramseteController, ramseteController, this::tankDriveVolts, this);
-  }
+  // public RamseteCommand ramseteCommand(Trajectory path) {
+  //   return new RamseteCommand(path, m_odometry::getPoseMeters, new RamseteController(),
+  //     TrajectoryConstants.SIMPLE_MOTOR_FEED_FOrWARD, TrajectoryConstants.DRIVE_KINEMATICS,
+  //     this::getWheelSpeeds, ramseteController, ramseteController, this::tankDriveVolts, this);
+  // }
 
   
 

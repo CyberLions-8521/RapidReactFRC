@@ -1,10 +1,21 @@
 package frc.robot;
 
 import java.lang.Math;
-
+import java.util.List;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+
+
+
 
 public final class Constants {
     public static class DriveConstants {
@@ -44,18 +55,19 @@ public final class Constants {
         public static final double wheelBase = 0.54;
 
         // Test one
-        public static final double KS = 1.2; // ksVolts
-        public static final double KV = 0.329; // kvVoltSecondsPerMeter
+        public static final double KS = 0.557; // ksVolts
+        public static final double KV = 1.329; // kvVoltSecondsPerMeter
         public static final double KA = 0.0933; // kaVoltSecondsSquaredPerMeter
         public static final double KP = 8.5; // kTrackwidthMeters
+        public static final double kPDriveVel = 1.79;
 
         // Rameste Parameter
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
 
         // Max Trajectory Velocity/Acceleration
-        public static final double MAX_VELOCITY = 3;
-        public static final double MAX_ACCELERATION = 3;
+        public static final double MAX_VELOCITY = 1.78;
+        public static final double MAX_ACCELERATION = 1.78;
 
         public static final double STARTING_POSE_X = 0;
         public static final double STARTING_POSE_Y = 0;
@@ -78,14 +90,53 @@ public final class Constants {
         // "gameName": "Barrel Racing Path",
         // "outputDir": ""
 
+        // Create a voltage constraint to ensure we don't accelerate too fast
+        public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+                new SimpleMotorFeedforward(
+                        TrajectoryConstants.KS,
+                        TrajectoryConstants.KV,
+                        TrajectoryConstants.KA),
+                TrajectoryConstants.DRIVE_KINEMATICS,
+                8);
+
+        // Create config for trajectory
+        public static final TrajectoryConfig config = new TrajectoryConfig(
+                TrajectoryConstants.MAX_VELOCITY,
+                TrajectoryConstants.MAX_ACCELERATION)
+                        // Add kinematics to ensure max speed is actually obeyed
+                        .setKinematics(TrajectoryConstants.DRIVE_KINEMATICS)
+                        // Apply the voltage constraint
+                        .addConstraint(autoVoltageConstraint);
+
+        // An example trajectory to follow. All units in meters.
+        public static final Trajectory STRAIGHT = TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(0, 0, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(3, 0, new Rotation2d(0)),
+                // Pass config
+                config);
+
+        public static Trajectory getTrajectory(String path) {
+            try {
+                return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath()
+                        .resolve("/home/lvuser/deploy/output/" + path + ".wpilib.json"));
+            } catch (Exception e) {
+                System.out.println("[ERROR] Something bad happened. You bloody idiot");
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     // Unused (Don't use --> reference instead) (Unstable)
     public static final class AutoAimConstants {
-        // !MAKE SURE THIS IS RIGHT
+        // MAKE SURE THIS IS RIGHT
         // see if we can just pull this from Network tables
 
-        // !CHARACTERIZE THE ROBOT FOR THESE VALUES
+        // CHARACTERIZE THE ROBOT FOR THESE VALUES
         public static final double KP = 0.009;
         public static final double KI = 0.0;
         public static final double KD = 0.01;
@@ -97,7 +148,7 @@ public final class Constants {
         /** Tolerance for the Vision PID. Units are in degrees. */
         public static final double TOLERANCE = 0.1;
 
-        // TODO get these values
+        // get these values
         // public static final double CAMERA_HEIGHT_METERS =
         // Units.inchesToMeters(21.375);
         // // 73.25
@@ -150,8 +201,8 @@ public final class Constants {
         public static final int LeftEncoderPort = 0;
         public static final int RightEncoderPort = 1;
         public static final double DistancePerPulse = 0.25;
-        // Inches
-        public static final int Circumference = 6;
+
+        public static final int Circumference = 6; // Inches
     }
 
     public static class CAN {
@@ -164,7 +215,6 @@ public final class Constants {
         // Entirely Right Side Gear Box
         public static final int kRightSlave = 6;
         public static final int kRightMiddleSlave = 2; // Find new CANSparkMotor and SetValue to 6
-
         // Rest of the Subsystems...
         public static final int kIntake = 7; // Find new CANSparkMotor and SetValue to 5
         public static final int kIndexorLower = 8; // 775 Motor
@@ -198,10 +248,13 @@ public final class Constants {
         public static final int LEFT_STICK_BUTTON = 9;
         public static final int RIGHT_STICK_BUTTON = 10;
 
-        // check later
-        public static final int DPAD_X = 5;
-        public static final int DPAD_Y = 6;
-
+        // D-Pad
+        public static final int leftPOV = 270;
+        public static final int rightPOV = 90;
+        public static final int upPOV = 0;
+        public static final int downPOV = 180;
+        // // check later
+   
     }
 
     public enum DriveMode {
