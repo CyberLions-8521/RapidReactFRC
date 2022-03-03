@@ -7,7 +7,6 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.PIDConstants;
 //XBOX Controller Imports
 import frc.robot.Constants.XBOX;
-import frc.robot.commands.Shoot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -40,7 +39,7 @@ public class Shooter extends SubsystemBase {
 	}
 	
 	//PID controller to compute output for motor
-	PIDController ShooterPID = new PIDController(PIDConstants.kShooterP, PIDConstants.kShooterI, PIDConstants.kShooterD);
+	PIDController ShooterPID = new PIDController(PIDConstants.Kp_shooter, PIDConstants.Ki_shooter, PIDConstants.Kd_shooter);
 
 	public void setSpeed(double setpoint) {
 		//config whatever setpoint and calulcate through the PID
