@@ -36,6 +36,7 @@ import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 import frc.robot.subsystems.togglesystem.Turret;
 import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 // Autonomous Mode Imports 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -44,19 +45,22 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.autonomous.TrajectoryFollower;
 
-
 // Climber stuff
 import frc.robot.subsystems.Climber;
 
 public class RobotContainer {
 
-
-  // private Trajectory[] paths = new Trajectory[] { PATHS.PathWeaver.getTrajectory("FAR_TRENCH"),
-  //     PATHS.PathWeaver.getTrajectory("FAR_RENDEVOUS"), PATHS.PathWeaver.getTrajectory("MIDDLE_TRENCH"),
-  //     PATHS.PathWeaver.getTrajectory("MIDDLE_RENDEVOUS"), PATHS.PathWeaver.getTrajectory("CLOSE_TRENCH"),
-  //     PATHS.PathWeaver.getTrajectory("CLOSE_RENDEVOUS"), PATHS.PathWeaver.getTrajectory("BALL_THIEF"), null,
-  //     PATHS.PathWeaver.getTrajectory("MIDDLE_TRENCH_SIDE"), null, PATHS.STRAIGHT_TRAJECTORY_2M,
-  //     PATHS.S_TRAJECTORY };
+  // private Trajectory[] paths = new Trajectory[] {
+  // PATHS.PathWeaver.getTrajectory("FAR_TRENCH"),
+  // PATHS.PathWeaver.getTrajectory("FAR_RENDEVOUS"),
+  // PATHS.PathWeaver.getTrajectory("MIDDLE_TRENCH"),
+  // PATHS.PathWeaver.getTrajectory("MIDDLE_RENDEVOUS"),
+  // PATHS.PathWeaver.getTrajectory("CLOSE_TRENCH"),
+  // PATHS.PathWeaver.getTrajectory("CLOSE_RENDEVOUS"),
+  // PATHS.PathWeaver.getTrajectory("BALL_THIEF"), null,
+  // PATHS.PathWeaver.getTrajectory("MIDDLE_TRENCH_SIDE"), null,
+  // PATHS.STRAIGHT_TRAJECTORY_2M,
+  // PATHS.S_TRAJECTORY };
 
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
@@ -98,12 +102,25 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-     // return new DrivetrainCommand(m_drive);
-     m_drivebase.resetEncoders();
-     m_drivebase.zeroHeading();
-     
-     return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT, m_drivebase);
+    // return new DrivetrainCommand(m_drive);
+    m_drivebase.resetEncoders();
+    m_drivebase.zeroHeading();
+
+    //Toggling intake 
+
+    //    || m_solenoids.getArmStatus().equals(kReverse) && m_intakeMotor.getIntakeStatus() == false) {
+    //   m_intakeMotor.IntakeOn();
+    //   m_solenoids.extendArms();
+    // } else {
+    //   m_solenoids.retractArms();
+    //   m_intakeMotor.IntakeOff();
+    // } if (m_solenoids.getArmStatus().equals(kOff)
     
-    
+    // m_isDone = true;
+   
+    // toggling lower indexor
+
+    return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT, m_drivebase);
+
   }
 }
