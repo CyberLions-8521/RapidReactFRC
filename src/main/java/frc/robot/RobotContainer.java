@@ -24,19 +24,19 @@ import frc.robot.Constants.TrajectoryConstants;
 // Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
-import frc.robot.commands.dstoggle.ToggleGear;
-import frc.robot.commands.dstoggle.ToggleIntakeSystem;
-import frc.robot.commands.subtoggle.Shoot;
-import frc.robot.commands.subtoggle.Climb;
-import frc.robot.commands.subtoggle.LowerIndexor;
-// Subsystems
+// import frc.robot.commands.dstoggle.ToggleGear;
+// import frc.robot.commands.dstoggle.ToggleIntakeSystem;
+// import frc.robot.commands.subtoggle.Shoot;
+// import frc.robot.commands.subtoggle.Climb;
+// import frc.robot.commands.subtoggle.LowerIndexor;
+// // Subsystems
 import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
-import frc.robot.subsystems.togglesystem.Turret;
-import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
+// import frc.robot.subsystems.Limelight;
+// import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+// import frc.robot.subsystems.togglesystem.Turret;
+// import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+//import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 // Autonomous Mode Imports 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
@@ -64,17 +64,17 @@ public class RobotContainer {
 
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
-  public static final Turret m_shooter = new Turret();
-  public static final Limelight m_limelight = new Limelight();
-  public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
-  public static final ToggleGeneralMotors m_genmotor = new ToggleGeneralMotors();
-  private static Climber m_Climber = new Climber();
+  // public static final Turret m_shooter = new Turret();
+  // public static final Limelight m_limelight = new Limelight();
+  // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
+  // public static final ToggleGeneralMotors m_genmotor = new ToggleGeneralMotors();
+  // private static Climber m_Climber = new Climber();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  private final Shoot m_shoot = new Shoot(m_shooter, m_genmotor);
-  private final LowerIndexor m_index = new LowerIndexor(m_genmotor);
-  private static final Climb m_Climb = new Climb(m_Climber);
+  // private final Shoot m_shoot = new Shoot(m_shooter, m_genmotor);
+  // private final LowerIndexor m_index = new LowerIndexor(m_genmotor);
+  // private static final Climb m_Climb = new Climb(m_Climber);
 
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
@@ -82,17 +82,17 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_drivebase.setDefaultCommand(m_driveSystem);
-    m_shooter.setDefaultCommand(m_shoot);
+    // m_shooter.setDefaultCommand(m_shoot);
     // m_genmotor.setDefaultCommand(m_index); // double check
     configureButtonBindings();
 
   }
 
   private void configureButtonBindings() {
-    new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
-    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_solenoids, m_genmotor));
-    new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_shooter, m_genmotor));
-    new JoystickButton(m_controller, XBOX.LB).whenPressed(new LowerIndexor(m_genmotor));
+    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
+    // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_solenoids, m_genmotor));
+    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_shooter, m_genmotor));
+    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new LowerIndexor(m_genmotor));
 
   }
 
@@ -106,7 +106,7 @@ public class RobotContainer {
     m_drivebase.resetEncoders();
     m_drivebase.zeroHeading();
 
-    m_genmotor.IntakeOn();
+    // m_genmotor.IntakeOn();
 
     // Toggling intake
 
@@ -120,8 +120,8 @@ public class RobotContainer {
     // } if (m_solenoids.getArmStatus().equals(kOff)
 
     
-    m_genmotor.ToggleIntakeSystemON(m_solenoids, m_genmotor);
-    m_genmotor.ToggleIntakeSystemOFF(m_solenoids, m_genmotor);
+    // m_genmotor.ToggleIntakeSystemON(m_solenoids, m_genmotor);
+    // m_genmotor.ToggleIntakeSystemOFF(m_solenoids, m_genmotor);
 
 
     return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT, m_drivebase);
