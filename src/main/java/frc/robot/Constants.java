@@ -98,12 +98,13 @@ public final class Constants {
                 config);
         
 
+        
         public static Trajectory getTrajectory(String path) {
             try {
                 return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath()
                         .resolve("/home/lvuser/deploy/output/" + path + ".wpilib.json"));
             } catch (Exception e) {
-                System.out.println("[ERROR] Something bad happened. You bloody idiot");
+                System.out.println("[ERROR] Something bad happened. SMH");
                 e.printStackTrace();
                 return null;
             }
