@@ -26,6 +26,28 @@ public final class Constants
 
     }
 
+    public static class AutoConstants {
+        public static final double kMaxSpeedMetersPerSecond = 0.87;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 0.67;
+    
+        // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+        public static final double wheelBase = 0.54;
+
+        
+
+
+        // "lengthUnit": "Meter",
+        // "exportUnit": "Always Meters",
+        // "maxVelocity": 2.0,
+        // "maxAcceleration": 2.0,
+        // "wheelBase": 0.54,
+        // "gameName": "Barrel Racing Path",
+        // "outputDir": ""
+
+    }
+
     public static class TrajectoryConstants{
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
