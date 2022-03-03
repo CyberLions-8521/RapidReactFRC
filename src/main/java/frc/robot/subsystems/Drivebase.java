@@ -5,32 +5,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import frc.robot.RobotContainer;
-
 //XBOX Controller Imports
 import frc.robot.Constants.XBOX;
 import edu.wpi.first.wpilibj.XboxController;
-
 // Rev Robotics Imports
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 // Constants
 import frc.robot.Constants;
 import frc.robot.Constants.DriveMode;
 import frc.robot.Constants.DriveConstants;
-
 //Drivebase Motor-Speed Configurations
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-
-// import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-// Encoder / PID Only 
-// import frc.robot.Constants.EncodersConstants;
-// import frc.robot.commands.Drive;
-// import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
 
@@ -61,37 +51,6 @@ public class Drivebase extends SubsystemBase {
   // Differential drive class
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
-  // Encoders stuff
-  // private final Encoder m_RightEncoder = new Encoder(
-  // EncodersConstants.m_RightSlaveEncoderPorts[0],
-  // EncodersConstants.m_RightSlaveEncoderPorts[1],
-  // EncodersConstants.m_RightSlaveEncoderReversed);
-
-  // private final Encoder m_LeftEncoder = new Encoder(
-  // EncodersConstants.m_LeftSlaveEncoderPorts[0],
-  // EncodersConstants.m_LeftSlaveEncoderPorts[1],
-  // EncodersConstants.m_LeftSlaveEncoderReversed);
-
-  // // Reset Encoders
-  // public void resetEncoders() {
-  // m_RightEncoder.reset();
-  // m_LeftEncoder.reset();
-  // }
-
-  // //Returns for encoder
-  // public Encoder getLeftEncoder() {
-  // return m_LeftEncoder;
-  // }
-
-  // public Encoder getRightEncoder() {
-  // return m_RightEncoder;
-  // }
-
-  // //Get distance from both encoders and avg them for best accuracy
-  // public double getAverageEncoderDistance() {
-  // return (m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0;
-  // }
-
   public void setMaxOutput(double maxOutput) {
     m_drive.setMaxOutput(maxOutput);
   }
@@ -108,15 +67,8 @@ public class Drivebase extends SubsystemBase {
 
   // reset postions
   public void resetOdometry(Pose2d pose) {
-    // resetEncoders();
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
-
-  // Wheel-Speed stuff
-  // public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-  // return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(),
-  // m_RightEncoder.getRate());
-  // }
 
   // Arcade Drive
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
@@ -167,8 +119,7 @@ public class Drivebase extends SubsystemBase {
     m_rightSlave.setOpenLoopRampRate(0.2);
     m_rightMiddleSlave.setOpenLoopRampRate(0.2);
 
-    // If we want to set max output
-    //m_drive.setMaxOutput(0.5);
+  
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());

@@ -1,6 +1,5 @@
 package frc.robot;
 import java.lang.Math;
-
 public final class Constants 
 {
     public static class DriveConstants
@@ -11,7 +10,6 @@ public final class Constants
         public static final double MAX_OUTPUT = 0.5; //originally 0.5
         public static final double AutoMAX_OUTPUT = 0.3;
         public static final double Speedlimit=0.5;
-
         public static final double DRIVE_SLOW = 0.4;
         public static final double TURN_SLOW = 0.5;
         // Steering adjust is never zero, so we choose a number where the robot is basically centered on the target
@@ -36,9 +34,6 @@ public final class Constants
         public static final double Kp_climber = 0.0;
         public static final double Ki_climber = 0.0;
         public static final double Kd_climber = 0.0;
-
-        
-
     }
 
     public static class SubsystemConstants {
@@ -77,11 +72,8 @@ public final class Constants
         public static final int kShaftEncoder = 13;
 
     }
-
-    //Thien Please Check what IO means in WPI
     public static class IO 
     {
-        
         public static final int kXBOX = 0;
         public static final int kAuxCtrl = 1;
     }
@@ -104,7 +96,8 @@ public final class Constants
         public static final int LOGO_RIGHT = 8;
         public static final int LEFT_STICK_BUTTON = 9;
         public static final int RIGHT_STICK_BUTTON = 10;
-        //need to be check
+
+        //check later
         public static final int DPAD_X= 5;
         public static final int DPAD_Y = 6;
 

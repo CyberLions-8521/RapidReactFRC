@@ -21,8 +21,8 @@ public class ToggleGeneralMotors extends SubsystemBase {
     CANSparkMax m_IntakeMotor = new CANSparkMax(Constants.CAN.kIntake, MotorType.kBrushed);
 
     public ToggleGeneralMotors() {
-        IndexorOff();
-        lowerIndexorOff();
+        IndexOff();
+        lowerIndexOff();
     }
 
     public void setMotor(double speed) {
@@ -44,25 +44,25 @@ public class ToggleGeneralMotors extends SubsystemBase {
         return m_intakeStatus;
     }
 
-    public void IndexorOn() {
+    public void IndexOn() {
         m_FrontIndexor.set(0.60);
         m_BackIndexor.set(0.50);
         
         m_indexorStatus = true;
     }
 
-    public void IndexorOff() {
+    public void IndexOff() {
         m_FrontIndexor.set(0.0);
         m_BackIndexor.set(0.0);
         m_indexorStatus = false;
     }
 
-    public void lowerIndexorON() {
+    public void lowerIndexON() {
         m_LowIndexor.set(0.6);
         m_lowindexorStatus = true;
     }
 
-    public void lowerIndexorOff() {
+    public void lowerIndexOff() {
         m_LowIndexor.set(0.0);
         m_lowindexorStatus = false;
     }
