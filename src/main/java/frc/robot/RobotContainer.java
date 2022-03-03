@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // Commands
 import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.ToggleCompressor;
 import frc.robot.commands.ToggleGear;
 import frc.robot.commands.ToggleIntakeArm;
 
 // Subsystems
 import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.pneumatics.CompressorSystem;
 import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -32,12 +34,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class RobotContainer {
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
+  public static final Shooter m_shooter = new Shooter();
+
   // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
   // public static final CompressorSystem m_compressor = new CompressorSystem();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  
+  private final Shoot m_shoot = new Shoot(m_shooter);
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
   public static final Joystick m_aux = new Joystick(1);
@@ -45,7 +49,8 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
-    m_drivebase.setDefaultCommand(m_driveSystem);
+  //  m_drivebase.setDefaultCommand(m_driveSystem);
+      m_shooter.setDefaultCommand(m_shoot);
     configureButtonBindings();
     //Robot
   }
@@ -57,6 +62,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+   // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_shooter));
     // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeArm(m_solenoids));
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
     // new JoystickButton(m_controller, XBOX.RB).whenPressed(new ToggleCompressor(m_compressor));
