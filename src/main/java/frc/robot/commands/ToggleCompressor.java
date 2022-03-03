@@ -29,3 +29,4 @@ public class ToggleCompressor extends CommandBase {
         return m_isDone;
     }
 }
+
