@@ -26,6 +26,11 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
+
+// Climber stuff
+import frc.robot.subsystems.Climber;
+import frc.robot.commands.Climb;
+
 public class RobotContainer {
 
   // Subsystems
@@ -34,10 +39,36 @@ public class RobotContainer {
   public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
   public static final ToggleGeneralMotors m_genmotor = new ToggleGeneralMotors();
 
+  private Climber m_Climber = new Climber();
+  private final Climb m_Climb = new Climb(m_Climber);
+
+
+
+
+
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
   private final Shoot m_shoot = new Shoot(m_shooter, m_genmotor);
   private final LowerIndexor m_index = new LowerIndexor(m_genmotor);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.kXBOX);
@@ -47,7 +78,7 @@ public class RobotContainer {
  
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_shooter.setDefaultCommand(m_shoot);
-    m_genmotor.setDefaultCommand(m_index); // double check
+    // m_genmotor.setDefaultCommand(m_index); // double check
     configureButtonBindings();
   
   }

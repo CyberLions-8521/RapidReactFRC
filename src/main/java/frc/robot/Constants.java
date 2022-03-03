@@ -50,6 +50,12 @@ public final class Constants
         public static final double HeightOfCamera = 0.4;
         public static final double HeightOfTarget = 2.64;
     }
+    public static class ElevatorOutput{
+        public static final double PositionMin =0;
+        public static final double PositionMax =100;
+        public static final double ElevatorUp =12;
+        public static final double ElevatorDown =6;
+    }
 
     public static class CAN {
         // Left + right Cim Motors Slave Masters
