@@ -50,14 +50,6 @@ public class Climber extends SubsystemBase {
 }
 
 
-	public void setNothing() {
-		//setting nothing
-	}
-
-	public boolean returnNothing() {
-		//return nothing;
-	}
-
 
   @Override
   public void periodic() {

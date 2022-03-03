@@ -27,7 +27,7 @@ public final class Constants
         public static final double PositionMax =100;
         public static final double ElevatorUp =12;
         public static final double ElevatorDown =6;
-
+    }
 
     public static class PIDConstants {
         // Drivebase PID
@@ -118,5 +118,7 @@ public final class Constants
         ARCADE, TANK
     }
 
-    
 }
+
+    
+
