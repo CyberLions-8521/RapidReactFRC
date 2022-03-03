@@ -1,33 +1,23 @@
-
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-//Additional Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.PIDConstants;
-//XBOX Controller Imports
 import frc.robot.Constants.XBOX;
-import frc.robot.commands.motortoggle.Shoot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.XboxController;
-
-// Rev Robotics Imports
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxRelativeEncoder.Type;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import frc.robot.Constants;
 
-// Constants
-import static frc.robot.Constants.CAN.*;
-import static frc.robot.Constants.PIDConstants.*;
 
 public class Shooter extends SubsystemBase {
     boolean m_shooterStatus;
-    int deviceID = 11;
-    CANSparkMax m_shooter = new CANSparkMax(deviceID, MotorType.kBrushed);
+    CANSparkMax m_shooter = new CANSparkMax(Constants.CAN.kShooter, MotorType.kBrushed);
     //SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
     RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
 
