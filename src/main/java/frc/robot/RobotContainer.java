@@ -62,7 +62,6 @@ public class RobotContainer {
   // PATHS.STRAIGHT_TRAJECTORY_2M,
   // PATHS.S_TRAJECTORY };
 
-
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
   public static final Turret m_shooter = new Turret();
@@ -106,40 +105,32 @@ public class RobotContainer {
     // return new DrivetrainCommand(m_drive);
     m_drivebase.resetEncoders();
     m_drivebase.zeroHeading();
-    
+
     m_genmotor.IntakeOn();
 
+    // Toggling intake
 
-    //Toggling intake 
-
-    //    || m_solenoids.getArmStatus().equals(kReverse) && m_intakeMotor.getIntakeStatus() == false) {
-    //   m_intakeMotor.IntakeOn();
-    //   m_solenoids.extendArms();
+    // || m_solenoids.getArmStatus().equals(kReverse) &&
+    // m_intakeMotor.getIntakeStatus() == false) {
+    // m_intakeMotor.IntakeOn();
+    // m_solenoids.extendArms();
     // } else {
-    //   m_solenoids.retractArms();
-    //   m_intakeMotor.IntakeOff();
+    // m_solenoids.retractArms();
+    // m_intakeMotor.IntakeOff();
     // } if (m_solenoids.getArmStatus().equals(kOff)
 
-  
-
-    m_genmotor.ToggleIntakeSystem(m_solenoids, m_genmotor);
-
-    // Autodeploy intake on start of Autonomous mode
     
-// make it run while during autonomous
-    //return TrajectoryFollower.getRamseteCommand(new ToggleIntakeSystem(m_solenoids, m_genmotor);
-    
-    // m_isDone = true;
-   
-    // toggling lower indexor
+    m_genmotor.ToggleIntakeSystemON(m_solenoids, m_genmotor);
+    m_genmotor.ToggleIntakeSystemOFF(m_solenoids, m_genmotor);
+
 
     return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT, m_drivebase);
 
   }
 
-
-  // public void getToggleIntakeSystem(SolenoidsSystem subsystem, ToggleGeneralMotors subsystem2) {
-  //   m_genmotor = subsystem;
-  //   m_solenoids subsystem2;
+  // public void getToggleIntakeSystem(SolenoidsSystem subsystem,
+  // ToggleGeneralMotors subsystem2) {
+  // m_genmotor = subsystem;
+  // m_solenoids subsystem2;
   // }
 }

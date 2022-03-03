@@ -2,6 +2,7 @@
 package frc.robot.subsystems.togglesystem;
 
 import frc.robot.Constants;
+import frc.robot.commands.dstoggle.ToggleIntakeSystem;
 import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 
 import com.revrobotics.CANSparkMax;
@@ -13,6 +14,7 @@ public class ToggleGeneralMotors extends SubsystemBase {
     boolean m_lowindexorStatus;
     boolean m_indexorStatus;
     boolean m_intakeStatus;
+    boolean m_toggleSystemStatus;
 
     CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless);
     CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushed);
@@ -82,10 +84,27 @@ public class ToggleGeneralMotors extends SubsystemBase {
         SmartDashboard.putBoolean("Upper Index Status", getIndexStatus());
         SmartDashboard.putBoolean("Lower Index Status", getLowerIndexStatus());
         SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
+        SmartDashboard.putBoolean("Auto Intake/Index Status", getSystemStatus());
 
     }
 
-    public void ToggleIntakeSystem(SolenoidsSystem mSolenoids, ToggleGeneralMotors mGenmotor) {
+    public boolean getSystemStatus() {
+        return m_toggleSystemStatus;
+    }
+
+    public void ToggleIntakeSystemON(SolenoidsSystem mSolenoids, ToggleGeneralMotors mGenmotor) {
+        this.ToggleIntakeSystemON(mSolenoids, mGenmotor);
+        mSolenoids.extendArms();
+        mGenmotor.IntakeOn();
+        mGenmotor.lowerIndexON();
+        m_toggleSystemStatus = true;
+    }
+    public void ToggleIntakeSystemOFF(SolenoidsSystem mSolenoids, ToggleGeneralMotors mGenmotor) {
+        this.ToggleIntakeSystemON(mSolenoids, mGenmotor);
+        mSolenoids.retractArms();
+        mGenmotor.IntakeOff();
+        mGenmotor.lowerIndexOff();
+        m_toggleSystemStatus = false;
     }
 
 }

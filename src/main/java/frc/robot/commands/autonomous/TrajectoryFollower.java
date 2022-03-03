@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
 public class TrajectoryFollower {
+
+    boolean m_trajectoryStatus;
+    boolean m_pathCompletition;
+
     public static Command getRamseteCommand(Trajectory path, Drivebase m_drive) {
         RamseteCommand auto = new RamseteCommand(
             path, 
@@ -24,10 +28,12 @@ public class TrajectoryFollower {
             new PIDController(TrajectoryConstants.kPDriveVel, 0, 0),
             m_drive::tankDriveVolts, 
             m_drive);
+           
 
         m_drive.resetOdometry(path.getInitialPose());
 
         return auto.andThen(() -> m_drive.tankDriveVolts(0,0));
+        
 
 
         // RamseteCommand ramseteCommand = new RamseteCommand(
@@ -55,4 +61,9 @@ public class TrajectoryFollower {
         // return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
         
     }
+
+    public boolean getTrajectoryStatus() {
+        return m_trajectoryStatus;
+    }
+
 }
