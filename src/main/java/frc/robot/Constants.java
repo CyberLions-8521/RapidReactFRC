@@ -41,6 +41,12 @@ public final class Constants
 
     }
 
+    public static class SubsystemConstants {
+        public static final double intakeSpeed = 0.5;
+        public static final double IndexSpeed = 0.3; // For both front and back indexors
+        public static final double IndexLower = 0.2; // Lower indexor intake (Optional Usage)
+    }
+
     public static class VisionConstants
     {  
         // Area of the ball in the camera view when the robot stops approaching it
@@ -50,20 +56,25 @@ public final class Constants
         public static final double HeightOfTarget = 2.64;
     }
 
-    public static class CAN
-    {
-        //Left + right Cim Motors Slave Masters
+    public static class CAN {
+        // Left + right Cim Motors Slave Masters
         public static final int kLeftMaster = 3;
         public static final int kRightMaster = 4;
-        //Entirely Left Side Gear Box
+        // Entirely Left Side Gear Box
         public static final int kLeftSlave = 5;
-        public static final int kLeftMiddleSlave = 1; //Find new CANSparkMotor and SetValue to 7
-        //Entirely Right Side Gear Box
+        public static final int kLeftMiddleSlave = 1; // Find new CANSparkMotor and SetValue to 7
+        // Entirely Right Side Gear Box
         public static final int kRightSlave = 6;
-        public static final int kRightMiddleSlave =2; //Find new CANSparkMotor and SetValue to 6
-        //Intake motor775
-        //public static final int kIntake = 5; //Find new CANSparkMotor and SetValue to 5
-        //public static final int shooter_motor = 0;
+        public static final int kRightMiddleSlave = 2; // Find new CANSparkMotor and SetValue to 6
+
+        // Rest of the Subsystems...
+        public static final int kIntake = 7; // Find new CANSparkMotor and SetValue to 5 
+        public static final int kIndexorLower = 8; // 775 Motor
+        public static final int kIndexorFront = 9; // This is inversed motors Neo // Make ths 775
+        public static final int kIndexorBack = 10; // Default motor SpinRate Neo
+        public static final int kShooter = 11; // 775 Motors
+        public static final int kElevator = 12; // Neo Motors Brushless with PID
+        public static final int kShaftEncoder = 13;
 
     }
 
