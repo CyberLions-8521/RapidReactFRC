@@ -22,7 +22,7 @@ public class ToggleGeneralMotors extends SubsystemBase {
 
     public ToggleGeneralMotors() {
         IndexorOff();
-
+        lowerIndexorOff();
     }
 
     public void setMotor(double speed) {
@@ -35,6 +35,10 @@ public class ToggleGeneralMotors extends SubsystemBase {
     public boolean getIndexStatus() {
         return m_indexorStatus;
     }
+
+    public boolean getLowerIndexStatus() {
+        return m_lowindexorStatus;
+    }
     
     public boolean getIntakeStatus() {
         return m_intakeStatus;
@@ -43,15 +47,24 @@ public class ToggleGeneralMotors extends SubsystemBase {
     public void IndexorOn() {
         m_FrontIndexor.set(0.60);
         m_BackIndexor.set(0.50);
-        m_LowIndexor.set(0.60);
+        
         m_indexorStatus = true;
     }
 
     public void IndexorOff() {
         m_FrontIndexor.set(0.0);
         m_BackIndexor.set(0.0);
-        m_LowIndexor.set(0.0);
         m_indexorStatus = false;
+    }
+
+    public void lowerIndexorON() {
+        m_LowIndexor.set(0.6);
+        m_lowindexorStatus = true;
+    }
+
+    public void lowerIndexorOff() {
+        m_LowIndexor.set(0.0);
+        m_lowindexorStatus = false;
     }
 
     public void IntakeOn() {
@@ -67,7 +80,8 @@ public class ToggleGeneralMotors extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("Indexor Status", getIndexStatus());
+        SmartDashboard.putBoolean("Upper Index Status", getIndexStatus());
+        SmartDashboard.putBoolean("Lower Index Status", getLowerIndexStatus());
         SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
 
     }
