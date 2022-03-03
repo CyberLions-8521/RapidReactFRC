@@ -41,7 +41,6 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class Drivebase extends SubsystemBase {
 
-  private static final double EncodersConstants = 0;
   String driveMode = "Drive Mode";
   // trying a smaller value for the rate limit
   SlewRateLimiter filter = new SlewRateLimiter(0.2);
