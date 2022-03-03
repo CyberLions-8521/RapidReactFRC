@@ -58,10 +58,16 @@ public void periodic() {
  }
 
  public double DistanceToMotorVelocity(){
-  //insert hao's math
-  double motorVelocity=0;
-  return motorVelocity;
+  double rad = .05088; //(meters)
+  double grav = 9.8; //(m/s^2)
+  
+  //can be changed
+  double heightDiff = (VisionConstants.HeightOfTarget - VisionConstants.HeightOfCamera + .25); //constant can be changed
+  double angle = Math.PI/3; //adjustable
 
+  double motorVelocity = (grav * getDistanceToHub())/(Math.cos(angle) * Math.sqrt(2 * grav * heightDiff)) * (Math.PI/30) * rad;
+
+  return motorVelocity;
  }
 
   public double getTy(){
