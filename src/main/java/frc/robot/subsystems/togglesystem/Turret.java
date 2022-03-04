@@ -1,25 +1,22 @@
 package frc.robot.subsystems.togglesystem;
 
 
-import frc.robot.Constants;
-import frc.robot.Constants.XBOX;
-import frc.robot.Constants.PIDConstants;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxRelativeEncoder.Type;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.XBOX;
 
 public class Turret extends SubsystemBase {
     boolean m_shooterStatus;
     CANSparkMax m_shooter = new CANSparkMax(Constants.CAN.kShooter, MotorType.kBrushed);
-    // SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
     RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
     double totalspeed;
 
@@ -31,8 +28,7 @@ public class Turret extends SubsystemBase {
     }
 
     // PID controller to compute output for motor
-    PIDController ShooterPID = new PIDController(PIDConstants.Kp_shooter, PIDConstants.Ki_shooter,
-            PIDConstants.Kd_shooter);
+    PIDController ShooterPID = new PIDController(PIDConstants.Kp_shooter, PIDConstants.Ki_shooter, PIDConstants.Kd_shooter);
 
     public void ControllerBind(XboxController controller) {
         if (controller.getRawButton(XBOX.RB)) {
@@ -53,8 +49,6 @@ public class Turret extends SubsystemBase {
     public void stopShooter() {
         m_shooter.set(0.0);
         m_shooterStatus = false;
-
-        // m_shooter.disable();
     }
 
     public boolean getShooterStatus() {
