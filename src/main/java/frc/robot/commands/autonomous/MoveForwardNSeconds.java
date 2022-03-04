@@ -12,7 +12,7 @@ public class MoveForwardNSeconds extends CommandBase {
   ToggleGeneralMotors m_genmotor;
   double m_InitHeading;
   double m_speed;
-  public MoveForwardNSeconds(Drivebase db, SolenoidsSystem intake, double speed, ToggleGeneralMotors motors) {
+  public MoveForwardNSeconds(Drivebase db, SolenoidsSystem intake, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speed;

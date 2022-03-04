@@ -15,8 +15,8 @@ public class TrajectoryFollower {
 
     boolean m_trajectoryStatus;
     boolean m_pathCompletition;
+    
     // classes
-
     public static Command getRamseteCommand(Trajectory path, Drivebase m_drive) {
         RamseteCommand auto = new RamseteCommand(
             path, 
