@@ -92,6 +92,11 @@ public class Drivebase extends SubsystemBase {
 
   public Drivebase() {
 
+    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
+    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
+
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
     speed = 0.0;
@@ -262,10 +267,7 @@ public class Drivebase extends SubsystemBase {
   }
 
   public void initializeEncoder() {
-    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
-    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
+    
   }
 
   // private final Encoder m_LeftEncoder = new Encoder(
