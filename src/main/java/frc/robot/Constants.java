@@ -96,9 +96,16 @@ public final class Constants {
                 new Pose2d(3, 0, new Rotation2d(0)),
                 // Pass config
                 config);
-        
 
-        
+        public static final Trajectory SPLINE = TrajectoryGenerator.generateTrajectory(
+                List.of(
+                        new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+                        new Pose2d(3, 3, Rotation2d.fromDegrees(0))),
+                config);
+
+        public static final Trajectory SIDE_FORWARD = TrajectoryConstants.getTrajectory("StraightLine");
+
+
         public static Trajectory getTrajectory(String path) {
             try {
                 return TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath()
@@ -110,6 +117,7 @@ public final class Constants {
             }
         }
     }
+
     public static class PIDConstants {
         // Drivebase PID
         public static final double KpD = 0.1;
@@ -124,6 +132,7 @@ public final class Constants {
         public static final double Ki_climber = 0.0;
         public static final double Kd_climber = 0.0;
     }
+
     public static class VisionConstants {
         // Area of the ball in the camera view when the robot stops approaching it
         public static final double BALL_AREA = 0.7;
@@ -131,18 +140,21 @@ public final class Constants {
         public static final double HeightOfCamera = 0.4;
         public static final double HeightOfTarget = 2.64;
     }
+
     public static class ElevatorOutput {
         public static final double PositionMin = 0;
         public static final double PositionMax = 100;
         public static final double ElevatorUp = 12;
         public static final double ElevatorDown = 6;
     }
+
     public static class EncodersConstant {
         public static final int LeftEncoderPort = 0;
         public static final int RightEncoderPort = 1;
         public static final double DistancePerPulse = 0.25;
         public static final int Circumference = 6; // Inches
     }
+
     public static class CAN {
         // Left + right Cim Motors Slave Masters
         public static final int kLeftMaster = 3;
@@ -162,10 +174,12 @@ public final class Constants {
         public static final int kElevator = 12; // Neo Motors Brushless with PID
         public static final int kShaftEncoder = 13;
     }
+
     public static class IO {
         public static final int kXBOX = 0;
         public static final int kAuxCtrl = 1;
     }
+
     public static class XBOX {
         public static final int LEFT_STICK_X = 0;
         public static final int LEFT_STICK_Y = 1;
