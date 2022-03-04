@@ -124,8 +124,8 @@ public class RobotContainer {
     // m_genmotor.ToggleIntakeSystemOFF(m_solenoids, m_genmotor);
 
 
-    return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT, m_drivebase);
-    
+    // return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT, m_drivebase);
+    return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.SIDE_FORWARD, m_drivebase);
   
 
   }
