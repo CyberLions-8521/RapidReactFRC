@@ -14,15 +14,18 @@ import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.XBOX;
 
+/*
+TODO: Tune PID coefficients
+The SmartDashboard should have inputs to change the coefficients
+Follow the instructions here https://frc-pdr.readthedocs.io/en/latest/control/pid_control.html#tuning-methods
+Use PI, but if necessary, extend to full PID
+After done, revert any tuning code and update PIDConstants with the new coefficients
+*/
 public class Turret extends SubsystemBase {
     boolean m_shooterStatus;
     CANSparkMax m_shooter = new CANSparkMax(Constants.CAN.kShooter, MotorType.kBrushed);
     RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
     double m_targetSpeed;
-
-    double kp = PIDConstants.Kp_shooter;
-    double ki = PIDConstants.Ki_shooter;
-    double kd = PIDConstants.Kd_shooter;
 
     public Turret() {
         m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); // Allows wheels to move when motor is active
@@ -30,9 +33,11 @@ public class Turret extends SubsystemBase {
         m_encoder.setVelocityConversionFactor(0.25);
         stopShooter();
         
-        SmartDashboard.putNumber("P Shooter", kp);
-        SmartDashboard.putNumber("I Shooter", ki);
-        SmartDashboard.putNumber("D Shooter", kd);
+        // TUNING STUFF
+        SmartDashboard.putNumber("P Shooter", PIDConstants.Kp_shooter);
+        SmartDashboard.putNumber("I Shooter", PIDConstants.Ki_shooter);
+        SmartDashboard.putNumber("D Shooter", PIDConstants.Kd_shooter);
+        // END TUNING STUFF
     }
 
     // PID controller to compute output for motor
@@ -41,9 +46,9 @@ public class Turret extends SubsystemBase {
     public void ControllerBind(XboxController controller) {
         if (controller.getRawButton(XBOX.RB)) {
             setSpeed(500);
-
-        } else if (controller.getRawButton(XBOX.RB) == false)
+        } else if (controller.getRawButton(XBOX.RB) == false) {
             stopShooter();
+        }
     }
 
     public void setSpeed(double speed) {
@@ -51,7 +56,7 @@ public class Turret extends SubsystemBase {
     }
 
     public void stopShooter() {
-        m_shooter.set(0.0);
+        m_shooter.stopMotor();
         m_shooterStatus = false;
     }
 
@@ -65,22 +70,11 @@ public class Turret extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double p = SmartDashboard.getNumber("P Shooter", kp);
-        double i = SmartDashboard.getNumber("I Shooter", ki);
-        double d = SmartDashboard.getNumber("D Shooter", kd);
-
-        if (p != kp) {
-            kp = p;
-            ShooterPID.setP(p);
-        }
-        if (i != ki) {
-            ki = i;
-            ShooterPID.setI(i);
-        }
-        if (d != kd) {
-            kd = d;
-            ShooterPID.setD(d);
-        }
+        // TUNING STUFF
+        ShooterPID.setP(SmartDashboard.getNumber("P Shooter", PIDConstants.Kp_shooter));
+        ShooterPID.setI(SmartDashboard.getNumber("I Shooter", PIDConstants.Ki_shooter));
+        ShooterPID.setD(SmartDashboard.getNumber("D Shooter", PIDConstants.Kd_shooter));
+        // END TUNING STUFF
 
         // config whatever setpoint and calulcate through the PID
         double output = ShooterPID.calculate(m_encoder.getVelocity(), m_targetSpeed);
