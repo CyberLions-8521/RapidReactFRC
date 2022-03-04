@@ -13,25 +13,15 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.TrajectoryConstants;
 import frc.robot.commands.autonomous.RotateCommand;
 // Commands
-
 import frc.robot.commands.Drive;
-// import frc.robot.commands.dstoggle.ToggleGear;
-// import frc.robot.commands.dstoggle.ToggleIntakeSystem;
-// import frc.robot.commands.subtoggle.Shoot;
-// import frc.robot.commands.subtoggle.Climb;
-// import frc.robot.commands.subtoggle.LowerIndexor;
-// // Subsystems
-import frc.robot.subsystems.Drivebase;
-// import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.pneumatics.SolenoidsSystem; // maybe using something else 
-// import frc.robot.subsystems.togglesystem.Turret;
-// import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
-import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.autonomous.MoveForwardNSeconds;
 import frc.robot.commands.autonomous.ToggleIntakeAuto;
 // Autonomous Mode Imports 
 import frc.robot.commands.autonomous.TrajectoryFollower;
+import frc.robot.subsystems.dreadsubsystem.Climber;
+import frc.robot.subsystems.dreadsubsystem.Drivebase;
+import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -43,7 +33,7 @@ public class RobotContainer {
   public static Drivebase m_drivebase = new Drivebase();
   // public static final Turret m_shooter = new Turret();
   // public static final Limelight m_limelight = new Limelight();
-  public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
+  public static final MasterSubsystem m_solenoids = new MasterSubsystem();
   // public static final ToggleGeneralMotors m_genmotor = new
   // ToggleGeneralMotors();
   // private static Climber m_Climber = new Climber();

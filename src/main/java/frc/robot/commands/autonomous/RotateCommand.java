@@ -3,7 +3,7 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.subsystems.Drivebase;
+import frc.robot.subsystems.dreadsubsystem.Drivebase;
 
 public class RotateCommand extends CommandBase {
   /** Creates a new RotateCommand. */

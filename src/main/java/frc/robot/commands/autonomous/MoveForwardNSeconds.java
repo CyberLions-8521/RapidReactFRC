@@ -1,18 +1,18 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
-import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
+import frc.robot.subsystems.dreadsubsystem.Drivebase;
+import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class MoveForwardNSeconds extends CommandBase {
   /** Creates a new MoveForwardNSeconds. */
   Drivebase m_db;
-  SolenoidsSystem m_intake;
-  ToggleGeneralMotors m_genmotor;
+  MasterSubsystem m_intake;
+  MasterSubsystem m_genmotor;
   double m_InitHeading;
   double m_speed;
-  public MoveForwardNSeconds(Drivebase db, SolenoidsSystem intake, double speed) {
+  public MoveForwardNSeconds(Drivebase db, MasterSubsystem intake, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speed;

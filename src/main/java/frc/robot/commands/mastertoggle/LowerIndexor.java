@@ -1,4 +1,4 @@
-package frc.robot.commands.subtoggle;
+package frc.robot.commands.mastertoggle;
 
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
@@ -6,14 +6,15 @@ package frc.robot.commands.subtoggle;
 
 //imports 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
+
+import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class LowerIndexor extends CommandBase {
     /** Creates a new Drive. */
-    private final ToggleGeneralMotors m_motor;
+    private final MasterSubsystem m_motor;
     private boolean m_returnStatus;
 
-    public LowerIndexor(ToggleGeneralMotors subsystem) {
+    public LowerIndexor(MasterSubsystem subsystem) {
         m_motor = subsystem;
         addRequirements(subsystem);
     }

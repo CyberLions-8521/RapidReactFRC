@@ -1,7 +1,7 @@
-package frc.robot.commands.subtoggle;
+package frc.robot.commands.mastertoggle;
 
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.dreadsubsystem.Climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Climb extends CommandBase {

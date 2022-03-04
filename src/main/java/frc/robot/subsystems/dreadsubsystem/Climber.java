@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.dreadsubsystem;
 
 import frc.robot.Constants.CAN;
 import frc.robot.Constants.XBOX;

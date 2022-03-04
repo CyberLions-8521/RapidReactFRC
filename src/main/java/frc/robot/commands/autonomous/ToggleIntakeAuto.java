@@ -1,15 +1,16 @@
 package frc.robot.commands.autonomous;
 
-import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+
 import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 
 public class ToggleIntakeAuto extends CommandBase {
-  private final SolenoidsSystem m_solenoids;
+  private final MasterSubsystem m_solenoids;
  
   private boolean m_isDone;
 
-  public ToggleIntakeAuto(SolenoidsSystem subsystem) {
+  public ToggleIntakeAuto(MasterSubsystem subsystem) {
     m_solenoids = subsystem;
    
     m_isDone = false;
