@@ -43,24 +43,26 @@ import frc.robot.Constants.TrajectoryConstants;
 import java.util.List;
 
 public class Drivebase extends SubsystemBase {
-
+  // Drive Mode
+  public static DriveMode m_mode;
   String driveMode = "Drive Mode";
-  // trying a smaller value for the rate limit
-  SlewRateLimiter filter = new SlewRateLimiter(0.2);
+  double speed;
+  double turnRate;
 
   // Constants to control joystick input
   double SPEED_REDUCER = 0.5;
   double TURN_REDUCER = 0.5;
 
+  // Encoders stuff
+  private final Counter m_RightEncoder = new Counter();
+  private final Counter m_LeftEncoder = new Counter();
+
+  // Gyro
+  AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+
   // autonomous stuff
   private final DifferentialDriveOdometry m_odometry;
-  //public PIDController MoveFowardPID = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
   public PIDController ramseteController = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
-  // private final DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-  //     TrajectoryConstants.SIMPLE_MOTOR_FEED_FOrWARD, TrajectoryConstants.DRIVE_KINEMATICS, 5);
-  // private final TrajectoryConfig config = new TrajectoryConfig(TrajectoryConstants.MAX_VELOCITY,
-  //     TrajectoryConstants.MAX_ACCELERATION).setKinematics(TrajectoryConstants.DRIVE_KINEMATICS)
-  //         .addConstraint(autoVoltageConstraint);
 
   // Left GearBox
   CANSparkMax m_leftMaster = new CANSparkMax(Constants.CAN.kLeftMaster, MotorType.kBrushed);
@@ -75,27 +77,7 @@ public class Drivebase extends SubsystemBase {
   // Differential drive class
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
-  // Encoders stuff
-  private final Counter m_RightEncoder = new Counter();
-  private final Counter m_LeftEncoder = new Counter();
-
-  double speed;
-  double turnRate;
-
-  // Gyro
-  AHRS m_gyro = new AHRS(SPI.Port.kMXP);
-
-  // Drive Mode
-  public static DriveMode m_mode;
-
-  //public final List<Trajectory> pathList;
-
   public Drivebase() {
-
-    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
-    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
 
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
@@ -103,17 +85,7 @@ public class Drivebase extends SubsystemBase {
     turnRate = 0.0;
     m_gyro.calibrate();
     // m_gyro.reset();
-
-   
-
     // // Pathlist
-    // pathList = List.of(
-    //     TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-    //         List.of(new Translation2d(1, 0)), new Pose2d(3, 0, new Rotation2d(0)), config),
-    //     TrajectoryGenerator.generateTrajectory(new Pose2d(0, 0, new Rotation2d(0)),
-    //         List.of(new Translation2d(2, 0)), new Pose2d(4, 0, new Rotation2d(0)), config));
-    // resetEncoders();
-
     // follow​(CANSparkMax leader, boolean invert) (Slave Followers)
     m_leftSlave.follow(m_leftMaster, false);
     m_rightSlave.follow(m_rightMaster, false);
@@ -143,6 +115,10 @@ public class Drivebase extends SubsystemBase {
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
+    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
 
   }
 
@@ -159,12 +135,6 @@ public class Drivebase extends SubsystemBase {
     // m_drive.tankDrive(adjust, -adjust, true);
   }
 
-  /**
-   * Drive straight with the help of the 9-axis IMU (that's hopefully not damaged
-   * by now lol)
-   * 
-   * @param speed - A value between -1 and 1
-   */
   public void moveForward(double speed, double angle) {
     // Increase corrector to make it move to the left more
     // Decrease to make it move more to the right
@@ -266,14 +236,6 @@ public class Drivebase extends SubsystemBase {
     return speed;
   }
 
-  public void initializeEncoder() {
-    
-  }
-
-  // private final Encoder m_LeftEncoder = new Encoder(
-  // EncodersConstants.m_LeftSlaveEncoderPorts[0],
-  // EncodersConstants.m_LeftSlaveEncoderPorts[1],
-  // EncodersConstants.m_LeftSlaveEncoderReversed);
 
   // // Reset Encoders
   public void resetEncoders() {
@@ -343,21 +305,6 @@ public class Drivebase extends SubsystemBase {
     m_rightMaster.setVoltage(rightVolts);
     m_drive.feed();
   }
-
-      /**
-    * Returns a {@code RamseteCommand} object. Used to follow the specified
-    * {@link Trajectory}.
-    *
-    * @param path the {@code Trajectory} to follow
-    * @return a {@link RamseteCommand} object
-    */
-  // public RamseteCommand ramseteCommand(Trajectory path) {
-  //   return new RamseteCommand(path, m_odometry::getPoseMeters, new RamseteController(),
-  //     TrajectoryConstants.SIMPLE_MOTOR_FEED_FOrWARD, TrajectoryConstants.DRIVE_KINEMATICS,
-  //     this::getWheelSpeeds, ramseteController, ramseteController, this::tankDriveVolts, this);
-  // }
-
-  
 
   @Override
   public void periodic() {

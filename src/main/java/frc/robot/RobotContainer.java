@@ -1,19 +1,9 @@
 package frc.robot;
 
-// LMAO I had to use these
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import java.sql.DriverPropertyInfo;
 import java.util.List;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import frc.robot.Constants;
+import frc.robot.Constants.XBOX;
+
 //Additional imports
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -22,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.TrajectoryConstants;
 // Commands
-import frc.robot.Constants.XBOX;
+
 import frc.robot.commands.Drive;
 // import frc.robot.commands.dstoggle.ToggleGear;
 // import frc.robot.commands.dstoggle.ToggleIntakeSystem;
@@ -35,18 +25,15 @@ import frc.robot.subsystems.Drivebase;
 // import frc.robot.subsystems.pneumatics.SolenoidsSystem;
 // import frc.robot.subsystems.togglesystem.Turret;
 // import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
+import frc.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj2.command.Command;
-//import frc.robot.subsystems.pneumatics.SolenoidsSystem;
+import frc.robot.commands.autonomous.MoveForwardNSeconds;
 // Autonomous Mode Imports 
+import frc.robot.commands.autonomous.TrajectoryFollower;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants;
-import frc.robot.commands.autonomous.TrajectoryFollower;
-
-// Climber stuff
-import frc.robot.subsystems.Climber;
 
 public class RobotContainer {
 
@@ -67,7 +54,8 @@ public class RobotContainer {
   // public static final Turret m_shooter = new Turret();
   // public static final Limelight m_limelight = new Limelight();
   // public static final SolenoidsSystem m_solenoids = new SolenoidsSystem();
-  // public static final ToggleGeneralMotors m_genmotor = new ToggleGeneralMotors();
+  // public static final ToggleGeneralMotors m_genmotor = new
+  // ToggleGeneralMotors();
   // private static Climber m_Climber = new Climber();
 
   // Commands
@@ -82,6 +70,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_drivebase.setDefaultCommand(m_driveSystem);
+
     // m_shooter.setDefaultCommand(m_shoot);
     // m_genmotor.setDefaultCommand(m_index); // double check
     configureButtonBindings();
@@ -89,10 +78,14 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_solenoids));
-    // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_solenoids, m_genmotor));
-    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_shooter, m_genmotor));
-    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new LowerIndexor(m_genmotor));
+    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new
+    // ToggleGear(m_solenoids));
+    // new JoystickButton(m_controller, XBOX.B).whenPressed(new
+    // ToggleIntakeSystem(m_solenoids, m_genmotor));
+    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_shooter,
+    // m_genmotor));
+    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new
+    // LowerIndexor(m_genmotor));
 
   }
 
@@ -106,33 +99,17 @@ public class RobotContainer {
     m_drivebase.resetEncoders();
     m_drivebase.zeroHeading();
 
-    // m_genmotor.IntakeOn();
-
-    // Toggling intake
-
-    // || m_solenoids.getArmStatus().equals(kReverse) &&
-    // m_intakeMotor.getIntakeStatus() == false) {
-    // m_intakeMotor.IntakeOn();
-    // m_solenoids.extendArms();
-    // } else {
-    // m_solenoids.retractArms();
-    // m_intakeMotor.IntakeOff();
-    // } if (m_solenoids.getArmStatus().equals(kOff)
-
-    
     // m_genmotor.ToggleIntakeSystemON(m_solenoids, m_genmotor);
     // m_genmotor.ToggleIntakeSystemOFF(m_solenoids, m_genmotor);
 
 
-    // return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT, m_drivebase);
-    return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.SIDE_FORWARD, m_drivebase);
-  
-
+    // Trajectory Paths (Uncomment to Choose one)
+    // TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT,
+    // m_drivebase);
+    //return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHTLINE , m_drivebase);
+    return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.ROTATIONALMOVEMENT, m_drivebase);
+    // return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.CIRCLE, m_drivebase);
+    // return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.THREEBALLAUTO, m_drivebase);
+    // return TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.PLANNERTEST, m_drivebase);
   }
-
-  // public void getToggleIntakeSystem(SolenoidsSystem subsystem,
-  // ToggleGeneralMotors subsystem2) {
-  // m_genmotor = subsystem;
-  // m_solenoids subsystem2;
-  // }
 }
