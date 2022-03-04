@@ -50,17 +50,17 @@ public final class Constants {
         // seconds
         public static final double wheelBase = 0.54;
         // Test one
-        public static final double KS = 0.557; // ksVolts
+        public static final double KS = 0.771205; // ksVolts
         public static final double KV = 1.329; // kvVoltSecondsPerMeter
         public static final double KA = 0.0933; // kaVoltSecondsSquaredPerMeter
-        public static final double KP = 8.5; // kTrackwidthMeters
-        public static final double kPDriveVel = 1.79;
+        public static final double KP = 0.681715; // kTrackwidthMeters
+        public static final double kPDriveVel = 0.79;
         // Rameste Parameter
         public static final double RAMSETE_B = 2.0;
         public static final double RAMSETE_ZETA = 0.7;
         // Max Trajectory Velocity/Acceleration
-        public static final double MAX_VELOCITY = 1.78;
-        public static final double MAX_ACCELERATION = 1.78;
+        public static final double MAX_VELOCITY = 0.78;
+        public static final double MAX_ACCELERATION = 0.58;
         public static final double STARTING_POSE_X = 0;
         public static final double STARTING_POSE_Y = 0;
         public static final boolean IS_GYRO_REVERSED_FOR_PATHWEAVER = true;
