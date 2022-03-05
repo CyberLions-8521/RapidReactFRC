@@ -42,11 +42,7 @@ public class MasterSubsystem extends SubsystemBase {
         m_intake.set(speed);
     }
 
-    public void extendArms() {
-        m_leftArmDS.set(kForward);
-        m_rightArmDS.set(kForward);
-    }
-
+    // Both Intake Arm and Intake Motor Status;
     public void AutoIntakeSystemON() {
         m_leftArmDS.set(kForward);
         m_rightArmDS.set(kForward);
@@ -59,6 +55,11 @@ public class MasterSubsystem extends SubsystemBase {
         m_rightArmDS.set(kReverse);
         m_intake.set(0.5);
         m_AutoStatus = false;
+    }
+
+    public void extendArms() {
+        m_leftArmDS.set(kForward);
+        m_rightArmDS.set(kForward);
     }
 
     public void retractArms() {

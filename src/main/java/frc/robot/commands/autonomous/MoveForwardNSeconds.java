@@ -5,35 +5,33 @@ import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class MoveForwardNSeconds extends CommandBase {
-  /** Creates a new MoveForwardNSeconds. */
+
   Drivebase m_db;
   MasterSubsystem m_toggleIntakeSystem;
-  
+
   double m_InitHeading;
   double m_speed;
 
-  public MoveForwardNSeconds(Drivebase db, MasterSubsystem intake, double speed) {
+  public MoveForwardNSeconds(Drivebase db, MasterSubsystem intakeSystem, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speed;
-    m_toggleIntakeSystem = intake;
+    m_toggleIntakeSystem = intakeSystem;
 
     addRequirements(db);
-    addRequirements(intake);
+    addRequirements(intakeSystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_db.getGyro().reset();
     m_InitHeading = m_db.getAngle();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    
+
+    m_toggleIntakeSystem.AutoIntakeSystemON();
 
     // m_db.moveForward(-0.2);
     // NOTE: may or may not be positive not sure
