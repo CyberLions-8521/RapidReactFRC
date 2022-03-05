@@ -1,6 +1,14 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.dreadsubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
+import frc.robot.RobotContainer;
+// Constants
+import frc.robot.Constants.XBOX;
+import frc.robot.Constants;
+import frc.robot.Constants.DriveMode;
+import frc.robot.Constants.EncodersConstant;
+import frc.robot.Constants.DriveConstants;
+import edu.wpi.first.wpilibj.XboxController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -13,33 +21,42 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Counter;
 // Encoder / PID Only 
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//Additional Imports
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// Constants
-import frc.robot.Constants.CAN;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.DriveMode;
-import frc.robot.Constants.EncodersConstant;
+import edu.wpi.first.math.controller.PIDController;
+// LMFAO IMAGINE ADDING MORE IMPORT LMFAOOO PLS HELP ME OML OML I CANT DO THIS NO MORE MAN T_T
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import static frc.robot.Constants.*;
 import frc.robot.Constants.PIDConstants;
-import frc.robot.Constants.XBOX;
-import frc.robot.RobotContainer;
+import frc.robot.Constants.TrajectoryConstants;
+import java.util.List;
 
 public class Drivebase extends SubsystemBase {
+  // Drive Mode
+  public static DriveMode m_mode;
+  String driveMode = "Drive Mode";
+  double speed;
+  double turnRate;
 
-  String m_driveMode = "Drive Mode";
-  // Trying a smaller value for the rate limit
-  SlewRateLimiter m_filter = new SlewRateLimiter(0.2);
+  // Constants to control joystick input
+  double SPEED_REDUCER = 0.5;
+  double TURN_REDUCER = 0.5;
 
-  // Variables to control joystick input
-  double m_speedReducer = 0.5;
-  double m_turnReducer = 0.5;
+  // Encoders stuff
+  private final Counter m_RightEncoder = new Counter();
+  private final Counter m_LeftEncoder = new Counter();
 
+  // Gyro
+  AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+
+  // autonomous stuff
   private final DifferentialDriveOdometry m_odometry;
-  public PIDController MoveFowardPID = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
-      PIDConstants.D_DRIVE);
+  public PIDController ramseteController = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
 
   // Left GearBox
   CANSparkMax m_leftMaster = new CANSparkMax(CAN.LEFT_MASTER, MotorType.kBrushed);
@@ -54,83 +71,6 @@ public class Drivebase extends SubsystemBase {
   // Differential drive class
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
-  // Encoders stuff
-  private final Counter m_rightEncoder = new Counter();
-  private final Counter m_leftEncoder = new Counter();
-
-  // private final Encoder m_LeftEncoder = new Encoder(
-  // EncodersConstants.m_LeftSlaveEncoderPorts[0],
-  // EncodersConstants.m_LeftSlaveEncoderPorts[1],
-  // EncodersConstants.m_LeftSlaveEncoderReversed);
-
-  // // Reset Encoders
-  public void resetEncoders() {
-    m_rightEncoder.reset();
-    m_leftEncoder.reset();
-  }
-
-  // //Returns for encoder
-  public Counter getLeftEncoder() {
-    return m_leftEncoder;
-  }
-
-  public Counter getRightEncoder() {
-    return m_rightEncoder;
-  }
-
-  // //Get distance from both encoders and avg them for best accuracy
-  public double getAverageEncoderDistance() {
-    return ((m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0)
-        * (Math.PI * EncodersConstant.CIRCUMFERENCE);
-  }
-
-  public double getLeftEncoderDistance() {
-    return ((m_leftEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
-  }
-
-  public double getRightEncoderDistance() {
-    return ((m_rightEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
-  }
-
-  public void setMaxOutput(double maxOutput) {
-    m_drive.setMaxOutput(maxOutput);
-  }
-
-  // reset gyro
-  public void zeroHeading() {
-    m_gyro.reset();
-  }
-
-  // Odometry
-  public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
-  }
-
-  // reset postions
-  public void resetOdometry(Pose2d pose) {
-    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
-  }
-
-  // Wheel-Speed stuff
-  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(),
-        m_rightEncoder.getRate());
-  }
-
-  // Arcade Drive
-  public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
-    m_drive.arcadeDrive(xSpeed, zRotation, squareInputs);
-  }
-
-  double m_speed;
-  double m_turnRate;
-  // DifferentialDriveOdometry odometry;
-  // Gyro
-  AHRS m_gyro = new AHRS(SPI.Port.kMXP);
-
-  // Drive Mode
-  public static DriveMode m_mode;
-
   public Drivebase() {
     // initializeEncoder
     m_rightEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
@@ -143,7 +83,7 @@ public class Drivebase extends SubsystemBase {
     m_turnRate = 0.0;
     m_gyro.calibrate();
     // m_gyro.reset();
-
+    // // Pathlist
     // follow​(CANSparkMax leader, boolean invert) (Slave Followers)
     m_leftSlave.follow(m_leftMaster, false);
     m_rightSlave.follow(m_rightMaster, false);
@@ -173,17 +113,11 @@ public class Drivebase extends SubsystemBase {
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
-  }
+    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
+    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
 
-  @Override
-  public void periodic() {
-    SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
-    SmartDashboard.putNumber("LeftEncoderDistance", getLeftEncoderDistance());
-    SmartDashboard.putNumber("RightEncoderDistance", getRightEncoderDistance());
-    // m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(),
-    // m_RightEncoder.getDistance());
-    double tHeading = getHeading().getDegrees();
-    SmartDashboard.putNumber("Heading", tHeading);
   }
 
   public Rotation2d getHeading() {
@@ -199,12 +133,6 @@ public class Drivebase extends SubsystemBase {
     // m_drive.tankDrive(adjust, -adjust, true);
   }
 
-  /**
-   * Drive straight with the help of the 9-axis IMU (that's hopefully not damaged
-   * by now lol)
-   * 
-   * @param speed - A value between -1 and 1
-   */
   public void moveForward(double speed, double angle) {
     // Increase corrector to make it move to the left more
     // Decrease to make it move more to the right
@@ -217,7 +145,7 @@ public class Drivebase extends SubsystemBase {
   // PID drive straight for auto fby Kevin
   public void moveForwardStraight(double speed) {
 
-    double output = MoveFowardPID.calculate(-getTurnRate(), 0);
+    double output = ramseteController.calculate(-getTurnRate(), 0);
     arcadeDrive(speed, output, false);
   }
 
@@ -227,6 +155,10 @@ public class Drivebase extends SubsystemBase {
 
   public double getTurnRate() {
     return m_turnRate;
+  }
+
+  public double getGyroTurnRate() {
+    return -m_gyro.getRate();
   }
 
   public void moveForward(double speed) {
@@ -300,6 +232,66 @@ public class Drivebase extends SubsystemBase {
     return speed;
   }
 
+
+  // // Reset Encoders
+  public void resetEncoders() {
+    m_RightEncoder.reset();
+    m_LeftEncoder.reset();
+  }
+
+  // //Returns for encoder
+  public Counter getLeftEncoder() {
+    return m_LeftEncoder;
+  }
+
+  public Counter getRightEncoder() {
+    return m_RightEncoder;
+  }
+
+  // //Get distance from both encoders and avg them for best accuracy
+  public double getAverageEncoderDistance() {
+    return ((m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0)
+        * (Math.PI * EncodersConstant.Circumference);
+  }
+
+  public double getLeftEncoderDistance() {
+    return ((m_LeftEncoder.getDistance()) * (Math.PI * EncodersConstant.Circumference));
+  }
+
+  public double getRightEncoderDistance() {
+    return ((m_RightEncoder.getDistance()) * (Math.PI * EncodersConstant.Circumference));
+  }
+
+  public void setMaxOutput(double maxOutput) {
+    m_drive.setMaxOutput(maxOutput);
+  }
+
+  // reset gyro
+  public void zeroHeading() {
+    m_gyro.reset();
+  }
+
+  // Odometry
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+
+  // reset postions
+  public void resetOdometry(Pose2d pose) {
+    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+  }
+
+  // Wheel-Speed stuff
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(),
+        m_RightEncoder.getRate());
+  }
+
+  // Arcade Drive
+  public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
+    m_drive.arcadeDrive(xSpeed, zRotation, squareInputs);
+  }
+
   public AHRS getGyro() {
     return m_gyro;
   }
@@ -309,4 +301,18 @@ public class Drivebase extends SubsystemBase {
     m_rightMaster.setVoltage(rightVolts);
     m_drive.feed();
   }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
+    SmartDashboard.putNumber("LeftEncoderDistance", getLeftEncoderDistance());
+    SmartDashboard.putNumber("RightEncoderDistance", getRightEncoderDistance());
+    // m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(),
+    // m_RightEncoder.getDistance());
+    double tHeading = getHeading().getDegrees();
+    SmartDashboard.putNumber("Heading", tHeading);
+    m_odometry.update(m_gyro.getRotation2d(), m_RightEncoder.getDistance(), m_LeftEncoder.getDistance());
+
+  }
+
 }

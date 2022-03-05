@@ -1,8 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
-package frc.robot.subsystems;
+package frc.robot.subsystems.dreadsubsystem;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -18,7 +14,6 @@ public class Climber extends SubsystemBase {
     public Climber() {
     }
 
-    // private Joystick m_stick;
     // creating encoder
     private RelativeEncoder m_encoder;
     // creating the motor
