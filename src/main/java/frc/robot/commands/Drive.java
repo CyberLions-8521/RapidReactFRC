@@ -27,7 +27,6 @@ public class Drive extends CommandBase {
     @Override
     public void execute()
     {
-   //   m_db.initializeEncoder();
       m_db.driveWithController(RobotContainer.m_controller);
     }
   

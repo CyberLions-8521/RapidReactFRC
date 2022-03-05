@@ -78,7 +78,11 @@ public class Drivebase extends SubsystemBase {
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
   public Drivebase() {
-
+    //initializeEncoder
+    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
+    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
+    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
     speed = 0.0;
