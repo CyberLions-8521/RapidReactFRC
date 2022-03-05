@@ -13,33 +13,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
 public class MasterSubsystem extends SubsystemBase {
 
     DoubleSolenoid m_leftArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 5, 4);
     DoubleSolenoid m_rightArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
     DoubleSolenoid m_transLeftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 7, 8);
     DoubleSolenoid m_transRightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
-    CANSparkMax m_intake = new CANSparkMax(CAN.kIntake, MotorType.kBrushed); 
+    CANSparkMax m_intake = new CANSparkMax(CAN.kIntake, MotorType.kBrushed);
     CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless);
     CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushed);
     CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushless);
-    
+
     boolean m_AutoStatus;
     boolean m_lowindexorStatus;
     boolean m_indexorStatus;
     boolean m_intakeStatus;
     boolean m_toggleSystemStatus;
 
-
-
     public MasterSubsystem() {
         // stop all subsystem toggle here
-       
+
     }
 
-
-    public void setSpeed(double speed) {
+    public void setMotor(double speed) {
+        m_FrontIndexor.set(speed);
+        m_BackIndexor.set(speed);
+        m_LowIndexor.set(speed);
         m_intake.set(speed);
     }
 
@@ -47,7 +46,6 @@ public class MasterSubsystem extends SubsystemBase {
         m_leftArmDS.set(kForward);
         m_rightArmDS.set(kForward);
     }
-
 
     public void AutoIntakeSystemON() {
         m_leftArmDS.set(kForward);
@@ -85,44 +83,7 @@ public class MasterSubsystem extends SubsystemBase {
         m_transRightDS.set(kReverse);
     }
 
-    // boolean status check
-
-    public Value getArmStatus() {
-        return m_rightArmDS.get();
-    }
-
-    public boolean getAutoStatus() {
-        return m_AutoStatus;
-    }
-
-    public int getGearStatus() {
-        if (m_transRightDS.get().equals(kForward)) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }
-
-    
-
-    public void setMotor(double speed) {
-        m_FrontIndexor.set(speed);
-        m_BackIndexor.set(speed);
-        m_LowIndexor.set(speed);
-        m_intake.set(speed);
-    }
-
-    public boolean getIndexStatus() {
-        return m_indexorStatus;
-    }
-
-    public boolean getLowerIndexStatus() {
-        return m_lowindexorStatus;
-    }
-
-    public boolean getIntakeStatus() {
-        return m_intakeStatus;
-    }
+    // Indexor
 
     public void IndexOn() {
         m_FrontIndexor.set(0.60);
@@ -147,6 +108,8 @@ public class MasterSubsystem extends SubsystemBase {
         m_lowindexorStatus = false;
     }
 
+    // Intake
+
     public void IntakeOn() {
         m_intake.set(0.6);
         m_intakeStatus = true;
@@ -158,12 +121,38 @@ public class MasterSubsystem extends SubsystemBase {
         m_intakeStatus = false;
     }
 
+    // boolean status check
+    public Value getArmStatus() {
+        return m_rightArmDS.get();
+    }
+
+    public boolean getAutoStatus() {
+        return m_AutoStatus;
+    }
+
+    public boolean getIndexStatus() {
+        return m_indexorStatus;
+    }
+
+    public boolean getLowerIndexStatus() {
+        return m_lowindexorStatus;
+    }
+
+    public boolean getIntakeStatus() {
+        return m_intakeStatus;
+    }
 
     public boolean getSystemStatus() {
         return m_toggleSystemStatus;
     }
 
-
+    public int getGearStatus() {
+        if (m_transRightDS.get().equals(kForward)) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
 
     @Override
     public void periodic() {
@@ -174,9 +163,5 @@ public class MasterSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
         SmartDashboard.putBoolean("Auto Intake/Index Status", getSystemStatus());
     }
-    
 
 }
-
-
-

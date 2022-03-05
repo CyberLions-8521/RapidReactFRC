@@ -1,31 +1,25 @@
 package frc.robot.commands.mastertoggle;
 
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
-//imports 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class LowerIndexor extends CommandBase {
-    /** Creates a new Drive. */
-    private final MasterSubsystem m_motor;
+
+    private final MasterSubsystem m_lowindexmotor;
     private boolean m_returnStatus;
 
     public LowerIndexor(MasterSubsystem subsystem) {
-        m_motor = subsystem;
+        m_lowindexmotor = subsystem;
         addRequirements(subsystem);
     }
 
     @Override
     public void initialize() {
-        if (m_motor.getLowerIndexStatus() == false) {
-            m_motor.lowerIndexON();
+        if (m_lowindexmotor.getLowerIndexStatus() == false) {
+            m_lowindexmotor.lowerIndexON();
 
         } else {
-            m_motor.IndexOff();
+            m_lowindexmotor.IndexOff();
         }
         m_returnStatus = true;
     }
