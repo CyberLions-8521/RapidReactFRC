@@ -16,19 +16,9 @@ public class LowerIndexor extends CommandBase {
   public void initialize() {
     if (m_lowIndexMotor.getLowerIndexStatus() == false) {
       m_lowIndexMotor.lowerIndexOn();
-    } else {
-      m_lowIndexMotor.IndexOff();
-    }
-    m_returnStatus = true;
-  }
-
-  @Override
-  public void initialize() {
-    if (m_motor.getLowerIndexStatus() == false) {
-      m_motor.lowerIndexOn();
 
     } else {
-      m_motor.indexOff();
+      m_lowIndexMotor.indexOff();
     }
     m_returnStatus = true;
   }

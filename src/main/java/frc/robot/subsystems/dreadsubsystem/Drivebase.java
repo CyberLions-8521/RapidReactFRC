@@ -1,19 +1,10 @@
 package frc.robot.subsystems.dreadsubsystem;
 
 import com.kauailabs.navx.frc.AHRS;
-import frc.robot.RobotContainer;
-// Constants
-import frc.robot.Constants.XBOX;
-import frc.robot.Constants;
-import frc.robot.Constants.DriveMode;
-import frc.robot.Constants.EncodersConstant;
-import frc.robot.Constants.DriveConstants;
-import edu.wpi.first.wpilibj.XboxController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -21,51 +12,50 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Counter;
 // Encoder / PID Only 
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.math.controller.PIDController;
-// LMFAO IMAGINE ADDING MORE IMPORT LMFAOOO PLS HELP ME OML OML I CANT DO THIS NO MORE MAN T_T
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
-import static frc.robot.Constants.*;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.CAN;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriveMode;
+import frc.robot.Constants.EncodersConstant;
 import frc.robot.Constants.PIDConstants;
-import frc.robot.Constants.TrajectoryConstants;
-import java.util.List;
+// Constants
+import frc.robot.Constants.XBOX;
+import frc.robot.RobotContainer;
 
 public class Drivebase extends SubsystemBase {
   // Drive Mode
   public static DriveMode m_mode;
-  String driveMode = "Drive Mode";
-  double speed;
-  double turnRate;
+  String m_driveMode = "Drive Mode";
+  double m_speed;
+  double m_turnRate;
 
   // Constants to control joystick input
-  double SPEED_REDUCER = 0.5;
-  double TURN_REDUCER = 0.5;
+  double m_speedReducer = 0.5;
+  double m_turnReducer = 0.5;
 
   // Encoders stuff
-  private final Counter m_RightEncoder = new Counter();
-  private final Counter m_LeftEncoder = new Counter();
+  private final Counter m_rightEncoder = new Counter();
+  private final Counter m_leftEncoder = new Counter();
 
   // Gyro
   AHRS m_gyro = new AHRS(SPI.Port.kMXP);
 
   // autonomous stuff
   private final DifferentialDriveOdometry m_odometry;
-  public PIDController ramseteController = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
+  public PIDController m_ramseteController = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
+      PIDConstants.D_DRIVE);
 
   // Left GearBox
   CANSparkMax m_leftMaster = new CANSparkMax(CAN.LEFT_MASTER, MotorType.kBrushed);
-  CANSparkMax m_leftMiddleSlave = new CANSparkMax(CAN.LEFT_MIDDLE_SLAVE, MotorType.kBrushed);
+  CANSparkMax m_leftMiddleSlave = new CANSparkMax(CAN.LEFT_MID_SLAVE, MotorType.kBrushed);
   CANSparkMax m_leftSlave = new CANSparkMax(CAN.LEFT_SLAVE, MotorType.kBrushed);
 
   // Right GearBox
   CANSparkMax m_rightMaster = new CANSparkMax(CAN.RIGHT_MASTER, MotorType.kBrushed);
-  CANSparkMax m_rightMiddleSlave = new CANSparkMax(CAN.RIGHT_MIDDLE_SLAVE, MotorType.kBrushed);
+  CANSparkMax m_rightMiddleSlave = new CANSparkMax(CAN.RIGHT_MID_SLAVE, MotorType.kBrushed);
   CANSparkMax m_rightSlave = new CANSparkMax(CAN.RIGHT_SLAVE, MotorType.kBrushed);
 
   // Differential drive class
@@ -113,11 +103,10 @@ public class Drivebase extends SubsystemBase {
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
-    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
-    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
-
+    m_rightEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
+    m_leftEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
+    m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT);
+    m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT);
   }
 
   public Rotation2d getHeading() {
@@ -145,7 +134,7 @@ public class Drivebase extends SubsystemBase {
   // PID drive straight for auto fby Kevin
   public void moveForwardStraight(double speed) {
 
-    double output = ramseteController.calculate(-getTurnRate(), 0);
+    double output = m_ramseteController.calculate(-getTurnRate(), 0);
     arcadeDrive(speed, output, false);
   }
 
@@ -232,34 +221,33 @@ public class Drivebase extends SubsystemBase {
     return speed;
   }
 
-
   // // Reset Encoders
   public void resetEncoders() {
-    m_RightEncoder.reset();
-    m_LeftEncoder.reset();
+    m_rightEncoder.reset();
+    m_leftEncoder.reset();
   }
 
   // //Returns for encoder
   public Counter getLeftEncoder() {
-    return m_LeftEncoder;
+    return m_leftEncoder;
   }
 
   public Counter getRightEncoder() {
-    return m_RightEncoder;
+    return m_rightEncoder;
   }
 
   // //Get distance from both encoders and avg them for best accuracy
   public double getAverageEncoderDistance() {
-    return ((m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0)
-        * (Math.PI * EncodersConstant.Circumference);
+    return ((m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0)
+        * (Math.PI * EncodersConstant.CIRCUMFERENCE);
   }
 
   public double getLeftEncoderDistance() {
-    return ((m_LeftEncoder.getDistance()) * (Math.PI * EncodersConstant.Circumference));
+    return ((m_leftEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
   }
 
   public double getRightEncoderDistance() {
-    return ((m_RightEncoder.getDistance()) * (Math.PI * EncodersConstant.Circumference));
+    return ((m_rightEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
   }
 
   public void setMaxOutput(double maxOutput) {
@@ -283,8 +271,8 @@ public class Drivebase extends SubsystemBase {
 
   // Wheel-Speed stuff
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(),
-        m_RightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(),
+        m_rightEncoder.getRate());
   }
 
   // Arcade Drive
@@ -307,11 +295,11 @@ public class Drivebase extends SubsystemBase {
     SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
     SmartDashboard.putNumber("LeftEncoderDistance", getLeftEncoderDistance());
     SmartDashboard.putNumber("RightEncoderDistance", getRightEncoderDistance());
-    // m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(),
-    // m_RightEncoder.getDistance());
+    // m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(),
+    // m_rightEncoder.getDistance());
     double tHeading = getHeading().getDegrees();
     SmartDashboard.putNumber("Heading", tHeading);
-    m_odometry.update(m_gyro.getRotation2d(), m_RightEncoder.getDistance(), m_LeftEncoder.getDistance());
+    m_odometry.update(m_gyro.getRotation2d(), m_rightEncoder.getDistance(), m_leftEncoder.getDistance());
 
   }
 

@@ -4,11 +4,11 @@
 
 package frc.robot.subsystems.utilsubsystem;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants;
 
@@ -48,7 +48,7 @@ public class Limelight extends SubsystemBase {
 
   public double getDistanceToHub() {
     double yOffset = Math.toRadians(yFilter.calculate(getTy()));
-    double Distance = ((VisionConstants.HEIGHT_OF_TARGET - VisionConstants.HEIGHT_OF_CAMERA)
+    double Distance = ((VisionConstants.TARGET_HEIGHT - VisionConstants.CAMERA_HEIGHT)
         / Math.tan(VisionConstants.CAMERA_ANGLE + yOffset));
 
     return Distance;
@@ -59,7 +59,7 @@ public class Limelight extends SubsystemBase {
     double grav = 9.8; // (m/s^2)
 
     // constant can be changed
-    double heightDiff = (VisionConstants.HEIGHT_OF_TARGET - VisionConstants.HEIGHT_OF_CAMERA + .25);
+    double heightDiff = (VisionConstants.TARGET_HEIGHT - VisionConstants.CAMERA_HEIGHT + .25);
     double angle = Math.PI / 3; // adjustable
 
     double motorVelocity = (grav * getDistanceToHub()) / (Math.cos(angle) * Math.sqrt(2 * grav * heightDiff))
@@ -85,10 +85,10 @@ public class Limelight extends SubsystemBase {
   }
 
   /*
-  public NetworkTableEntry getTy() {
-    return ty;
-  }
-  */
+   * public NetworkTableEntry getTy() {
+   * return ty;
+   * }
+   */
 
   @Override
   public void simulationPeriodic() {

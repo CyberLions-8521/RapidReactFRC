@@ -5,7 +5,6 @@ import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class MoveForwardNSeconds extends CommandBase {
-
   Drivebase m_db;
   MasterSubsystem m_toggleIntakeSystem;
 
@@ -30,20 +29,13 @@ public class MoveForwardNSeconds extends CommandBase {
 
   @Override
   public void execute() {
-
-    m_toggleIntakeSystem.AutoIntakeSystemON();
+    m_toggleIntakeSystem.autoIntakeSystemOn();
 
     // m_db.moveForward(-0.2);
     // NOTE: may or may not be positive not sure
     m_db.moveForward(-m_speed, -m_db.getAngle());
   }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
+  
   @Override
   public boolean isFinished() {
     return false;

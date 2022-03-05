@@ -7,11 +7,11 @@ import frc.robot.subsystems.dreadsubsystem.Climber;
 public class Climb extends CommandBase {
   private final Climber m_climber;
 
-  public Climb(Climber m_climber) {
+  public Climb(Climber climber) {
     // set m_subsystem equal to whatever you put in Test
-    this.m_climber = m_climber;
+    m_climber = climber;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_climber);
+    addRequirements(climber);
   }
 
   @Override
