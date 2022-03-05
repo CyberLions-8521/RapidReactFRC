@@ -139,9 +139,9 @@ public class Drivebase extends SubsystemBase {
   public void moveForwardStraight(double speed) {
 
 
-    // double output = m_ramseteController.calculate(-getTurnRate(), 0);
+    double output = m_ramseteController.calculate(-getTurnRate(), 0);
 
-    double output = m_PID.calculate(-getTurnRate(), 0);
+    //double output = m_PID.calculate(-getTurnRate(), 0);
 
     arcadeDrive(speed, output, false);
   }
