@@ -11,33 +11,34 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 
 public class Drive extends CommandBase {
-    /** Creates a new Drive. */
-    private final Drivebase m_db;
-    public Drive(Drivebase db) {
-      m_db = db;
-      // Use addRequirements() here to declare subsystem dependencies.
-      addRequirements(db);
-    }
-  
-    // Called when the command is initially scheduled.
-    @Override
-    public void initialize() {}
-  
-    // Called every time the scheduler runs while the command is scheduled.
-    @Override
-    public void execute()
-    {
-      m_db.driveWithController(RobotContainer.m_controller);
-    }
-  
-    // Called once the command ends or is interrupted.
-    @Override
-    public void end(boolean interrupted) {}
-  
-    // Returns true when the command should end.
-    @Override
-    public boolean isFinished() {
-      return false;
-    }
+  /** Creates a new Drive. */
+  private final Drivebase m_db;
+
+  public Drive(Drivebase db) {
+    m_db = db;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(db);
   }
 
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
+    m_db.driveWithController(RobotContainer.m_controller);
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+  }
+
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
+}
