@@ -51,7 +51,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_drivebase.setDefaultCommand(m_driveSystem);
-
+    m_Climber.setDefaultCommand(m_climb);
     // m_shooter.setDefaultCommand(m_shoot);
     // m_genmotor.setDefaultCommand(m_index); // double check
     configureButtonBindings();
@@ -74,12 +74,12 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
   //   // return new DrivetrainCommand(m_drive);
   //   m_drivebase.resetEncoders();
   //   m_drivebase.zeroHeading();
   // }
-  // return new SequentialCommandGroup(
+    return new SequentialCommandGroup();
   // new WaitCommand(1),
   // new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
   // 0.4).withTimeout(0.9),
@@ -152,4 +152,5 @@ public class RobotContainer {
   // return
   // TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.PLANNERTEST,
   // m_drivebase);
+}
 }
