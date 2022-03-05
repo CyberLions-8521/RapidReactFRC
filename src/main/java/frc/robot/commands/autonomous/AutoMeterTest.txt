@@ -1,0 +1,36 @@
+package frc.robot.commands.autonomous;
+
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.Drivebase;
+
+
+
+public class AutoMeterTest {
+
+    private final Trajectory path;
+    private final Command command;
+
+    //Auto profile that drives 2 meters backwards.
+     
+    public AutoMeterTest(Drivebase drivetrain){
+        path = drivetrain.pathList.get(0);
+
+        command = new SequentialCommandGroup(
+                new InstantCommand(() -> drivetrain.resetOdometry(path.getInitialPose()), drivetrain),
+                drivetrain.ramseteCommand(path),
+                new InstantCommand(() -> drivetrain.arcadeDrive(0, 0, false), drivetrain));
+    }
+
+    /**
+     * Returns this Command
+     * 
+     * @return this Command
+     */
+    public Command getCommand() {
+        System.out.println("Two meters");
+        return command;
+    }
+}
