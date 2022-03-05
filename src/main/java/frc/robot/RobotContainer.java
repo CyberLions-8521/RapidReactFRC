@@ -37,7 +37,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_drivebase.setDefaultCommand(m_driveSystem);
-
+    m_Climber.setDefaultCommand(m_climb);
     // m_shooter.setDefaultCommand(m_shoot);
     // m_genmotor.setDefaultCommand(m_index); // double check
     configureButtonBindings();
@@ -57,6 +57,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
     return new SequentialCommandGroup();
   }
   /*
@@ -141,4 +142,6 @@ public class RobotContainer {
    * PLANNERTEST,
    * m_drivebase);
    */
+
+}
 }

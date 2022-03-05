@@ -45,8 +45,12 @@ public class Drivebase extends SubsystemBase {
 
   // autonomous stuff
   private final DifferentialDriveOdometry m_odometry;
+
   public PIDController m_ramseteController = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
       PIDConstants.D_DRIVE);
+
+  // public PIDController m_PID = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
+
 
   // Left GearBox
   CANSparkMax m_leftMaster = new CANSparkMax(CAN.LEFT_MASTER, MotorType.kBrushed);
@@ -134,7 +138,11 @@ public class Drivebase extends SubsystemBase {
   // PID drive straight for auto fby Kevin
   public void moveForwardStraight(double speed) {
 
-    double output = m_ramseteController.calculate(-getTurnRate(), 0);
+
+    // double output = m_ramseteController.calculate(-getTurnRate(), 0);
+
+    double output = m_PID.calculate(-getTurnRate(), 0);
+
     arcadeDrive(speed, output, false);
   }
 
