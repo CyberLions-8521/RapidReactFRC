@@ -5,42 +5,36 @@ import frc.robot.subsystems.togglesystem.ToggleGeneralMotors;
 import frc.robot.subsystems.togglesystem.Turret;
 
 public class Shoot extends CommandBase {
-    private final Turret m_shooter;
-    private final ToggleGeneralMotors m_index;
-    private boolean m_isDone;
+  private final Turret m_shooter;
+  private final ToggleGeneralMotors m_index;
+  private boolean m_isDone;
 
-    public Shoot(Turret shooter, ToggleGeneralMotors index) {
-        m_shooter = shooter;
-        m_index = index;
-        m_isDone = false;
-        addRequirements(shooter);
-        addRequirements(index);
+  public Shoot(Turret shooter, ToggleGeneralMotors index) {
+    m_shooter = shooter;
+    m_index = index;
+    m_isDone = false;
+    addRequirements(shooter);
+    addRequirements(index);
+  }
+
+  private final int targetSpeed = 500;
+  private final int maxtargetSpeed = 600;
+
+  @Override
+  public void initialize() {
+    if (m_shooter.getShooterStatus() == false && m_index.getIndexStatus() == false
+        && m_shooter.getSpeed() > targetSpeed && targetSpeed < maxtargetSpeed) {
+      m_shooter.setSpeed(565);
+      m_index.IndexOn();
+    } else {
+      m_shooter.setSpeed(0);
+      m_index.indexOff();
     }
+    m_isDone = true;
+  }
 
-    private final int targetSpeed = 500;
-    private final int maxtargetSpeed = 600;
-
-    @Override
-    public void initialize() {
-
-        if (m_shooter.getShooterStatus() == false && m_index.getIndexStatus() == false
-                && m_shooter.getSpeed() > targetSpeed && targetSpeed < maxtargetSpeed) {
-            m_shooter.setSpeed(565);
-            m_index.IndexOn();
-        } else {
-            m_shooter.setSpeed(0);
-            m_index.IndexOff();
-        }
-        m_isDone = true;
-    }
-
-    @Override
-    public void execute() {
-        // m_shooter.ControllerBind(RobotContainer.m_controller);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return m_isDone;
-    }
+  @Override
+  public boolean isFinished() {
+    return m_isDone;
+  }
 }

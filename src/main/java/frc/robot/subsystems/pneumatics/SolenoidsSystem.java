@@ -1,10 +1,13 @@
 package frc.robot.subsystems.pneumatics;
 
-// Pneumatic Dependecies (API)
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kOff;
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
+// Pneumatic Dependecies (API)
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -49,11 +52,7 @@ public class SolenoidsSystem extends SubsystemBase {
     }
 
     public int getGearStatus() {
-        if (m_transRightDS.get().equals(kForward)) {
-            return 1;
-        } else {
-            return 2;
-        }
+        return m_transRightDS.get().equals(kForward) ? 1 : 2;
     }
 
     @Override

@@ -1,32 +1,33 @@
 
 package frc.robot.subsystems.togglesystem;
 
-import frc.robot.Constants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ToggleGeneralMotors extends SubsystemBase {
     boolean m_lowindexorStatus;
     boolean m_indexorStatus;
     boolean m_intakeStatus;
 
-    CANSparkMax m_FrontIndexor = new CANSparkMax(Constants.CAN.kIndexorFront, MotorType.kBrushless);
-    CANSparkMax m_BackIndexor = new CANSparkMax(Constants.CAN.kIndexorBack, MotorType.kBrushed);
-    CANSparkMax m_LowIndexor = new CANSparkMax(Constants.CAN.kIndexorLower, MotorType.kBrushless);
-    CANSparkMax m_IntakeMotor = new CANSparkMax(Constants.CAN.kIntake, MotorType.kBrushed);
+    CANSparkMax m_frontIndexor = new CANSparkMax(Constants.CAN.INDEXOR_FRONT, MotorType.kBrushless);
+    CANSparkMax m_backIndexor = new CANSparkMax(Constants.CAN.INDEXOR_BACK, MotorType.kBrushed);
+    CANSparkMax m_lowIndexor = new CANSparkMax(Constants.CAN.INDEXOR_LOWER, MotorType.kBrushless);
+    CANSparkMax m_intakeMotor = new CANSparkMax(Constants.CAN.INTAKE, MotorType.kBrushed);
 
     public ToggleGeneralMotors() {
-        IndexOff();
+        indexOff();
         lowerIndexOff();
     }
 
     public void setMotor(double speed) {
-        m_FrontIndexor.set(speed);
-        m_BackIndexor.set(speed);
-        m_LowIndexor.set(speed);
-        m_IntakeMotor.set(speed);
+        m_frontIndexor.set(speed);
+        m_backIndexor.set(speed);
+        m_lowIndexor.set(speed);
+        m_intakeMotor.set(speed);
     }
 
     public boolean getIndexStatus() {
@@ -42,36 +43,35 @@ public class ToggleGeneralMotors extends SubsystemBase {
     }
 
     public void IndexOn() {
-        m_FrontIndexor.set(0.60);
-        m_BackIndexor.set(0.50);
+        m_frontIndexor.set(0.60);
+        m_backIndexor.set(0.50);
 
         m_indexorStatus = true;
     }
 
-    public void IndexOff() {
-        m_FrontIndexor.set(0.0);
-        m_BackIndexor.set(0.0);
+    public void indexOff() {
+        m_frontIndexor.set(0.0);
+        m_backIndexor.set(0.0);
         m_indexorStatus = false;
     }
 
-    public void lowerIndexON() {
-        m_LowIndexor.set(0.6);
+    public void lowerIndexOn() {
+        m_lowIndexor.set(0.6);
         m_lowindexorStatus = true;
     }
 
     public void lowerIndexOff() {
-        m_LowIndexor.set(0.0);
+        m_lowIndexor.set(0.0);
         m_lowindexorStatus = false;
     }
 
-    public void IntakeOn() {
-        m_IntakeMotor.set(0.6);
+    public void intakeOn() {
+        m_intakeMotor.set(0.6);
         m_intakeStatus = true;
-
     }
 
-    public void IntakeOff() {
-        m_IntakeMotor.set(0.0);
+    public void intakeOff() {
+        m_intakeMotor.set(0.0);
         m_intakeStatus = false;
     }
 
@@ -80,7 +80,5 @@ public class ToggleGeneralMotors extends SubsystemBase {
         SmartDashboard.putBoolean("Upper Index Status", getIndexStatus());
         SmartDashboard.putBoolean("Lower Index Status", getLowerIndexStatus());
         SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
-
     }
-
 }

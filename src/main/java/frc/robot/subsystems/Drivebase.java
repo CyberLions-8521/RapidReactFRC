@@ -1,102 +1,96 @@
 package frc.robot.subsystems;
 
-//Additional Imports
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
-import frc.robot.RobotContainer;
-// Constants
-import frc.robot.Constants.XBOX;
-import frc.robot.Constants;
-import frc.robot.Constants.DriveMode;
-import frc.robot.Constants.EncodersConstant;
-import frc.robot.Constants.DriveConstants;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.Counter;
-// import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 // Encoder / PID Only 
-// import frc.robot.Constants.EncodersConstants;
-// import frc.robot.commands.Drive;
-// import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//Additional Imports
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// Constants
+import frc.robot.Constants.CAN;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.DriveMode;
+import frc.robot.Constants.EncodersConstant;
+import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.XBOX;
 import frc.robot.RobotContainer;
+
 public class Drivebase extends SubsystemBase {
 
-  String driveMode = "Drive Mode";
-  // trying a smaller value for the rate limit
-  SlewRateLimiter filter = new SlewRateLimiter(0.2);
+  String m_driveMode = "Drive Mode";
+  // Trying a smaller value for the rate limit
+  SlewRateLimiter m_filter = new SlewRateLimiter(0.2);
 
-  // Constants to control joystick input
-  double SPEED_REDUCER = 0.5;
-  double TURN_REDUCER = 0.5;
- 
+  // Variables to control joystick input
+  double m_speedReducer = 0.5;
+  double m_turnReducer = 0.5;
 
   private final DifferentialDriveOdometry m_odometry;
-  public PIDController MoveFowardPID = new PIDController(Constants.PIDConstants.KpD, Constants.PIDConstants.KiD, Constants.PIDConstants.KlD);
+  public PIDController MoveFowardPID = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
+      PIDConstants.D_DRIVE);
 
   // Left GearBox
-  CANSparkMax m_leftMaster = new CANSparkMax(Constants.CAN.kLeftMaster, MotorType.kBrushed);
-  CANSparkMax m_leftMiddleSlave = new CANSparkMax(Constants.CAN.kLeftMiddleSlave, MotorType.kBrushed);
-  CANSparkMax m_leftSlave = new CANSparkMax(Constants.CAN.kLeftSlave, MotorType.kBrushed);
+  CANSparkMax m_leftMaster = new CANSparkMax(CAN.LEFT_MASTER, MotorType.kBrushed);
+  CANSparkMax m_leftMiddleSlave = new CANSparkMax(CAN.LEFT_MIDDLE_SLAVE, MotorType.kBrushed);
+  CANSparkMax m_leftSlave = new CANSparkMax(CAN.LEFT_SLAVE, MotorType.kBrushed);
 
   // Right GearBox
-  CANSparkMax m_rightMaster = new CANSparkMax(Constants.CAN.kRightMaster, MotorType.kBrushed);
-  CANSparkMax m_rightMiddleSlave = new CANSparkMax(Constants.CAN.kRightMiddleSlave, MotorType.kBrushed);
-  CANSparkMax m_rightSlave = new CANSparkMax(Constants.CAN.kRightSlave, MotorType.kBrushed);
+  CANSparkMax m_rightMaster = new CANSparkMax(CAN.RIGHT_MASTER, MotorType.kBrushed);
+  CANSparkMax m_rightMiddleSlave = new CANSparkMax(CAN.RIGHT_MIDDLE_SLAVE, MotorType.kBrushed);
+  CANSparkMax m_rightSlave = new CANSparkMax(CAN.RIGHT_SLAVE, MotorType.kBrushed);
 
   // Differential drive class
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
   // Encoders stuff
-   private final Counter m_RightEncoder = new Counter();
-   private final Counter m_LeftEncoder = new Counter();
+  private final Counter m_rightEncoder = new Counter();
+  private final Counter m_leftEncoder = new Counter();
 
-   
-  
   // private final Encoder m_LeftEncoder = new Encoder(
   // EncodersConstants.m_LeftSlaveEncoderPorts[0],
   // EncodersConstants.m_LeftSlaveEncoderPorts[1],
   // EncodersConstants.m_LeftSlaveEncoderReversed);
 
   // // Reset Encoders
-   public void resetEncoders() {
-    m_RightEncoder.reset();
-    m_LeftEncoder.reset();
-    }
-
-  // //Returns for encoder
-   public Counter getLeftEncoder() {
-   return m_LeftEncoder;
-   }
-
-   public Counter getRightEncoder() {
-   return m_RightEncoder;
-   }
-
-  // //Get distance from both encoders and avg them for best accuracy
-   public double getAverageEncoderDistance() {
-   return ((m_LeftEncoder.getDistance() + m_RightEncoder.getDistance()) / 2.0)*(Math.PI*EncodersConstant.Circumference);
-   }
-
-   public double getLeftEncoderDistance() {
-    return ((m_LeftEncoder.getDistance())*(Math.PI*EncodersConstant.Circumference));
+  public void resetEncoders() {
+    m_rightEncoder.reset();
+    m_leftEncoder.reset();
   }
 
-    public double getRightEncoderDistance() {
-      return ((m_RightEncoder.getDistance())*(Math.PI*EncodersConstant.Circumference));
-      }
+  // //Returns for encoder
+  public Counter getLeftEncoder() {
+    return m_leftEncoder;
+  }
+
+  public Counter getRightEncoder() {
+    return m_rightEncoder;
+  }
+
+  // //Get distance from both encoders and avg them for best accuracy
+  public double getAverageEncoderDistance() {
+    return ((m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0)
+        * (Math.PI * EncodersConstant.CIRCUMFERENCE);
+  }
+
+  public double getLeftEncoderDistance() {
+    return ((m_leftEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
+  }
+
+  public double getRightEncoderDistance() {
+    return ((m_rightEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
+  }
 
   public void setMaxOutput(double maxOutput) {
     m_drive.setMaxOutput(maxOutput);
@@ -118,18 +112,18 @@ public class Drivebase extends SubsystemBase {
   }
 
   // Wheel-Speed stuff
-   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-   return new DifferentialDriveWheelSpeeds(m_LeftEncoder.getRate(),
-   m_RightEncoder.getRate());
-   }
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(),
+        m_rightEncoder.getRate());
+  }
 
   // Arcade Drive
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
     m_drive.arcadeDrive(xSpeed, zRotation, squareInputs);
   }
 
-  double speed;
-  double turnRate;
+  double m_speed;
+  double m_turnRate;
   // DifferentialDriveOdometry odometry;
   // Gyro
   AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -138,15 +132,15 @@ public class Drivebase extends SubsystemBase {
   public static DriveMode m_mode;
 
   public Drivebase() {
-    //initializeEncoder
-    m_RightEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_LeftEncoder.setDistancePerPulse(EncodersConstant.DistancePerPulse);
-    m_RightEncoder.setUpSource(EncodersConstant.RightEncoderPort);
-    m_LeftEncoder.setUpSource(EncodersConstant.LeftEncoderPort);
+    // initializeEncoder
+    m_rightEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
+    m_leftEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
+    m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT);
+    m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT);
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
-    speed = 0.0;
-    turnRate = 0.0;
+    m_speed = 0.0;
+    m_turnRate = 0.0;
     m_gyro.calibrate();
     // m_gyro.reset();
 
@@ -157,7 +151,7 @@ public class Drivebase extends SubsystemBase {
     m_rightMiddleSlave.follow(m_rightMaster, true);
 
     // Setting all Motors Idle mode
-    m_leftMaster.setIdleMode(CANSparkMax.IdleMode.kBrake); 
+    m_leftMaster.setIdleMode(CANSparkMax.IdleMode.kBrake);
     m_rightMaster.setIdleMode(CANSparkMax.IdleMode.kBrake);
     m_leftSlave.setIdleMode(CANSparkMax.IdleMode.kBrake);
     m_leftMiddleSlave.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -176,23 +170,20 @@ public class Drivebase extends SubsystemBase {
     m_rightSlave.setOpenLoopRampRate(0.2);
     m_rightMiddleSlave.setOpenLoopRampRate(0.2);
 
-  
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
-
   }
 
   @Override
   public void periodic() {
-     SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
-     SmartDashboard.putNumber("LeftEncoderDistance",getLeftEncoderDistance());
-     SmartDashboard.putNumber("RightEncoderDistance",getRightEncoderDistance());
+    SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
+    SmartDashboard.putNumber("LeftEncoderDistance", getLeftEncoderDistance());
+    SmartDashboard.putNumber("RightEncoderDistance", getRightEncoderDistance());
     // m_odometry.update(m_gyro.getRotation2d(), m_LeftEncoder.getDistance(),
     // m_RightEncoder.getDistance());
     double tHeading = getHeading().getDegrees();
     SmartDashboard.putNumber("Heading", tHeading);
-
   }
 
   public Rotation2d getHeading() {
@@ -231,11 +222,11 @@ public class Drivebase extends SubsystemBase {
   }
 
   public double getThrottle() {
-    return speed;
+    return m_speed;
   }
 
   public double getTurnRate() {
-    return turnRate;
+    return m_turnRate;
   }
 
   public void moveForward(double speed) {
@@ -251,15 +242,14 @@ public class Drivebase extends SubsystemBase {
   }
 
   public void driveWithController(XboxController controller) {
-
     // Use the Y button to switch between ARCADE and TANK
     if (RobotContainer.m_controller.getYButtonPressed()) {
       if (m_mode == DriveMode.TANK) {
         m_mode = DriveMode.ARCADE;
-        driveMode = "Arcade Drive";
+        m_driveMode = "Arcade Drive";
       } else if (m_mode == DriveMode.ARCADE) {
         m_mode = DriveMode.TANK;
-        driveMode = "Tank Drive";
+        m_driveMode = "Tank Drive";
       }
     }
 
@@ -276,32 +266,31 @@ public class Drivebase extends SubsystemBase {
         arcadeDrive(controller);
         break;
     }
-
     // Display values to smart dashboard
-    SmartDashboard.putString("Arcade Drive", driveMode);
+    SmartDashboard.putString("Arcade Drive", m_driveMode);
   }
 
   public void arcadeDrive(XboxController controller) {
-    TURN_REDUCER = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
-    SPEED_REDUCER = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
+    m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
+    m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
 
-    speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * SPEED_REDUCER;
-    turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * TURN_REDUCER;
+    m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
+    m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
 
-    speed = limitSpeed(speed);
-    turnRate = limitSpeed(turnRate);
+    m_speed = clampSpeed(m_speed);
+    m_turnRate = clampSpeed(m_turnRate);
 
-    arcadeDrive(speed, -turnRate, true);
+    arcadeDrive(m_speed, -m_turnRate, true);
 
-    SmartDashboard.putNumber("Speed", -speed);
-    SmartDashboard.putNumber("Turn Rate", turnRate);
+    SmartDashboard.putNumber("Speed", -m_speed);
+    SmartDashboard.putNumber("Turn Rate", m_turnRate);
   }
 
   public void autoArcade(double speed, double turn) {
     m_drive.arcadeDrive(speed, turn, false);
   }
 
-  public double limitSpeed(double speed) {
+  public double clampSpeed(double speed) {
     if (speed > 1.0)
       speed = 0.4;
     // speed = DriveConstants.MAX_OUTPUT;
@@ -320,5 +309,4 @@ public class Drivebase extends SubsystemBase {
     m_rightMaster.setVoltage(rightVolts);
     m_drive.feed();
   }
-
 }
