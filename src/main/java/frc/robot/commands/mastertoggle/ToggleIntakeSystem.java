@@ -20,10 +20,10 @@ public class ToggleIntakeSystem extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_intakeSystem.getGearStatus() == 1) {
-      m_intakeSystem.setGear1();
+    if (m_intakeSystem.getAutoStatus()==false) {
+      m_intakeSystem.autoIntakeSystemOn();
     } else {
-      m_intakeSystem.setGear2();
+      m_intakeSystem.autoIntakeSystemOff();
     }
     m_isDone = true;
   }
