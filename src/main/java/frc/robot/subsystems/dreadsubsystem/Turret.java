@@ -85,11 +85,11 @@ public class Turret extends SubsystemBase {
     double output = ShooterPID.calculate(m_encoder.getVelocity(), m_targetSpeed);
     // put calulcated output from PID into motor output
     m_shooter.set(output);
-    SmartDashboard.putNumber("Output", output);
+    // SmartDashboard.putNumber("Output", output);
 
     SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
-    SmartDashboard.putBoolean("ShooterStatus", getShooterStatus());
+    SmartDashboard.putBoolean("Toggle Turret", getShooterStatus());
   }
 
 }

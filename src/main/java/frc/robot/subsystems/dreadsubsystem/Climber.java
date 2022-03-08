@@ -11,6 +11,8 @@ import frc.robot.Constants.CAN;
 import frc.robot.Constants.ElevatorOutput;
 
 public class Climber extends SubsystemBase {
+    
+   
     public Climber() {
     }
 
@@ -26,6 +28,8 @@ public class Climber extends SubsystemBase {
         // default position = 0
         m_encoder.setPosition(0);
     }
+
+  
 
     // setting up the controller
     public void tarzan(XboxController controller) {
@@ -52,5 +56,6 @@ public class Climber extends SubsystemBase {
         // we display the position and velocity of the encoder on the shuffleBoard
         SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
         SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
+        
     }
 }

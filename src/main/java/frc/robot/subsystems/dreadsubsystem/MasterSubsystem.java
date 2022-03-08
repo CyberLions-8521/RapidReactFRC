@@ -156,9 +156,6 @@ public class MasterSubsystem extends SubsystemBase {
     return m_intakeStatus;
   }
 
-  public boolean getSystemStatus() {
-    return m_toggleSystemStatus;
-  }
 
   public int getGearStatus() {
     if (m_transRightDS.get().equals(kForward)) {
@@ -170,12 +167,12 @@ public class MasterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putString("Arm", getArmStatus().toString());
-    SmartDashboard.putNumber("Gear", getGearStatus());
-    SmartDashboard.putBoolean("Upper Index Status", getIndexStatus());
+    // SmartDashboard.putString("Arm", getArmStatus().toString());
+    // SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
+    // SmartDashboard.putBoolean("Upper Index Status", getIndexStatus());
+    SmartDashboard.putNumber("Toggle Gear", getGearStatus());
     SmartDashboard.putBoolean("Lower Index Status", getLowerIndexStatus());
-    SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
-    SmartDashboard.putBoolean("Auto Intake/Index Status", getSystemStatus());
+    SmartDashboard.putBoolean("Toggle Intake System", getAutoStatus());
   }
 
 }

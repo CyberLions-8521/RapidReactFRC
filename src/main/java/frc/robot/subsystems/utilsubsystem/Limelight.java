@@ -36,9 +36,9 @@ public class Limelight extends SubsystemBase {
     boolean TargetDetected = tv.getDouble(0.0) == 1;
     // post to smart dashboard periodically
     SmartDashboard.putNumber("Pipeline", z);
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
+    SmartDashboard.getNumber("LimelightX", x);
+    SmartDashboard.getNumber("LimelightY", y);
+    SmartDashboard.getNumber("LimelightArea", area);
     SmartDashboard.putBoolean("Target Detected", TargetDetected);
     SmartDashboard.putNumber("Distance", getDistanceToHub());
   }
