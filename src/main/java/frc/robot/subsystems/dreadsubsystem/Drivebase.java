@@ -46,7 +46,7 @@ public class Drivebase extends SubsystemBase {
   // autonomous stuff
   private final DifferentialDriveOdometry m_odometry;
 
-  public PIDController m_ramseteController = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
+  public PIDController m_pid = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
       PIDConstants.D_DRIVE);
 
   // public PIDController m_PID = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
@@ -139,12 +139,26 @@ public class Drivebase extends SubsystemBase {
   public void moveForwardStraight(double speed) {
 
 
-    double output = m_ramseteController.calculate(-getTurnRate(), 0);
+    double output = m_pid.calculate(-getTurnRate(), 0);
 
     //double output = m_PID.calculate(-getTurnRate(), 0);
 
     arcadeDrive(speed, output, false);
   }
+
+  //need to be edit
+    public void EncoderDirection(){
+    if (m_rightMaster.get() > 0){
+      m_rightEncoder.setReverseDirection(true);
+    } else if (m_rightMaster.get() < 0)
+    m_rightEncoder.setReverseDirection(false);
+
+    if (m_leftEncoder.get() > 0){
+      m_leftEncoder.setReverseDirection(true);
+    } else if (m_rightMaster.get() < 0)
+    m_leftEncoder.setReverseDirection(false);
+    }
+  
 
   public double getThrottle() {
     return m_speed;
@@ -302,6 +316,7 @@ public class Drivebase extends SubsystemBase {
 
   @Override
   public void periodic() {
+    EncoderDirection();
     SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
     SmartDashboard.putNumber("LeftEncoderDistance", getLeftEncoderDistance());
     SmartDashboard.putNumber("RightEncoderDistance", getRightEncoderDistance());
