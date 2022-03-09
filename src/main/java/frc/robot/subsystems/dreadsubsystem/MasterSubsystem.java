@@ -27,11 +27,14 @@ public class MasterSubsystem extends SubsystemBase {
   
   DoubleSolenoid m_transLeftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
   DoubleSolenoid m_transRightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 4, 5);
+
+  
   
 
 
 
 
+// adawakwdmkwadwadkawdjakd
 
 
   CANSparkMax m_intake = new CANSparkMax(CAN.INTAKE, MotorType.kBrushed);
@@ -45,6 +48,7 @@ public class MasterSubsystem extends SubsystemBase {
   boolean m_indexorStatus;
   boolean m_intakeStatus;
   boolean m_toggleSystemStatus;
+  boolean m_final;
 
   public MasterSubsystem() {
     // stop all subsystem toggle here
