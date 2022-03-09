@@ -300,15 +300,14 @@ public class Drivebase extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.getNumber("AverageDistance", getAverageEncoderDistance());
-    SmartDashboard.getNumber("LeftEncoderDistance", getLeftEncoderDistance());
-    SmartDashboard.getNumber("RightEncoderDistance", getRightEncoderDistance());
+    SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
+    SmartDashboard.putNumber("LeftEncoderDistance", getLeftEncoderDistance());
+    SmartDashboard.putNumber("RightEncoderDistance", getRightEncoderDistance());
     // m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(),
     // m_rightEncoder.getDistance());
     double tHeading = getHeading().getDegrees();
-    SmartDashboard.getNumber("Heading", tHeading);
+    SmartDashboard.putNumber("Heading", tHeading);
     m_odometry.update(m_gyro.getRotation2d(), m_rightEncoder.getDistance(), m_leftEncoder.getDistance());
-
   }
 
 }
