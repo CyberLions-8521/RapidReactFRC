@@ -13,6 +13,8 @@ import frc.robot.Constants;
 import frc.robot.Constants.PIDConstants;
 import frc.robot.Constants.XBOX;
 
+import static frc.robot.Constants.PIDConstants.*;
+
 /*
 TODO: Tune PID coefficients
 The SmartDashboard should have inputs to change the coefficients
@@ -26,11 +28,7 @@ public class Turret extends SubsystemBase {
   RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
   double m_targetSpeed;
 
-  double kp = PIDConstants.P_SHOOTER;
-  double ki = PIDConstants.I_SHOOTER;
-  double kd = PIDConstants.D_SHOOTER;
-
-  PIDController m_shooterPID = new PIDController(PIDConstants.P_SHOOTER, PIDConstants.I_SHOOTER, PIDConstants.D_SHOOTER);
+  PIDController m_shooterPID = new PIDController(P_SHOOTER, I_SHOOTER, D_SHOOTER);
 
   public Turret() {
     m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); // Allows wheels to move when motor is active
@@ -38,9 +36,9 @@ public class Turret extends SubsystemBase {
     m_encoder.setVelocityConversionFactor(0.25);
     stopShooter();
 
-    SmartDashboard.putNumber("P Shooter", kp);
-    SmartDashboard.putNumber("I Shooter", ki);
-    SmartDashboard.putNumber("D Shooter", kd);
+    SmartDashboard.putNumber("P Shooter", P_SHOOTER);
+    SmartDashboard.putNumber("I Shooter", I_SHOOTER);
+    SmartDashboard.putNumber("D Shooter", D_SHOOTER);
   }
 
   public void ControllerBind(XboxController controller) {
@@ -69,22 +67,12 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
-    double p = SmartDashboard.getNumber("P Shooter", kp);
-    double i = SmartDashboard.getNumber("I Shooter", ki);
-    double d = SmartDashboard.getNumber("D Shooter", kd);
-
-    if (p != kp) {
-      kp = p;
-      m_shooterPID.setP(p);
-    }
-    if (i != ki) {
-      ki = i;
-      m_shooterPID.setI(i);
-    }
-    if (d != kd) {
-      kd = d;
-      m_shooterPID.setD(d);
-    }
+    double p = SmartDashboard.getNumber("P Shooter", P_SHOOTER);
+    double i = SmartDashboard.getNumber("I Shooter", I_SHOOTER);
+    double d = SmartDashboard.getNumber("D Shooter", D_SHOOTER);
+    m_shooterPID.setP(p);
+    m_shooterPID.setI(i);
+    m_shooterPID.setD(d);
 
     // config whatever setpoint and calulcate through the PID
     double output = m_shooterPID.calculate(m_encoder.getVelocity(), m_targetSpeed);
