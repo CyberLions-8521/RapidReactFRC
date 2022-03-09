@@ -11,55 +11,16 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "0,0": {
-            "size": [
-              4,
-              5
-            ],
-            "content": {
-              "_type": "Grid Layout",
-              "_title": "PID Set Values",
-              "Layout/Number of columns": 3,
-              "Layout/Number of rows": 2,
-              "Layout/Label position": "BOTTOM",
-              "_children": {
-                "0,0": {
-                  "_type": "PID Command",
-                  "_title": "PID Command LimeLight"
-                },
-                "1,0": {
-                  "_type": "PID Command",
-                  "_title": "PID Command Drivebase"
-                },
-                "1,1": {
-                  "_type": "PID Controller",
-                  "_title": "PID Controller Elevator"
-                },
-                "2,0": {
-                  "_type": "PID Command",
-                  "_title": "PID Command Elevator"
-                },
-                "0,1": {
-                  "_type": "PID Controller",
-                  "_title": "PID Controller Drivebase"
-                },
-                "2,1": {
-                  "_type": "PID Controller",
-                  "_title": "PID Controller Limelight"
-                }
-              }
-            }
-          },
           "4,0": {
             "size": [
-              6,
-              6
+              5,
+              5
             ],
             "content": {
               "_type": "Grid Layout",
               "_title": "Status Table",
               "Layout/Number of columns": 2,
-              "Layout/Number of rows": 2,
+              "Layout/Number of rows": 3,
               "Layout/Label position": "HIDDEN",
               "_children": {
                 "0,1": {
@@ -103,12 +64,6 @@
                       "Colors/Color when true": "#7CFC00FF",
                       "Colors/Color when false": "#8B0000FF"
                     },
-                    "1,0": {
-                      "_type": "Boolean Box",
-                      "_title": "Elevator Status",
-                      "Colors/Color when true": "#7CFC00FF",
-                      "Colors/Color when false": "#8B0000FF"
-                    },
                     "1,1": {
                       "_type": "Boolean Box",
                       "_title": "unknown",
@@ -126,38 +81,28 @@
                   "_children": {
                     "0,0": {
                       "_type": "Text View",
-                      "_title": "getTX"
+                      "_title": "LimelightTX"
                     },
                     "1,0": {
                       "_type": "Text View",
-                      "_title": "getTY"
+                      "_title": "LimelightTY"
                     },
                     "0,1": {
                       "_type": "Text View",
-                      "_title": "getTA"
+                      "_title": "LimelightTA"
                     },
                     "1,1": {
                       "_type": "Text View",
-                      "_title": "getTV"
+                      "_title": "LimelightTV"
                     }
                   }
                 }
               }
             }
           },
-          "0,5": {
+          "0,3": {
             "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Encoder",
-              "_title": "Drivebase Encoder"
-            }
-          },
-          "10,0": {
-            "size": [
-              3,
+              4,
               2
             ],
             "content": {
@@ -178,39 +123,74 @@
               }
             }
           },
-          "10,2": {
+          "0,0": {
             "size": [
-              3,
-              2
+              4,
+              3
             ],
             "content": {
-              "_type": "Basic Subsystem",
-              "_title": "Basic Subsystem"
-            }
-          },
-          "2,5": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Accelerometer",
-              "_title": "Accelerometer",
-              "Visuals/Show text": true,
-              "Visuals/Precision": 2,
-              "Visuals/Show tick marks": false,
-              "Range/Min": -1.0,
-              "Range/Max": 1.0
-            }
-          },
-          "10,4": {
-            "size": [
-              3,
-              2
-            ],
-            "content": {
-              "_type": "Network Table Tree",
-              "_title": "Network Table Tree"
+              "_type": "Grid Layout",
+              "_title": "Grid Layout",
+              "Layout/Number of columns": 2,
+              "Layout/Number of rows": 2,
+              "Layout/Label position": "BOTTOM",
+              "_children": {
+                "0,0": {
+                  "_type": "Grid Layout",
+                  "_title": "Turret Encoders",
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 1,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "0,0": {
+                      "_type": "Text View",
+                      "_title": "Encoder Position"
+                    },
+                    "1,0": {
+                      "_type": "Text View",
+                      "_title": "Encoder Velocity"
+                    }
+                  }
+                },
+                "1,0": {
+                  "_type": "Grid Layout",
+                  "_title": "Elevator",
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 1,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "0,0": {
+                      "_type": "Text View",
+                      "_title": "Encoder Position"
+                    },
+                    "1,0": {
+                      "_type": "Text View",
+                      "_title": "Encoder Velocity"
+                    }
+                  }
+                },
+                "1,1": {
+                  "_type": "Grid Layout",
+                  "_title": "Drivebase Encoders",
+                  "Layout/Number of columns": 2,
+                  "Layout/Number of rows": 1,
+                  "Layout/Label position": "BOTTOM",
+                  "_children": {
+                    "1,0": {
+                      "_type": "Text View",
+                      "_title": "RightEncoderDistance"
+                    },
+                    "0,0": {
+                      "_type": "Text View",
+                      "_title": "LeftEncoderDistance"
+                    }
+                  }
+                },
+                "0,1": {
+                  "_type": "Text View",
+                  "_title": "Heading"
+                }
+              }
             }
           }
         }
@@ -229,8 +209,8 @@
         "tiles": {
           "0,1": {
             "size": [
-              8,
-              4
+              5,
+              3
             ],
             "content": {
               "_type": "Camera Stream",
@@ -247,7 +227,7 @@
           },
           "0,0": {
             "size": [
-              8,
+              5,
               1
             ],
             "content": {
@@ -255,9 +235,9 @@
               "_title": "Basic FMS Info"
             }
           },
-          "4,5": {
+          "0,4": {
             "size": [
-              4,
+              3,
               1
             ],
             "content": {
@@ -265,22 +245,7 @@
               "_title": "DifferientialDrive Mode"
             }
           },
-          "0,5": {
-            "size": [
-              4,
-              1
-            ],
-            "content": {
-              "_type": "Accelerometer",
-              "_title": "Accelerometer",
-              "Visuals/Show text": true,
-              "Visuals/Precision": 2,
-              "Visuals/Show tick marks": false,
-              "Range/Min": -1.0,
-              "Range/Max": 1.0
-            }
-          },
-          "8,0": {
+          "5,0": {
             "size": [
               5,
               6
@@ -289,7 +254,7 @@
               "_type": "Grid Layout",
               "_title": "Grid Layout",
               "Layout/Number of columns": 2,
-              "Layout/Number of rows": 3,
+              "Layout/Number of rows": 4,
               "Layout/Label position": "BOTTOM",
               "_children": {
                 "0,0": {
@@ -311,15 +276,6 @@
                   "_type": "ComboBox Chooser",
                   "_title": "Robot Mode"
                 },
-                "1,2": {
-                  "_type": "Voltage View",
-                  "_title": "",
-                  "Range/Min": 0.0,
-                  "Range/Max": 5.0,
-                  "Range/Center": 0.0,
-                  "Visuals/Orientation": "HORIZONTAL",
-                  "Visuals/Number of tick marks": 5
-                },
                 "0,1": {
                   "_type": "Grid Layout",
                   "_title": "Toggle Status",
@@ -327,36 +283,29 @@
                   "Layout/Number of rows": 2,
                   "Layout/Label position": "BOTTOM",
                   "_children": {
-                    "0,1": {
+                    "1,0": {
                       "_type": "Boolean Box",
-                      "_title": "Elevator",
+                      "_title": "Lower Index Status",
                       "Colors/Color when true": "#7CFC00FF",
                       "Colors/Color when false": "#8B0000FF"
                     },
                     "1,1": {
-                      "_type": "Boolean Box",
-                      "_title": "unknown",
-                      "Colors/Color when true": "#7CFC00FF",
-                      "Colors/Color when false": "#8B0000FF"
+                      "_type": "Text View",
+                      "_title": "Toggle Gear"
                     },
                     "0,0": {
                       "_type": "Boolean Box",
-                      "_title": "Arm",
+                      "_title": "Toggle Intake System",
                       "Colors/Color when true": "#7CFC00FF",
                       "Colors/Color when false": "#8B0000FF"
                     },
-                    "1,0": {
+                    "0,1": {
                       "_type": "Boolean Box",
-                      "_title": "Gear",
+                      "_title": "Toggle Turret",
                       "Colors/Color when true": "#7CFC00FF",
                       "Colors/Color when false": "#8B0000FF"
                     }
                   }
-                },
-                "1,1": {
-                  "_type": "Ultrasonic",
-                  "_title": "Ultrasonic",
-                  "Unit/Unit": "INCH"
                 }
               }
             }
@@ -489,9 +438,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -8.0,
-    "y": -8.0,
-    "width": 1936.0,
-    "height": 1056.0
+    "x": 184.0,
+    "y": 187.0,
+    "width": 1608.0,
+    "height": 908.0
   }
 }
