@@ -31,6 +31,7 @@ public class Drivebase extends SubsystemBase {
   String m_driveMode = "Drive Mode";
   double m_speed;
   double m_turnRate;
+  double m_lastAngle = 0;
 
   // Constants to control joystick input
   double m_speedReducer = 0.5;
@@ -264,6 +265,7 @@ public class Drivebase extends SubsystemBase {
 
   // reset gyro
   public void zeroHeading() {
+    m_lastAngle = 0;
     m_gyro.reset();
   }
 
@@ -284,8 +286,11 @@ public class Drivebase extends SubsystemBase {
   }
 
   // Arcade Drive
+  double turnCorrectorP = 0.03;
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
-    m_drive.arcadeDrive(xSpeed, zRotation, squareInputs);
+    double error = (getAngle() - m_lastAngle) - zRotation;
+    SmartDashboard.putNumber("Turn Rate Error", error);
+    m_drive.arcadeDrive(xSpeed, zRotation + error*turnCorrectorP, squareInputs);
   }
 
   public AHRS getGyro() {
@@ -308,6 +313,8 @@ public class Drivebase extends SubsystemBase {
     double tHeading = getHeading().getDegrees();
     SmartDashboard.putNumber("Heading", tHeading);
     m_odometry.update(m_gyro.getRotation2d(), m_rightEncoder.getDistance(), m_leftEncoder.getDistance());
+
+    m_lastAngle = getAngle();
   }
 
 }
