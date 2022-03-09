@@ -10,6 +10,7 @@ import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.LowerIndexor;
+import frc.robot.commands.mastertoggle.Shoot;
 // import frc.robot.commands.mastertoggle.Shoot;
 import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
 import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
@@ -18,6 +19,8 @@ import frc.robot.subsystems.dreadsubsystem.Climber;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 //import frc.robot.subsystems.dreadsubsystem.Turret;
+import frc.robot.subsystems.dreadsubsystem.Turret;
+import frc.robot.subsystems.utilsubsystem.Limelight;
 
 public class RobotContainer {
 
@@ -25,11 +28,12 @@ public class RobotContainer {
   public static Drivebase m_drivebase = new Drivebase();
   private static final Climber m_Climber = new Climber();
   public static final MasterSubsystem m_masterSubsystem = new MasterSubsystem();
-  //public static final Turret m_turret = new Turret();
+  public static final Turret m_turret = new Turret();
+  private static final Limelight m_vision = new Limelight();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  //private final Shoot m_shoot = new Shoot(m_turret, m_masterSubsystem);
+  private final Shoot m_shoot = new Shoot(m_turret, m_vision, m_masterSubsystem);
   private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_masterSubsystem);
   private final LowerIndexor m_lowindex = new LowerIndexor(m_masterSubsystem);
   private final toggleIndexSystem m_indextoggle = new toggleIndexSystem(m_masterSubsystem);
@@ -43,7 +47,10 @@ public class RobotContainer {
     // Only setDefaultCommand When calling controller in subsystems.
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_Climber.setDefaultCommand(m_climb);
-    //m_masterSubsystem.setDefaultCommand(m_shoot);
+    m_turret.setDefaultCommand(m_shoot);
+    m_masterSubsystem.setDefaultCommand(m_shoot);
+    m_vision.setDefaultCommand(m_shoot);
+
 
     configureButtonBindings();
 

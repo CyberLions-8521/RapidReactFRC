@@ -26,7 +26,7 @@ public class Climber extends SubsystemBase {
         // using the encoder to get the value from the motor
         m_encoder = m_elevatorMotor.getEncoder();
         // default position = 0
-        m_encoder.setPosition(0);
+        m_encoder.setPosition(144);
     }
 
   

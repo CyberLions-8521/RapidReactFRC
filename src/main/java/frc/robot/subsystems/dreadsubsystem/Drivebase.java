@@ -46,7 +46,7 @@ public class Drivebase extends SubsystemBase {
   // autonomous stuff
   private final DifferentialDriveOdometry m_odometry;
 
-  public PIDController m_ramseteController = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
+  public PIDController m_pid = new PIDController(PIDConstants.P_DRIVE, PIDConstants.I_DRIVE,
       PIDConstants.D_DRIVE);
 
   // public PIDController m_PID = new PIDController(PIDConstants.KpD, PIDConstants.KiD, PIDConstants.KlD);
@@ -73,7 +73,7 @@ public class Drivebase extends SubsystemBase {
     m_turnRate = 0.0;
     m_gyro.calibrate();
     // m_gyro.reset();
-    // // Pathlist
+    // // Pathlistfd
     // follow​(CANSparkMax leader, boolean invert) (Slave Followers)
     m_leftSlave.follow(m_leftMaster, false);
     m_rightSlave.follow(m_rightMaster, false);
@@ -135,12 +135,26 @@ public class Drivebase extends SubsystemBase {
   public void moveForwardStraight(double speed) {
 
 
-    double output = m_ramseteController.calculate(-getTurnRate(), 0);
+    double output = m_pid.calculate(-getTurnRate(), 0);
 
     //double output = m_PID.calculate(-getTurnRate(), 0);
 
     arcadeDrive(speed, output, false);
   }
+
+  //need to be edit
+    public void EncoderDirection(){
+    if (m_rightMaster.get() > 0){
+      m_rightEncoder.setReverseDirection(true);
+    } else if (m_rightMaster.get() < 0)
+    m_rightEncoder.setReverseDirection(false);
+
+    if (m_leftEncoder.get() > 0){
+      m_leftEncoder.setReverseDirection(true);
+    } else if (m_rightMaster.get() < 0)
+    m_leftEncoder.setReverseDirection(false);
+    }
+  
 
   public double getThrottle() {
     return m_speed;
@@ -195,9 +209,12 @@ public class Drivebase extends SubsystemBase {
     SmartDashboard.putString("Arcade Drive", m_driveMode);
   }
 
+
+
   public void arcadeDrive(XboxController controller) {
     m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
     m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
+    double offset = 0;
 
     m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
     m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
@@ -205,7 +222,16 @@ public class Drivebase extends SubsystemBase {
     m_speed = clampSpeed(m_speed);
     m_turnRate = clampSpeed(m_turnRate);
 
-    arcadeDrive(m_speed, -m_turnRate, true);
+    //testing imagine it works
+    if(controller.getRawAxis(XBOX.LEFT_STICK_Y) > 0){
+      offset = 0.01;
+    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) < 0){
+      offset = -0.01;
+    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) == 0){
+      offset = 0;
+    }
+
+    arcadeDrive(m_speed, -m_turnRate + offset, true);
 
     SmartDashboard.putNumber("Speed", -m_speed);
     SmartDashboard.putNumber("Turn Rate", m_turnRate);
@@ -296,9 +322,10 @@ public class Drivebase extends SubsystemBase {
 
   @Override
   public void periodic() {
-   // SmartDashboard.getNumber("AverageDistance", getAverageEncoderDistance());
-    //SmartDashboard.getNumber("LeftEncoderDistance", getLeftEncoderDistance());
-    //SmartDashboard.getNumber("RightEncoderDistance", getRightEncoderDistance());
+    EncoderDirection();
+    SmartDashboard.putNumber("AverageDistance", getAverageEncoderDistance());
+    SmartDashboard.putNumber("LeftEncoderDistance", getLeftEncoderDistance());
+    SmartDashboard.putNumber("RightEncoderDistance", getRightEncoderDistance());
     // m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(),
     // m_rightEncoder.getDistance());
     double tHeading = getHeading().getDegrees();
