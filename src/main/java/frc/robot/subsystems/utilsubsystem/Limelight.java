@@ -54,7 +54,7 @@ public class Limelight extends SubsystemBase {
     return Distance;
   }
 
-  public double DistanceToMotorVelocity() {
+  public double getDistanceToMotorVelocity() {
     double rad = .05088; // (meters)
     double grav = 9.8; // (m/s^2)
 
