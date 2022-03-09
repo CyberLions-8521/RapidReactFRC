@@ -36,7 +36,8 @@ public class Climber extends SubsystemBase {
         m_encoder = m_elevatorMotor.getEncoder();
         // if you hit the dpad right and the position is less than x , make it go in one
         // direction
-        if (controller.getPOV() == 90 && m_encoder.getPosition() < 100) {
+        /*
+        if (controller.getPOV() == 90 && m_encoder.getPosition() < 144) {
             m_elevatorMotor.setVoltage(ElevatorOutput.ELEVATOR_UP);
             // if you hit the dpad left and the position is greater than 0, make the motor
             // go in the other direction
@@ -44,9 +45,20 @@ public class Climber extends SubsystemBase {
             m_elevatorMotor.setVoltage(ElevatorOutput.ELEVATOR_DOWN);
             // if you are NOT pressing the dpap button or the position is greater than x or
             // the position is less than 0 then the motor does nothing
-        } else if (controller.getPOV() == -1 || m_encoder.getPosition() > 100 || m_encoder.getPosition() < 0) {
+        } else if (controller.getPOV() == -1 || m_encoder.getPosition() > 144 || m_encoder.getPosition() < 0) {
             m_elevatorMotor.setVoltage(0);
-        }
+        }*/
+
+        if (controller.getPOV() == 90) {
+            m_elevatorMotor.setVoltage(ElevatorOutput.ELEVATOR_UP);
+            // if you hit the dpad left and the position is greater than 0, make the motor
+            // go in the other direction
+        } else if (controller.getPOV() == 270) {
+            m_elevatorMotor.setVoltage(ElevatorOutput.ELEVATOR_DOWN);
+            // if you are NOT pressing the dpap button or the position is greater than x or
+            // the position is less than 0 then the motor does nothing
+        } else if (controller.getPOV() == -1) {
+            m_elevatorMotor.setVoltage(0);}
     }
 
     @Override
