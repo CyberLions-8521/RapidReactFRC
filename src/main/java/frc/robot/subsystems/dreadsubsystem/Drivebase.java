@@ -69,8 +69,6 @@ public class Drivebase extends SubsystemBase {
     // initializeEncoder
     m_rightEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
     m_leftEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
-    m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT);
-    m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT);
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
     m_speed = 0.0;

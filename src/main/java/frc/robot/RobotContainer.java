@@ -54,7 +54,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this referring to?
-    new JoystickButton(m_controller, XBOX.LB).whenPressed(new LowerIndexor(m_masterSubsystem));
+    //new JoystickButton(m_controller, XBOX.LB).whenPressed(new LowerIndexor(m_masterSubsystem));
   }
 
   /**

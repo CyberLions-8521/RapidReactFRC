@@ -24,7 +24,7 @@ public class Climber extends SubsystemBase {
         // using the encoder to get the value from the motor
         m_encoder = m_elevatorMotor.getEncoder();
         // default position = 0
-        m_encoder.setPosition(0);
+        m_encoder.setPosition(144);
     }
 
     // setting up the controller
@@ -32,7 +32,7 @@ public class Climber extends SubsystemBase {
         m_encoder = m_elevatorMotor.getEncoder();
         // if you hit the dpad right and the position is less than x , make it go in one
         // direction
-        if (controller.getPOV() == 90 && m_encoder.getPosition() < 100) {
+        if (controller.getPOV() == 90 && m_encoder.getPosition() < 144) {
             m_elevatorMotor.setVoltage(ElevatorOutput.ELEVATOR_UP);
             // if you hit the dpad left and the position is greater than 0, make the motor
             // go in the other direction
