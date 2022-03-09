@@ -40,6 +40,7 @@ public class RobotContainer {
   public static final Joystick m_aux = new Joystick(1);
 
   public RobotContainer() {
+    // Only setDefaultCommand When calling controller in subsystems.
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_Climber.setDefaultCommand(m_climb);
     //m_masterSubsystem.setDefaultCommand(m_shoot);

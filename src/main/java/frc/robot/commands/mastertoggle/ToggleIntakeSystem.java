@@ -26,6 +26,7 @@ public class ToggleIntakeSystem extends CommandBase {
       m_intakeSystem.autoIntakeSystemOff();
     }
     m_isDone = true;
+    
   }
 
   @Override

@@ -40,6 +40,7 @@ public class MasterSubsystem extends SubsystemBase {
   CANSparkMax m_lowIndexor = new CANSparkMax(Constants.CAN.INDEXOR_LOWER, MotorType.kBrushless);
 
   boolean m_autoStatus;
+  boolean m_gearStatus;
   boolean m_lowindexorStatus;
   boolean m_indexorStatus;
   boolean m_intakeStatus;
@@ -47,6 +48,11 @@ public class MasterSubsystem extends SubsystemBase {
 
   public MasterSubsystem() {
     // stop all subsystem toggle here
+    // autoIntakeSystemOff();
+    // indexOff();
+    // lowerIndexOff();
+    // setGearOff();
+
   }
 
   public void setMotor(double speed) {
@@ -60,14 +66,14 @@ public class MasterSubsystem extends SubsystemBase {
   public void autoIntakeSystemOn() {
     m_leftArmDS.set(kForward);
     m_rightArmDS.set(kForward);
-    m_intake.set(0.5);
+    m_intake.set(0.8);
     m_autoStatus = true;
   }
 
   public void autoIntakeSystemOff() {
     m_leftArmDS.set(kReverse);
     m_rightArmDS.set(kReverse);
-    m_intake.set(0.5);
+    m_intake.set(0.0);
     m_autoStatus = false;
   }
 
@@ -88,14 +94,20 @@ public class MasterSubsystem extends SubsystemBase {
 
   // Double solenoid transmission gear
 
-  public void setGear1() {
+  public void setGearOn() {
     m_transLeftDS.set(kForward);
     m_transRightDS.set(kForward);
+    m_gearStatus = true;
   }
 
-  public void setGear2() {
+  public void setGearOff() {
     m_transLeftDS.set(kReverse);
     m_transRightDS.set(kReverse);
+    m_gearStatus = false;
+  }
+
+  public boolean getTransmissionStatus() {
+    return m_gearStatus;
   }
 
   // Indexor
@@ -157,20 +169,22 @@ public class MasterSubsystem extends SubsystemBase {
   }
 
 
-  public int getGearStatus() {
-    if (m_transRightDS.get().equals(kForward)) {
-      return 1;
-    } else {
-      return 2;
-    }
-  }
+  // public int getGearStatus() {
+  //   if (m_transRightDS.get().equals(kForward)) {
+  //     return 1;
+  //   } else {
+  //     return 2;
+  //   }
+  // }
 
+  
   @Override
   public void periodic() {
     // SmartDashboard.putString("Arm", getArmStatus().toString());
     // SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
     // SmartDashboard.putBoolean("Upper Index Status", getIndexStatus());
-    SmartDashboard.putNumber("Toggle Gear", getGearStatus());
+    //SmartDashboard.putNumber("Toggle Gear", getGearStatus());
+    SmartDashboard.putBoolean("Gear Change", getTransmissionStatus());
     SmartDashboard.putBoolean("Lower Index Status", getLowerIndexStatus());
     SmartDashboard.putBoolean("Toggle Intake System", getAutoStatus());
   }

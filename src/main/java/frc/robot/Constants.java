@@ -150,8 +150,8 @@ public final class Constants {
   }
 
   public static class EncodersConstant {
-    public static final int LEFT_ENCODER_PORT = 0;
-    public static final int RIGHT_ENCODER_PORT = 1;
+    public static final int LEFT_ENCODER_PORT = 1;
+    public static final int RIGHT_ENCODER_PORT = 0;
     public static final double DISTANCE_PER_PULSE = 0.25;
     public static final int CIRCUMFERENCE = 6; // Inches
   }

@@ -66,11 +66,7 @@ public class Drivebase extends SubsystemBase {
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
 
   public Drivebase() {
-    // initializeEncoder
-    m_rightEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
-    m_leftEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
-    m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT);
-    m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT);
+    
     // Default mode is tank drive
     m_mode = DriveMode.ARCADE;
     m_speed = 0.0;
@@ -109,8 +105,8 @@ public class Drivebase extends SubsystemBase {
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
     m_rightEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
     m_leftEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
-    m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT);
-    m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT);
+    m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT); //0 
+    m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT); // 1
   }
 
   public Rotation2d getHeading() {
@@ -300,13 +296,13 @@ public class Drivebase extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.getNumber("AverageDistance", getAverageEncoderDistance());
-    SmartDashboard.getNumber("LeftEncoderDistance", getLeftEncoderDistance());
-    SmartDashboard.getNumber("RightEncoderDistance", getRightEncoderDistance());
+   // SmartDashboard.getNumber("AverageDistance", getAverageEncoderDistance());
+    //SmartDashboard.getNumber("LeftEncoderDistance", getLeftEncoderDistance());
+    //SmartDashboard.getNumber("RightEncoderDistance", getRightEncoderDistance());
     // m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(),
     // m_rightEncoder.getDistance());
     double tHeading = getHeading().getDegrees();
-    SmartDashboard.getNumber("Heading", tHeading);
+  //SmartDashboard.getNumber("Heading", tHeading);
     m_odometry.update(m_gyro.getRotation2d(), m_rightEncoder.getDistance(), m_leftEncoder.getDistance());
 
   }

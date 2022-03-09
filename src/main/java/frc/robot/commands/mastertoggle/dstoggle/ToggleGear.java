@@ -15,10 +15,10 @@ public class ToggleGear extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_solenoids.getGearStatus() == 1) {
-      m_solenoids.setGear1();
+    if (m_solenoids.getTransmissionStatus() == false) {
+      m_solenoids.setGearOn();
     } else {
-      m_solenoids.setGear2();
+      m_solenoids.setGearOff();
     }
     m_isDone = true;
   }
