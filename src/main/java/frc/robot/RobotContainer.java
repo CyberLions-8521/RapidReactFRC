@@ -10,13 +10,14 @@ import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.LowerIndexor;
-import frc.robot.commands.mastertoggle.Shoot;
+// import frc.robot.commands.mastertoggle.Shoot;
 import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
 import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
+import frc.robot.commands.mastertoggle.toggleIndexSystem;
 import frc.robot.subsystems.dreadsubsystem.Climber;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
-import frc.robot.subsystems.dreadsubsystem.Turret;
+//import frc.robot.subsystems.dreadsubsystem.Turret;
 
 public class RobotContainer {
 
@@ -24,13 +25,14 @@ public class RobotContainer {
   public static Drivebase m_drivebase = new Drivebase();
   private static final Climber m_Climber = new Climber();
   public static final MasterSubsystem m_masterSubsystem = new MasterSubsystem();
-  public static final Turret m_turret = new Turret();
+  //public static final Turret m_turret = new Turret();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  private final Shoot m_shoot = new Shoot(m_turret, m_masterSubsystem);
+  //private final Shoot m_shoot = new Shoot(m_turret, m_masterSubsystem);
   private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_masterSubsystem);
   private final LowerIndexor m_lowindex = new LowerIndexor(m_masterSubsystem);
+  private final toggleIndexSystem m_indextoggle = new toggleIndexSystem(m_masterSubsystem);
   private static final Climb m_climb = new Climb(m_Climber);
 
   // Controller
@@ -40,7 +42,7 @@ public class RobotContainer {
   public RobotContainer() {
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_Climber.setDefaultCommand(m_climb);
-    m_masterSubsystem.setDefaultCommand(m_shoot);
+    //m_masterSubsystem.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
 
@@ -49,8 +51,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this referring to?
-    new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_masterSubsystem));
-    new JoystickButton(m_controller, XBOX.LB).whenPressed(new LowerIndexor(m_masterSubsystem));
+    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_masterSubsystem));
+    new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem));
+
+    //elevator done
+    //No Shooter isolated
   }
 
   /**
