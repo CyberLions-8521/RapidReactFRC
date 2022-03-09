@@ -286,11 +286,10 @@ public class Drivebase extends SubsystemBase {
   }
 
   // Arcade Drive
-  double turnCorrectorP = 0.03;
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
-    double error = (getAngle() - m_lastAngle) - zRotation;
+    double error = (getAngle() - m_lastAngle) - zRotation*SmartDashboard.getNumber("Joystick Correct Factor", 1.0);
     SmartDashboard.putNumber("Turn Rate Error", error);
-    m_drive.arcadeDrive(xSpeed, zRotation + error*turnCorrectorP, squareInputs);
+    m_drive.arcadeDrive(xSpeed, zRotation + error*SmartDashboard.getNumber("Turn Correct P", 0.03), squareInputs);
   }
 
   public AHRS getGyro() {
