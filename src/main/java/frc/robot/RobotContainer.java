@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
 // Commands
 import frc.robot.commands.Drive;
+import frc.robot.commands.autonomous.PIDTurnToAngle;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.LowerIndexor;
 import frc.robot.commands.mastertoggle.Shoot;
@@ -61,7 +62,7 @@ public class RobotContainer {
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this referring to?
     // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem));
+    // new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem)); This was testing only DO NOT USE (SHooter toggles indexor)
 
     //elevator done
     //No Shooter isolated
@@ -74,7 +75,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-    return new SequentialCommandGroup();
+    return new SequentialCommandGroup(
+      new PIDTurnToAngle(m_drivebase, 90).withTimeout(5.0)
+      
+    );
   }
   /*
    * return new DrivetrainCommand(m_drive);

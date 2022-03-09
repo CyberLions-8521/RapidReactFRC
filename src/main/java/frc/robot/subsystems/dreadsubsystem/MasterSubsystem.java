@@ -52,9 +52,9 @@ public class MasterSubsystem extends SubsystemBase {
 
   public MasterSubsystem() {
     // stop all subsystem toggle here
-    // autoIntakeSystemOff();
-    // indexOff();
-    // lowerIndexOff();
+    autoIntakeSystemOff();
+    indexOff();
+    lowerIndexOff();
     // setGearOff();
 
   }
@@ -68,15 +68,15 @@ public class MasterSubsystem extends SubsystemBase {
 
   // Both Intake Arm and Intake Motor Status;
   public void autoIntakeSystemOn() {
-    m_leftArmDS.set(kForward);
-    m_rightArmDS.set(kForward);
-    m_intake.set(0.8);
+    //m_leftArmDS.set(kForward);
+    //m_rightArmDS.set(kForward);
+    m_intake.set(0.7);
     m_autoStatus = true;
   }
 
   public void autoIntakeSystemOff() {
-    m_leftArmDS.set(kReverse);
-    m_rightArmDS.set(kReverse);
+  //   m_leftArmDS.set(kReverse);
+  //   m_rightArmDS.set(kReverse);
     m_intake.set(0.0);
     m_autoStatus = false;
   }
@@ -117,8 +117,8 @@ public class MasterSubsystem extends SubsystemBase {
   // Indexor
 
   public void indexOn() {
-    m_frontIndexor.set(0.60);
-    m_backIndexor.set(0.50);
+    m_frontIndexor.set(-0.60);
+    m_backIndexor.set(-0.70);
 
     m_indexorStatus = true;
   }
@@ -130,7 +130,7 @@ public class MasterSubsystem extends SubsystemBase {
   }
 
   public void lowerIndexOn() {
-    m_lowIndexor.set(0.6);
+    m_lowIndexor.set(-0.6);
     m_lowindexorStatus = true;
   }
 

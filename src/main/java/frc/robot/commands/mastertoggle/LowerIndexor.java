@@ -18,7 +18,7 @@ public class LowerIndexor extends CommandBase {
       m_lowIndexMotor.lowerIndexOn();
 
     } else {
-      m_lowIndexMotor.indexOff();
+      m_lowIndexMotor.lowerIndexOff();
     }
     m_returnStatus = true;
   }
