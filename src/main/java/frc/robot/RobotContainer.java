@@ -12,28 +12,17 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.autonomous.PIDTurnToAngle;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.LowerIndexor;
-<<<<<<< HEAD
 import frc.robot.commands.mastertoggle.Shoot;
 // import frc.robot.commands.mastertoggle.Shoot;
-=======
-import frc.robot.commands.mastertoggle.Shoot; // comment out later
->>>>>>> d350e06a305835fe4303fdd6fe45dbc250d83191
 import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
 import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
 import frc.robot.commands.mastertoggle.toggleIndexSystem;
 import frc.robot.subsystems.dreadsubsystem.Climber;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
-<<<<<<< HEAD
 //import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.utilsubsystem.Limelight;
-=======
-import frc.robot.commands.autonomous.AutoTurretIndex;
-import frc.robot.subsystems.dreadsubsystem.Turret; // comment out later
-import frc.robot.commands.autonomous.MoveForwardNSeconds;
-import frc.robot.commands.autonomous.RotateCommand;
->>>>>>> d350e06a305835fe4303fdd6fe45dbc250d83191
 
 public class RobotContainer {
 
@@ -41,20 +30,12 @@ public class RobotContainer {
   public static Drivebase m_drivebase = new Drivebase();
   private static final Climber m_Climber = new Climber();
   public static final MasterSubsystem m_masterSubsystem = new MasterSubsystem();
-<<<<<<< HEAD
   public static final Turret m_turret = new Turret();
   private static final Limelight m_vision = new Limelight();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
   private final Shoot m_shoot = new Shoot(m_turret, m_vision, m_masterSubsystem);
-=======
-  //public static final Turret m_turret = new Turret(); // comment outb later
-
-  // Commands
-  private final Drive m_driveSystem = new Drive(m_drivebase);
-  // private final Shoot m_shoot = new Shoot(m_turret, m_masterSubsystem);
->>>>>>> d350e06a305835fe4303fdd6fe45dbc250d83191
   private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_masterSubsystem);
   private final LowerIndexor m_lowindex = new LowerIndexor(m_masterSubsystem);
   private final toggleIndexSystem m_indextoggle = new toggleIndexSystem(m_masterSubsystem);
@@ -68,14 +49,10 @@ public class RobotContainer {
     // Only setDefaultCommand When calling controller in subsystems.
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_Climber.setDefaultCommand(m_climb);
-<<<<<<< HEAD
     m_turret.setDefaultCommand(m_shoot);
     m_masterSubsystem.setDefaultCommand(m_shoot);
     m_vision.setDefaultCommand(m_shoot);
 
-=======
-    // m_masterSubsystem.setDefaultCommand(m_shoot);
->>>>>>> d350e06a305835fe4303fdd6fe45dbc250d83191
 
     configureButtonBindings();
 
@@ -101,83 +78,11 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
 
-<<<<<<< HEAD
     return new SequentialCommandGroup(
       new PIDTurnToAngle(m_drivebase, 90).withTimeout(5.0)
       
     );
   }
-=======
-    return new SequentialCommandGroup();
-  } // delete bracket after
-    // return new DrivetrainCommand(m_drive);
-    // m_drivebase.resetEncoders();
-    // m_drivebase.zeroHeading();
-    // return new SequentialCommandGroup(
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(0.9),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, -48.3),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(1.35),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, 54.8),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(2.9),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, 40.0),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(1.25),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, -45.0),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(0.8),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, -90.0),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(1.7),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, -120.0),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(2.1),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, 42.0),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(2.9),
-    //     new WaitCommand(1),
-    //     new RotateCommand(m_drivebase, 45.0),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-    //         0.4).withTimeout(2.0),
-    //     new WaitCommand(1),
-    //     new MoveForwardNSeconds(m_drivebase, null, 0.4).withTimeout(2.0)
-    // // Last command is toggling intakeOFF during
-
-
-
-    // );
-    //Path testing 2 with Move Straight / Intake On / Turn Intake off  / Turret Toggle First then Shoot with indexorOn .withTimeout = teleop after autonomouse
-
-    // return new SequentialCommandGroup(
-    //   new WaitCommand(2),
-    //   new MoveForwardNSeconds(m_drivebase, m_masterSubsystem, 0),
-    //   new WaitCommand(10),
-    //   new MoveForwardNSeconds(m_drivebase, null, 0.4).withTimeout(2.0),
-    //   new AutoTurretIndex(m_drivebase, m_turret, m_masterSubsystem, 2.0).withTimeout(2.0)
-    // );
-
-    // ^^KEEP -Thien
-  //}
-
->>>>>>> d350e06a305835fe4303fdd6fe45dbc250d83191
   /*
    * 
    * Toggle Motor During Autonomouse Trajectory Mode
