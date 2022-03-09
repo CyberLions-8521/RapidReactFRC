@@ -3,6 +3,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Turret;
 
 public class MoveForwardNSeconds extends CommandBase {
   Drivebase m_db;
@@ -38,6 +39,7 @@ public class MoveForwardNSeconds extends CommandBase {
   
   @Override
   public boolean isFinished() {
+    m_toggleIntakeSystem.autoIntakeSystemOff();
     return false;
   }
 }

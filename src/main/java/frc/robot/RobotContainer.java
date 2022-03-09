@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
@@ -10,14 +11,17 @@ import frc.robot.Constants.XBOX;
 import frc.robot.commands.Drive;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.LowerIndexor;
-// import frc.robot.commands.mastertoggle.Shoot;
+import frc.robot.commands.mastertoggle.Shoot; // comment out later
 import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
 import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
 import frc.robot.commands.mastertoggle.toggleIndexSystem;
 import frc.robot.subsystems.dreadsubsystem.Climber;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
-//import frc.robot.subsystems.dreadsubsystem.Turret;
+import frc.robot.commands.autonomous.AutoTurretIndex;
+import frc.robot.subsystems.dreadsubsystem.Turret; // comment out later
+import frc.robot.commands.autonomous.MoveForwardNSeconds;
+import frc.robot.commands.autonomous.RotateCommand;
 
 public class RobotContainer {
 
@@ -25,11 +29,11 @@ public class RobotContainer {
   public static Drivebase m_drivebase = new Drivebase();
   private static final Climber m_Climber = new Climber();
   public static final MasterSubsystem m_masterSubsystem = new MasterSubsystem();
-  //public static final Turret m_turret = new Turret();
+  //public static final Turret m_turret = new Turret(); // comment outb later
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  //private final Shoot m_shoot = new Shoot(m_turret, m_masterSubsystem);
+  // private final Shoot m_shoot = new Shoot(m_turret, m_masterSubsystem);
   private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_masterSubsystem);
   private final LowerIndexor m_lowindex = new LowerIndexor(m_masterSubsystem);
   private final toggleIndexSystem m_indextoggle = new toggleIndexSystem(m_masterSubsystem);
@@ -42,7 +46,7 @@ public class RobotContainer {
   public RobotContainer() {
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_Climber.setDefaultCommand(m_climb);
-    //m_masterSubsystem.setDefaultCommand(m_shoot);
+    // m_masterSubsystem.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
 
@@ -50,13 +54,15 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
-    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this referring to?
-    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_masterSubsystem));
+    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this
+                                                                                                     // referring to?
+    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret,
+    // m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem));
 
-    //elevator done
-    //No Shooter isolated
+    // elevator done
+    // No Shooter isolated
   }
 
   /**
@@ -67,61 +73,75 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     return new SequentialCommandGroup();
-  }
+  } // delete bracket after
+    // return new DrivetrainCommand(m_drive);
+    // m_drivebase.resetEncoders();
+    // m_drivebase.zeroHeading();
+    // return new SequentialCommandGroup(
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(0.9),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, -48.3),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(1.35),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, 54.8),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(2.9),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, 40.0),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(1.25),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, -45.0),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(0.8),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, -90.0),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(1.7),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, -120.0),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(2.1),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, 42.0),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(2.9),
+    //     new WaitCommand(1),
+    //     new RotateCommand(m_drivebase, 45.0),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
+    //         0.4).withTimeout(2.0),
+    //     new WaitCommand(1),
+    //     new MoveForwardNSeconds(m_drivebase, null, 0.4).withTimeout(2.0)
+    // // Last command is toggling intakeOFF during
+
+
+
+    // );
+    //Path testing 2 with Move Straight / Intake On / Turn Intake off  / Turret Toggle First then Shoot with indexorOn .withTimeout = teleop after autonomouse
+
+    // return new SequentialCommandGroup(
+    //   new WaitCommand(2),
+    //   new MoveForwardNSeconds(m_drivebase, m_masterSubsystem, 0),
+    //   new WaitCommand(10),
+    //   new MoveForwardNSeconds(m_drivebase, null, 0.4).withTimeout(2.0),
+    //   new AutoTurretIndex(m_drivebase, m_turret, m_masterSubsystem, 2.0).withTimeout(2.0)
+    // );
+
+    // ^^KEEP -Thien
+  //}
+
   /*
-   * return new DrivetrainCommand(m_drive);
-   * m_drivebase.resetEncoders();
-   * m_drivebase.zeroHeading();
-   * return new SequentialCommandGroup(
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(0.9),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, -48.3),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(1.35),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, 54.8),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(2.9),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, 40.0),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(1.25),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, -45.0),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(0.8),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, -90.0),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(1.7),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, -120.0),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(2.1),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, 42.0),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(2.9),
-   * new WaitCommand(1),
-   * new RotateCommand(m_drivebase, 45.0),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, m_masterSubsystem,
-   * 0.4).withTimeout(2.0),
-   * new WaitCommand(1),
-   * new MoveForwardNSeconds(m_drivebase, null, 0.4).withTimeout(2.0) // Last
-   * command is toggling intakeOFF during
-   * autonomous MODE
-   * 
-   * );
    * 
    * Toggle Motor During Autonomouse Trajectory Mode
    * m_genmotor.ToggleIntakeSystemON(m_solenoids, m_genmotor);
