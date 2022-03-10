@@ -90,7 +90,7 @@ public class LimeLightRange extends CommandBase {
     double desiredDistanceMeters = 0;
     // First calculate range
     double distance = m_kVision.getDistanceToHub();
-    if (m_hasTarget==true) {
+    if (m_hasTarget) {
         
     
 

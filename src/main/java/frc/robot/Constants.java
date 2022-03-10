@@ -18,8 +18,8 @@ public final class Constants {
 
   public static class PIDConstants {
     // Drive PID
-    public static final double P_DRIVE = 0.1;
-    public static final double I_DRIVE = 0.0;
+    public static final double P_DRIVE = 0.02;
+    public static final double I_DRIVE = 0.016;
     public static final double D_DRIVE = 0.0;
 
     // Shooter PID
@@ -116,7 +116,7 @@ public final class Constants {
     // Just a coefficient to dampen how fast the robot turns
     public static final double STEER_K = 0.1;
     // Highest the robot can turn autonomously
-    public static final double MAX_OUTPUT = 0.5; // originally 0.5
+    public static final double MAX_OUTPUT = 0.3; // originally 0.5
     public static final double AutoMAX_OUTPUT = 0.3;
     public static final double Speedlimit = 0.5;
     public static final double DRIVE_SLOW = 0.4;
@@ -137,8 +137,8 @@ public final class Constants {
   public static class VisionConstants {
     // Area of the ball in the camera view when the robot stops approaching it
     public static final double BALL_AREA = 0.7;
-    public static final double CAMERA_ANGLE = Math.toRadians(35);
-    public static final double CAMERA_HEIGHT = 0.4;
+    public static final double CAMERA_ANGLE = Math.toRadians(30);
+    public static final double CAMERA_HEIGHT = 0.85;
     public static final double TARGET_HEIGHT = 2.64;
   }
 
@@ -146,7 +146,7 @@ public final class Constants {
     public static final double MIN_POSITION = 0;
     public static final double MAX_POSITION = 100;
     public static final double ELEVATOR_UP = 12;
-    public static final double ELEVATOR_DOWN = 6;
+    public static final double ELEVATOR_DOWN = -6;
   }
 
   public static class EncodersConstant {

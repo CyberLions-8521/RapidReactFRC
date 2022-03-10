@@ -59,13 +59,13 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
+     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this
                                                                                                      // referring to?
     // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret,
     // m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
-    // new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem)); This was testing only DO NOT USE (SHooter toggles indexor)
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem)); //This was testing only DO NOT USE (SHooter toggles indexor)
 
     // elevator done
     // No Shooter isolated

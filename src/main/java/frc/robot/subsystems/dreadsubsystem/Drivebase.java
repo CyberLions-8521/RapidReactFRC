@@ -108,6 +108,9 @@ public class Drivebase extends SubsystemBase {
     m_leftEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
     m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT); //0 
     m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT); // 1
+
+    SmartDashboard.putNumber("Joystick Correct Factor", 1.0);
+    SmartDashboard.putNumber("Turn Correct P", 0.03);
   }
 
   public Rotation2d getHeading() {
@@ -309,9 +312,10 @@ public class Drivebase extends SubsystemBase {
 
   // Arcade Drive
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
-    double error = (getAngle() - m_lastAngle) - zRotation*SmartDashboard.getNumber("Joystick Correct Factor", 1.0);
-    SmartDashboard.putNumber("Turn Rate Error", error);
-    m_drive.arcadeDrive(xSpeed, zRotation + error*SmartDashboard.getNumber("Turn Correct P", 0.03), squareInputs);
+    //double error = (getAngle() - m_lastAngle) - zRotation*SmartDashboard.getNumber("Joystick Correct Factor", 1.0);
+   // SmartDashboard.putNumber("Turn Rate Error", error);
+    m_drive.arcadeDrive(xSpeed, zRotation, squareInputs);
+  
   }
 
   public AHRS getGyro() {

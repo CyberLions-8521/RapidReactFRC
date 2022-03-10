@@ -16,6 +16,8 @@ public class Limelight extends SubsystemBase {
 
   /** Creates a new ExampleSubsystem. */
   public Limelight() {
+    
+
   }
 
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -29,6 +31,7 @@ public class Limelight extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     // read values periodically
+    getDistanceToHub();
     double z = getpipe.getDouble(0.0);
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
@@ -36,17 +39,17 @@ public class Limelight extends SubsystemBase {
     boolean TargetDetected = tv.getDouble(0.0) == 1;
     // post to smart dashboard periodically
     SmartDashboard.putNumber("Pipeline", z);
-    SmartDashboard.getNumber("LimelightX", x);
-    SmartDashboard.getNumber("LimelightY", y);
-    SmartDashboard.getNumber("LimelightArea", area);
+    SmartDashboard.putNumber("LimelightX", x);
+    SmartDashboard.putNumber("LimelightY", y);
+    SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putBoolean("Target Detected", TargetDetected);
     SmartDashboard.putNumber("Distance", getDistanceToHub());
   }
 
   // Filters
-  LinearFilter yFilter = LinearFilter.movingAverage(10);
 
   public double getDistanceToHub() {
+    LinearFilter yFilter = LinearFilter.movingAverage(10);
     double yOffset = Math.toRadians(yFilter.calculate(getTy()));
     double Distance = ((VisionConstants.TARGET_HEIGHT - VisionConstants.CAMERA_HEIGHT)
         / Math.tan(VisionConstants.CAMERA_ANGLE + yOffset));
@@ -60,11 +63,12 @@ public class Limelight extends SubsystemBase {
 
     // constant can be changed
     double heightDiff = (VisionConstants.TARGET_HEIGHT - VisionConstants.CAMERA_HEIGHT + .25);
-    double angle = Math.PI / 3; // adjustable
+    double angle = Math.toRadians(60); // adjustable
+    double efficiency = 30;
 
-    double motorVelocity = (grav * getDistanceToHub()) / (Math.cos(angle) * Math.sqrt(2 * grav * heightDiff))
-        * (Math.PI / 30) * rad;
-
+    double motorVelocity = efficiency * ((grav * getDistanceToHub()) / (Math.cos(angle) * Math.sqrt(2 * grav * heightDiff)))
+        * ((30/Math.PI)/rad);
+        //9.8 x 4.2672  / ( sqrt(2 x 9.8 x 1.8) *cos pi/3) x pi/30 x .05088
     return motorVelocity;
   }
 

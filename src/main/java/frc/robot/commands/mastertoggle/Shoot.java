@@ -38,7 +38,7 @@ public class Shoot extends CommandBase {
       }*/
       
       
-      if(1950 < m_shooter.m_encoder.getVelocity()){
+      if(3970 < m_shooter.m_encoder.getVelocity()){
         m_index.indexOn();
       } else {
         m_index.indexOff();
@@ -53,7 +53,7 @@ public class Shoot extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 0.5);
+    m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
     AutoIndexerTele();
   }
 

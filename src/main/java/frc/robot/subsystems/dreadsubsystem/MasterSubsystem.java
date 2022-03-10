@@ -70,7 +70,7 @@ public class MasterSubsystem extends SubsystemBase {
   public void autoIntakeSystemOn() {
     //m_leftArmDS.set(kForward);
     //m_rightArmDS.set(kForward);
-    m_intake.set(0.7);
+    m_intake.set(0.85);
     m_autoStatus = true;
   }
 
@@ -117,7 +117,7 @@ public class MasterSubsystem extends SubsystemBase {
   // Indexor
 
   public void indexOn() {
-    m_frontIndexor.set(-0.60);
+    m_frontIndexor.set(-0.55);
     m_backIndexor.set(-0.70);
 
     m_indexorStatus = true;

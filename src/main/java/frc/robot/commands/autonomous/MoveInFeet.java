@@ -34,7 +34,7 @@ public class MoveInFeet extends CommandBase {
 
   public void BooleanDriveToDistance(){
     if (m_feet > m_db.getAverageEncoderDistance()){
-      m_db.moveForwardStraight(0.2);
+      //m_db.moveForwardStraight(0.2);
      // m_db.autoArcade(m_speed, 0);
     } else {
       m_db.autoArcade(0, 0);
