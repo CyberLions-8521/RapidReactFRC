@@ -12,22 +12,25 @@ public class MoveInFeet extends CommandBase {
   double m_feet;
   double m_intakeFeet;
   private double m_speed;
+  private boolean m_toggle;
 
-  public MoveInFeet(Drivebase db, MasterSubsystem m_Intake, double speedOffset, double distanceinFeet) {
+  public MoveInFeet(Drivebase db, MasterSubsystem m_Intake, double speedOffset, double distanceinFeet, boolean toggle) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speedOffset;
     m_feet = distanceinFeet;
+    m_toggle = toggle;
+    
    //m_intakeFeet = activateFeet;
-    //m_toggleIntakeSystem = intakeSystem;
+    m_toggleIntakeSystem = m_Intake;
 
     addRequirements(db);
+    addRequirements(m_Intake);
   //  addRequirements(intakeSystem);
   }
 
   @Override
   public void initialize() {
-    m_db.getGyro().reset();
     m_db.resetEncoders();
     //m_InitHeading = m_db.getAngle();
   }
@@ -35,7 +38,7 @@ public class MoveInFeet extends CommandBase {
   public void BooleanDriveToDistance(){
     if (m_feet > m_db.getAverageEncoderDistance()){
       //m_db.moveForwardStraight(0.2);
-     // m_db.autoArcade(m_speed, 0);
+      m_db.autoArcade(m_speed, 0);
     } else {
       m_db.autoArcade(0, 0);
       isFinished();
@@ -88,6 +91,15 @@ public class MoveInFeet extends CommandBase {
     isFinished();
   }
   
+  }
+
+  public void ToggleIntake(boolean m_toggle){
+    if(m_toggle){
+      m_toggleIntakeSystem.autoIntakeSystemOn();
+    } else {
+      m_toggleIntakeSystem.autoIntakeSystemOff();
+    }
+
   }
   
   @Override

@@ -116,7 +116,7 @@ public final class Constants {
     // Just a coefficient to dampen how fast the robot turns
     public static final double STEER_K = 0.1;
     // Highest the robot can turn autonomously
-    public static final double MAX_OUTPUT = 0.3; // originally 0.5
+    public static final double MAX_OUTPUT = 0.5; // originally 0.5
     public static final double AutoMAX_OUTPUT = 0.3;
     public static final double Speedlimit = 0.5;
     public static final double DRIVE_SLOW = 0.4;
@@ -152,7 +152,7 @@ public final class Constants {
   public static class EncodersConstant {
     public static final int LEFT_ENCODER_PORT = 1;
     public static final int RIGHT_ENCODER_PORT = 0;
-    public static final double DISTANCE_PER_PULSE = 1/6;
+    public static final double DISTANCE_PER_PULSE = 0.167;
     public static final double CIRCUMFERENCE = 0.5; // ft
   }
 

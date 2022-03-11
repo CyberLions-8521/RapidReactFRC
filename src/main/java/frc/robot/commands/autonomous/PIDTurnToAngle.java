@@ -34,9 +34,9 @@ public class PIDTurnToAngle extends CommandBase {
   }
 
   
-  final double kP=0.002;
+  final double kP=0.1;
   final double kI=0;
-  final double kD=1/4000;
+  final double kD=0;
   //Proportional System Control
   //Set I,D to 0 to make it Proportional System
   //Proportinal equation output=measured-setpoint
@@ -48,7 +48,7 @@ public class PIDTurnToAngle extends CommandBase {
     //Calculate output from PID api
     double output = pid.calculate(measuredAngle, m_Setpoint);
     //Put output from PID into drivesystem
-    m_db.turnInPlace(output);
+    m_db.turnInPlace(-output);
 
  }
 

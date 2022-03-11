@@ -68,15 +68,15 @@ public class MasterSubsystem extends SubsystemBase {
 
   // Both Intake Arm and Intake Motor Status;
   public void autoIntakeSystemOn() {
-    //m_leftArmDS.set(kForward);
-    //m_rightArmDS.set(kForward);
+    m_leftArmDS.set(kReverse);
+    m_rightArmDS.set(kReverse);
     m_intake.set(0.85);
     m_autoStatus = true;
   }
 
   public void autoIntakeSystemOff() {
-  //   m_leftArmDS.set(kReverse);
-  //   m_rightArmDS.set(kReverse);
+    m_leftArmDS.set(kForward);
+    m_rightArmDS.set(kForward);
     m_intake.set(0.0);
     m_autoStatus = false;
   }
@@ -145,10 +145,15 @@ public class MasterSubsystem extends SubsystemBase {
     m_intake.set(0.6);
     m_intakeStatus = true;
   }
+  
 
   public void intakeOff() {
     m_intake.set(0.0);
     m_intakeStatus = false;
+  }
+
+  public void autointakeOn() {
+    m_intake.set(0.85);
   }
 
   // boolean status check

@@ -1,5 +1,6 @@
 
 package frc.robot.subsystems.dreadsubsystem;
+
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 //Additional Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,72 +27,70 @@ import static frc.robot.Constants.CAN.*;
 import static frc.robot.Constants.PIDConstants.*;
 
 public class Turret extends SubsystemBase {
-    boolean m_shooterStatus;
-    CANSparkMax m_shooter = new CANSparkMax(CAN.SHOOTER, MotorType.kBrushed);
-    SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
-    public RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
+  boolean m_shooterStatus;
+  CANSparkMax m_shooter = new CANSparkMax(CAN.SHOOTER, MotorType.kBrushed);
+  SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
+  public RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
 
+  public Turret() {
+    m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); // Allows wheels to move when motor is active
 
-    public Turret() {
-        m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); // Allows wheels to move when motor is active
-        
-        stopShooter();
-    }
-    
-    //PID controller to compute output for motor
+    // stopShooter();
+  }
 
-      public void ControllerBindPID(XboxController controller, double setpoint){
-        if(controller.getRawButton(XBOX.RB)){
-            m_shooterPID.setReference(setpoint , ControlType.kVelocity,0);
-            m_shooterStatus = true;
-        } else if(controller.getRawButton(XBOX.RB)==false)
-            stopShooter(); 
-    }
+  // PID controller to compute output for motor
 
-    public void ControllerBindSpeed(XboxController controller, double speed){
-      if(controller.getRawButton(XBOX.RB)){
-          m_shooter.set(speed);
-          m_shooterStatus = true;
-      } else if(controller.getRawButton(XBOX.RB)==false)
-          stopShooter(); 
-       }
+  public void ControllerBindPID(XboxController controller, double setpoint) {
+    if (controller.getRawButton(XBOX.RB)) {
+      m_shooterPID.setReference(setpoint, ControlType.kVelocity, 0);
+      m_shooterStatus = true;
+    } else if (controller.getRawButton(XBOX.RB) == false)
+      stopShooter();
+  }
 
-     public void AutoShoot(Boolean shoot, double setpoint){
-       if (shoot){
-        m_shooterPID.setReference(setpoint , ControlType.kVelocity ,0);
-        m_shooterStatus = true;
-      } else{
-        stopShooter();
-        m_shooterStatus = false;
-      } 
-      
-     }  
+  public void ControllerBindSpeed(XboxController controller, double speed) {
+    if (controller.getRawButton(XBOX.RB)) {
+      m_shooter.set(speed);
+      m_shooterStatus = true;
+    } else if (controller.getRawButton(XBOX.RB) == false)
+      stopShooter();
+  }
 
-   
-
-     //for testing  
-    public void setSpeed(double speed) {
-       m_shooter.set(speed); 
+  public void AutoShoot(Boolean shoot, double setpoint) {
+    if (shoot) {
+      m_shooterPID.setReference(setpoint, ControlType.kVelocity, 0);
+      m_shooterStatus = true;
+    } else {
+      stopShooter();
+      m_shooterStatus = false;
     }
 
-    public void stopShooter() {
-        m_shooter.set(0.0);
-        m_shooterStatus = false;
+  }
 
-        // m_shooter.disable();
+  public void setSpeed() {
+    while (true) {
+      m_shooter.set(1);
+
     }
 
+  }
 
-    public double getSpeed() {
-        return m_encoder.getVelocity();
-    }
+  public void stopShooter() {
+    m_shooter.set(0.0);
+    m_shooterStatus = false;
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
-        SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
-        SmartDashboard.putBoolean("ShooterStatus", m_shooterStatus);
-    }
+    // m_shooter.disable();
+  }
 
+  public double getSpeed() {
+    return m_encoder.getVelocity();
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
+    SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
+    SmartDashboard.putBoolean("ShooterStatus", m_shooterStatus);
+  }
 
 }

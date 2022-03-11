@@ -2,14 +2,22 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
 // Commands
 import frc.robot.commands.Drive;
+import frc.robot.commands.autonomous.MoveForwardNSecondsTest;
+import frc.robot.commands.autonomous.MoveInFeet;
 import frc.robot.commands.autonomous.PIDTurnToAngle;
+import frc.robot.commands.autonomous.RotateCommand;
+import frc.robot.commands.autonomous.ToggleShooter;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.LowerIndexor;
 import frc.robot.commands.mastertoggle.Shoot;
@@ -23,9 +31,13 @@ import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 //import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.utilsubsystem.Limelight;
+import frc.robot.commands.autonomous.AutoIntakeSystem;
+import frc.robot.commands.autonomous.AutoMoveForwardNSeconds;
+import frc.robot.commands.autonomous.AutoTurretIndex;
 
 public class RobotContainer {
 
+  // SendableChooser<Command> m_chooser = new SendableChooser();
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
   private static final Climber m_Climber = new Climber();
@@ -53,19 +65,21 @@ public class RobotContainer {
     m_masterSubsystem.setDefaultCommand(m_shoot);
     m_vision.setDefaultCommand(m_shoot);
 
-
     configureButtonBindings();
 
   }
 
   private void configureButtonBindings() {
-     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
+    new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this
                                                                                                      // referring to?
     // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret,
     // m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem)); //This was testing only DO NOT USE (SHooter toggles indexor)
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem)); // This was testing
+                                                                                                    // only DO NOT USE
+                                                                                                    // (SHooter toggles
+                                                                                                    // indexor)
 
     // elevator done
     // No Shooter isolated
@@ -77,12 +91,19 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    System.out.println("In get autonomous Command");
 
+    // Working
     return new SequentialCommandGroup(
-      new PIDTurnToAngle(m_drivebase, 90).withTimeout(5.0)
-      
+        new AutoMoveForwardNSeconds(m_drivebase, m_masterSubsystem, m_turret, -0.4).withTimeout(6),
+        new RotateCommand(m_drivebase, 90).withTimeout(5)
+    // new AutoIntakeSystem(m_masterSubsystem).withTimeout(10)
     );
+
   }
+
+  // Trajectory code
+
   /*
    * 
    * Toggle Motor During Autonomouse Trajectory Mode

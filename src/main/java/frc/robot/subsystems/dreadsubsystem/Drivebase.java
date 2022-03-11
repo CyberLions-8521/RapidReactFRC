@@ -34,8 +34,8 @@ public class Drivebase extends SubsystemBase {
   double m_lastAngle = 0;
 
   // Constants to control joystick input
-  double m_speedReducer = 0.5;
-  double m_turnReducer = 0.5;
+  double m_speedReducer = 0.3;
+  double m_turnReducer = 0.3;
 
   // Encoders stuff
   private final Counter m_rightEncoder = new Counter();
@@ -65,6 +65,7 @@ public class Drivebase extends SubsystemBase {
 
   // Differential drive class
   DifferentialDrive m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
+  
 
   public Drivebase() {
     
@@ -104,14 +105,17 @@ public class Drivebase extends SubsystemBase {
     // reset odometry in drive mode
     // resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
+    
     m_rightEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
     m_leftEncoder.setDistancePerPulse(EncodersConstant.DISTANCE_PER_PULSE);
     m_rightEncoder.setUpSource(EncodersConstant.RIGHT_ENCODER_PORT); //0 
     m_leftEncoder.setUpSource(EncodersConstant.LEFT_ENCODER_PORT); // 1
-
     SmartDashboard.putNumber("Joystick Correct Factor", 1.0);
     SmartDashboard.putNumber("Turn Correct P", 0.03);
+ 
   }
+
+
 
   public Rotation2d getHeading() {
     return Rotation2d.fromDegrees(-m_gyro.getAngle());
@@ -147,7 +151,7 @@ public class Drivebase extends SubsystemBase {
   }
 
   //need to be edit
-    public void EncoderDirection(){
+  /*  public void EncoderDirection(){
     if (m_rightMaster.get() > 0){
       m_rightEncoder.setReverseDirection(true);
     } else if (m_rightMaster.get() < 0)
@@ -157,7 +161,7 @@ public class Drivebase extends SubsystemBase {
       m_leftEncoder.setReverseDirection(true);
     } else if (m_rightMaster.get() < 0)
     m_leftEncoder.setReverseDirection(false);
-    }
+    } */
   
 
   public double getThrottle() {
