@@ -67,6 +67,7 @@ public class Turret extends SubsystemBase {
 
   }
 
+  // For Auto
   public void setSpeed() {
     while (true) {
       m_shooter.set(1);
@@ -74,6 +75,10 @@ public class Turret extends SubsystemBase {
     }
 
   }
+
+  // public void setSpeed(double speed) {
+  // m_shooter.set(speed);
+  // }
 
   public void stopShooter() {
     m_shooter.set(0.0);

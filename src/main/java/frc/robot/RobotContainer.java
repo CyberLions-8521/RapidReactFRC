@@ -6,38 +6,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
 // Commands
 import frc.robot.commands.Drive;
-import frc.robot.commands.autonomous.MoveForwardNSecondsTest;
-import frc.robot.commands.autonomous.MoveInFeet;
-import frc.robot.commands.autonomous.PIDTurnToAngle;
-import frc.robot.commands.autonomous.RotateCommand;
-import frc.robot.commands.autonomous.ToggleShooter;
+import frc.robot.commands.autonomous.AutoStraight;
+import frc.robot.commands.autonomous.AutoRotateCommand;
+import frc.robot.commands.autonomous.AutoShoot;
+import frc.robot.commands.autonomous.Trajectory.AutoTesting;
+import frc.robot.commands.autonomous.Trajectory.MoveInFeet;
+import frc.robot.commands.autonomous.Trajectory.PIDTurnToAngle;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.LowerIndexor;
 import frc.robot.commands.mastertoggle.Shoot;
-// import frc.robot.commands.mastertoggle.Shoot;
 import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
 import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
-import frc.robot.commands.mastertoggle.toggleIndexSystem;
+import frc.robot.commands.mastertoggle.toggleReverseIndexSystem;
 import frc.robot.subsystems.dreadsubsystem.Climber;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
-//import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.utilsubsystem.Limelight;
-import frc.robot.commands.autonomous.AutoIntakeSystem;
-import frc.robot.commands.autonomous.AutoMoveForwardNSeconds;
-import frc.robot.commands.autonomous.AutoTurretIndex;
 
 public class RobotContainer {
-
-  // SendableChooser<Command> m_chooser = new SendableChooser();
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
   private static final Climber m_Climber = new Climber();
@@ -50,7 +42,7 @@ public class RobotContainer {
   private final Shoot m_shoot = new Shoot(m_turret, m_vision, m_masterSubsystem);
   private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_masterSubsystem);
   private final LowerIndexor m_lowindex = new LowerIndexor(m_masterSubsystem);
-  private final toggleIndexSystem m_indextoggle = new toggleIndexSystem(m_masterSubsystem);
+  private final toggleReverseIndexSystem m_indextoggle = new toggleReverseIndexSystem(m_masterSubsystem);
   private static final Climb m_climb = new Climb(m_Climber);
 
   // Controller
@@ -71,67 +63,33 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
-    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)); // what is this
-                                                                                                     // referring to?
-    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret,
-    // m_masterSubsystem));
+    new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleIndexSystem(m_masterSubsystem)); // This was testing
-                                                                                                    // only DO NOT USE
-                                                                                                    // (SHooter toggles
-                                                                                                    // indexor)
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)); // double check in testing phase - Thien
 
-    // elevator done
-    // No Shooter isolated
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
     System.out.println("In get autonomous Command");
 
-    // Working
+    // Working (Run each command by line based on time)
     return new SequentialCommandGroup(
-        new AutoMoveForwardNSeconds(m_drivebase, m_masterSubsystem, m_turret, -0.4).withTimeout(6),
-        new RotateCommand(m_drivebase, 90).withTimeout(5)
-    // new AutoIntakeSystem(m_masterSubsystem).withTimeout(10)
+        // new AutoTesting(m_drivebase, m_masterSubsystem, m_turret,
+        // -0.4).withTimeout(6),
+        new AutoStraight(m_drivebase, m_masterSubsystem, 0.5),
+        new AutoStraight(m_drivebase, m_masterSubsystem, -0.5),
+        new AutoRotateCommand(m_drivebase, 90.0).withTimeout(5),
+        new AutoRotateCommand(m_drivebase, -90.0).withTimeout(5),
+
+        // going to run both auto commands at the same time here
+        new ParallelCommandGroup( // both should run straight and shoot at the same time
+            new AutoShoot(m_turret, m_masterSubsystem),
+            new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(3)
+
+        )
+
     );
 
   }
-
-  // Trajectory code
-
-  /*
-   * 
-   * Toggle Motor During Autonomouse Trajectory Mode
-   * m_genmotor.ToggleIntakeSystemON(m_solenoids, m_genmotor);
-   * m_genmotor.ToggleIntakeSystemOFF(m_solenoids, m_genmotor);
-   * 
-   * Trajectory Paths (Uncomment to Choose one)
-   * TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.STRAIGHT,
-   * m_drivebase);
-   * return
-   * TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.
-   * STRAIGHTLINE
-   * , m_drivebase);
-   * return
-   * TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.
-   * ROTATIONALMOVEMENT,
-   * m_drivebase);
-   * return
-   * TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.CIRCLE,
-   * m_drivebase);
-   * return
-   * TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.
-   * THREEBALLAUTO,
-   * m_drivebase);
-   * return
-   * TrajectoryFollower.getRamseteCommand(Constants.TrajectoryConstants.
-   * PLANNERTEST,
-   * m_drivebase);
-   */
 
 }

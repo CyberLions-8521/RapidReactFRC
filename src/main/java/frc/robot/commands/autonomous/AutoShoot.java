@@ -11,63 +11,27 @@ import frc.robot.subsystems.utilsubsystem.Limelight;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-/** An example command that uses an example subsystem. */
-public class ToggleShooter extends CommandBase {
-  private final Turret m_Turret;
- // private final MasterSubsystem m_index;
 
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
+public class AutoShoot extends CommandBase {
+  Turret m_Turret;
+  MasterSubsystem m_SubsystemBase;
 
-   //Can be set in robot container to that degree
-  public ToggleShooter(Turret turret) {
+  public AutoShoot(Turret turret, MasterSubsystem subsystem) {
     m_Turret = turret;
+    m_SubsystemBase = subsystem;
     addRequirements(turret);
-    // Use addRequirements() here to declare subsystem dependencies.
-    
-
+    addRequirements(subsystem);
   }
-
-
-/*
-  public void AutoIndexerAuto(){
-      //For testing
-      /*
-
-        /*  if(setpoint-50 <  m_encoder.getVelocity()){
-             m_index.indexOn();
-        } else {
-        m_index.indexOff();
-       }
-      }*/
-      
-      
-    /*  if(3970 < m_Turret.m_encoder.getVelocity()){
-        m_index.indexOn();
-      } else {
-        m_index.indexOff();
-      }
-      
-  }*/
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {  }
 
-
-
- 
-
- 
-
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Turret.setSpeed();
-   //  AutoIndexerAuto();
+    m_SubsystemBase.setMotor(0.7);
+    m_Turret.setSpeed(); //Toggles Shooter + indexor after speed is reached
 
   }
 

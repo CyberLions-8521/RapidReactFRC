@@ -7,25 +7,9 @@ import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.Constants.DriveConstants;
 
-//additional test
 
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kForward;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kOff;
-import static edu.wpi.first.wpilibj.DoubleSolenoid.Value.kReverse;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-// Pneumatic Dependecies (API)
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.CAN;
-
-public class RotateCommand extends CommandBase {
+public class AutoRotateCommand extends CommandBase {
   Drivebase m_db;
   MasterSubsystem m_toggleIntakeSystem;
 
@@ -33,8 +17,8 @@ public class RotateCommand extends CommandBase {
   double targetAngle;
   double turn;
 
-  public RotateCommand(Drivebase db, double angle) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public AutoRotateCommand(Drivebase db, double angle) {
+   
     m_db = db;
     turn = angle;
     
@@ -45,6 +29,7 @@ public class RotateCommand extends CommandBase {
   @Override
   public void initialize() {
     m_db.getGyro().reset();
+    currentAngle = m_db.getAngle(); // Comment this if this does not work - Thien
     targetAngle = currentAngle + turn;
   }
 

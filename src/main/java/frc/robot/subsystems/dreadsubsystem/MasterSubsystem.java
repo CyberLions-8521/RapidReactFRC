@@ -49,6 +49,7 @@ public class MasterSubsystem extends SubsystemBase {
   boolean m_intakeStatus;
   boolean m_toggleSystemStatus;
   boolean m_final;
+  boolean m_reverseIndexStatus;
 
   public MasterSubsystem() {
     // stop all subsystem toggle here
@@ -129,6 +130,17 @@ public class MasterSubsystem extends SubsystemBase {
     m_indexorStatus = false;
   }
 
+  public void reverseIndexOn() {
+    m_frontIndexor.set(0.55);
+    m_backIndexor.set(0.70);
+    m_reverseIndexStatus = true;
+  }
+  public void reverseIndexOff() {
+    m_frontIndexor.set(0.0);
+    m_backIndexor.set(0.0);
+    m_reverseIndexStatus = false;
+  }
+
   public void lowerIndexOn() {
     m_lowIndexor.set(-0.6);
     m_lowindexorStatus = true;
@@ -175,6 +187,10 @@ public class MasterSubsystem extends SubsystemBase {
 
   public boolean getIntakeStatus() {
     return m_intakeStatus;
+  }
+
+  public boolean getReverseStatus() {
+    return m_reverseIndexStatus;
   }
 
 
