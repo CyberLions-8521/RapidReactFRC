@@ -47,18 +47,32 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putBoolean("Target Detected", TargetDetected);
+    SmartDashboard.putBoolean("In Range Of Hub", InRange());
     SmartDashboard.putNumber("Distance", getDistanceToHub());
   }
 
   // Filters
 
   public double getDistanceToHub() {
-    LinearFilter yFilter = LinearFilter.movingAverage(10);
+    LinearFilter yFilter =LinearFilter.movingAverage(10);
     double yOffset = Math.toRadians(yFilter.calculate(getTy()));
     double Distance = ((VisionConstants.TARGET_HEIGHT - VisionConstants.CAMERA_HEIGHT)
         / Math.tan(VisionConstants.CAMERA_ANGLE + yOffset));
 
     return Distance;
+  }
+
+  public boolean InRange(){
+    boolean inRange;
+    boolean TargetDetected = getHasTarget();
+    double distance = getDistanceToHub();
+    if (distance >= 12 && distance <= 14 && TargetDetected) {
+      inRange = true;
+    } else {
+      inRange = false;
+    }
+ 
+    return inRange;
   }
 
   public double getDistanceToMotorVelocity() {
