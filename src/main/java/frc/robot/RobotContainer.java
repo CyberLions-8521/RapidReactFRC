@@ -76,17 +76,24 @@ public class RobotContainer {
     return new SequentialCommandGroup(
         // new AutoTesting(m_drivebase, m_masterSubsystem, m_turret,
         // -0.4).withTimeout(6),
+        new AutoStraight(m_drivebase, m_masterSubsystem, -0.5).withTimeout(5), // forward Drivebase
+        new WaitCommand(2),
+        new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(5), // reverse drivebase
+        new WaitCommand(2),
+        new AutoRotateCommand(m_drivebase, 90.0), // ClocCounterkwise
+        new WaitCommand(2),
+        new AutoRotateCommand(m_drivebase, -90.0), // Clockwise
+        new WaitCommand(2),
         new AutoStraight(m_drivebase, m_masterSubsystem, 0.5),
-        new AutoStraight(m_drivebase, m_masterSubsystem, -0.5),
-        new AutoRotateCommand(m_drivebase, 90.0).withTimeout(5),
-        new AutoRotateCommand(m_drivebase, -90.0).withTimeout(5),
-
+        new WaitCommand(2),
         // going to run both auto commands at the same time here
         new ParallelCommandGroup( // both should run straight and shoot at the same time
             new AutoShoot(m_turret, m_masterSubsystem),
             new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(3)
 
         )
+        
+        
 
     );
 

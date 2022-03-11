@@ -34,7 +34,7 @@ public class Drivebase extends SubsystemBase {
   double m_lastAngle = 0;
 
   // Constants to control joystick input
-  double m_speedReducer = 0.3;
+  double m_speedReducer = 0.2;
   double m_turnReducer = 0.3;
 
   // Encoders stuff

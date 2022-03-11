@@ -76,9 +76,10 @@ public class Turret extends SubsystemBase {
 
   }
 
-  // public void setSpeed(double speed) {
-  // m_shooter.set(speed);
-  // }
+  //Comment out if it doesnt work - Thien 
+  public void setSpeedTurret(double speed) {
+  m_shooter.set(speed);
+  }
 
   public void stopShooter() {
     m_shooter.set(0.0);
