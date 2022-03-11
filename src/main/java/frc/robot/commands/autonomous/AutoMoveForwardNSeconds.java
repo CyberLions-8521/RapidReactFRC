@@ -18,18 +18,18 @@ public class AutoMoveForwardNSeconds extends CommandBase {
   double m_InitHeading;
   double m_speed;
 
-  public AutoMoveForwardNSeconds(Drivebase db, MasterSubsystem master, Turret yes, double speed) {
+  public AutoMoveForwardNSeconds(Drivebase db, MasterSubsystem master, Turret turret, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speed;
     m_master = master;
 
-    m_turret = yes;
+    m_turret = turret;
    // m_toggleIntakeSystem = intakeSystem;
 
     addRequirements(db);
     addRequirements(master);
-    addRequirements(yes);
+    addRequirements(turret);
     //addRequirements(intakeSystem);
   }
 
