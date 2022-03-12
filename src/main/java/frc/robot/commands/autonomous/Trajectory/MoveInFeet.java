@@ -93,20 +93,14 @@ public class MoveInFeet extends CommandBase {
   
   }
 
-  public void ToggleIntake(boolean m_toggle){
-    if(m_toggle){
-      m_toggleIntakeSystem.autoIntakeSystemOn();
-    } else {
-      m_toggleIntakeSystem.autoIntakeSystemOff();
-    }
-
-  }
+ 
   
   @Override
   public void execute() {
     //BooleanDriveToDistanceSelfCorrecting();
     //m_toggleIntakeSystem.autoIntakeSystemOn();
     BooleanDriveToDistance();
+    //m_toggleIntakeSystem.autoIntakeSystemOn();
     
 
   }

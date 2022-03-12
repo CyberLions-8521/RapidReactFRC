@@ -116,9 +116,9 @@ public final class Constants {
     // Just a coefficient to dampen how fast the robot turns
     public static final double STEER_K = 0.1;
     // Highest the robot can turn autonomously
-    public static final double MAX_OUTPUT = 0.6; // originally 0.5
+    public static final double MAX_OUTPUT = 0.7; // originally 0.5
     public static final double AutoMAX_OUTPUT = 0.3;
-    public static final double Speedlimit = 0.5;
+    public static final double Speedlimit = 0.6;
     public static final double DRIVE_SLOW = 0.4;
     public static final double TURN_SLOW = 0.5;
     // Steering adjust is never zero, so we choose a number where the robot is

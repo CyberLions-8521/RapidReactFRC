@@ -11,14 +11,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 // Pneumatic Dependecies (API)
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CAN;
-import frc.robot.Constants.XBOX;
 
-public class MasterSubsystem extends SubsystemBase {
+public class intakeArmOnly extends SubsystemBase {
   // DoubleSolenoid m_leftArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 5, 4);
   // DoubleSolenoid m_rightArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
   // DoubleSolenoid m_transLeftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 7, 8);
@@ -53,7 +51,7 @@ public class MasterSubsystem extends SubsystemBase {
   boolean m_final;
   boolean m_reverseIndexStatus;
 
-  public MasterSubsystem() {
+  public intakeArmOnly() {
     // stop all subsystem toggle here
     autoIntakeSystemOff();
     indexOff();
@@ -71,8 +69,8 @@ public class MasterSubsystem extends SubsystemBase {
 
   // Both Intake Arm and Intake Motor Status;
   public void autoIntakeSystemOn() {
-  //  m_leftArmDS.set(kReverse);
-    //m_rightArmDS.set(kReverse);
+    m_leftArmDS.set(kReverse);
+    m_rightArmDS.set(kReverse);
     m_intake.set(0.85);
     m_autoStatus = true;
   }
@@ -122,53 +120,8 @@ public class MasterSubsystem extends SubsystemBase {
   public void indexOn() {
     m_frontIndexor.set(-0.55);
     m_backIndexor.set(-0.70);
-    m_lowIndexor.set(-0.6);
 
     m_indexorStatus = true;
-  }
-  //Auto
-  public void SuperAutoindexOn() {
-    m_frontIndexor.set(-0.55);
-    m_backIndexor.set(-0.70);
-    m_lowIndexor.set(-0.6);
-
-    
-  }
-
-  //for controller
-  public void IndexSet(XboxController controller){
-    if (controller.getRawButton(XBOX.LB)){
-      m_frontIndexor.set(0.55);
-      m_backIndexor.set(0.70);
-    } else if (controller.getRawButton(XBOX.RB)){
-      m_frontIndexor.set(-0.55);
-      m_backIndexor.set(-0.70);
-     m_lowIndexor.set(-0.6);
-    }  else if(controller.getRawButton(XBOX.RB) == false && controller.getRawButton(XBOX.LB) == false){
-      m_frontIndexor.set(0.0);
-      m_backIndexor.set(0.0);
-      m_lowIndexor.set(0.0);
-
-    }
-  }
-
-  public void ReverseIndex(XboxController controller){
-    if (controller.getRawButton(XBOX.LB)){
-      reverseIndexOn();
-    } else if (controller.getRawButton(XBOX.LB) == false){
-      reverseIndexOff();
-    }
-  }
-
-  public void Index(XboxController controller){
-   if (controller.getRawButton(XBOX.RB)){
-    indexOn();
-
-    if(controller.getRawButton(XBOX.LB)){
-    }
-   } else if(controller.getRawButton(XBOX.RB) == false && controller.getRawButton(XBOX.LB)){
-    indexOff(); 
-  }
   }
 
   public void indexOff() {
@@ -189,7 +142,7 @@ public class MasterSubsystem extends SubsystemBase {
   }
 
   public void lowerIndexOn() {
-    m_lowIndexor.set(-0.7);
+    m_lowIndexor.set(-0.6);
     m_lowindexorStatus = true;
   }
 

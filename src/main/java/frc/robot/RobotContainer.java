@@ -4,14 +4,19 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
 // Commands
 import frc.robot.commands.Drive;
+import frc.robot.commands.KevinUltraAuto.UltraAuto;
 import frc.robot.commands.autonomous.AutoStraight;
+
+import frc.robot.commands.autonomous.AutoIntakeArm;
 import frc.robot.commands.autonomous.AutoRotateCommand;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.Trajectory.AutoTesting;
@@ -55,6 +60,8 @@ public class RobotContainer {
     m_Climber.setDefaultCommand(m_climb);
     m_turret.setDefaultCommand(m_shoot);
     m_masterSubsystem.setDefaultCommand(m_shoot);
+    m_masterSubsystem.setDefaultCommand(m_indextoggle);
+
     m_vision.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
@@ -65,37 +72,94 @@ public class RobotContainer {
     new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem));
     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)); // double check in testing phase - Thien
+    //new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)); // double check in testing phase - Thien (Inversed Index motor to fix stick ball)
 
   }
 
   public Command getAutonomousCommand() {
     System.out.println("In get autonomous Command");
 
-    // Working (Run each command by line based on time)
+  //  CommandBase autoStraight = new AutoStraight(m_drivebase, 0.5,50);
+
+    // return new SequentialCommandGroup(
+    // //  new AutoStraight(m_drivebase, -0.5).withTimeout(3),
+    //   autoStraight.withInterrupt(autoStraight::isFinished),
+    //   new WaitCommand(1),
+    //   new AutoShoot(m_turret).withTimeout(2)
+
+    //   // new ParallelCommandGroup(
+    //   //   new AutoIntakeArm(m_masterSubsystem)
+    //   // )
+    // );
+
+
+    
     return new SequentialCommandGroup(
+      new AutoStraight(m_drivebase, -0.40).withTimeout(1.90)
+      
+      // new ParallelCommandGroup(
+      //   new AutoShoot(m_turret),
+      //   new AutoIntakeArm(m_masterSubsystem)
+      // )
+    );
+
+    //Kevin Code
+    // return new SequentialCommandGroup(
+    // new UltraAuto(m_drivebase, m_masterSubsystem, 0.5, 20)
+
+    // );
+
+    // TIMMY: My code here
+    // return new AutoStraight(m_drivebase, -0.40).withTimeout(1.90).andThen(
+    //   new AutoShoot(m_turret).alongWith(new AutoIntakeArm(m_masterSubsystem))
+    // );
+
+
+  //  return new  SequentialCommandGroup(
+  //    new AutoStraight(m_drivebase, -0.4).withTimeout(2),
+  //   ); 
+     
+
+    // Working (Run each command by line based on time)
+  //  return new SequentialCommandGroup(
+    //   new AutoStraight(m_drivebase, -0.4).withTimeout(3),
+    
+  
+    // new WaitCommand(1),
+    // new AutoStraight(m_drivebase, 0.4),
+    //new AutoIntakeArm(m_masterSubsystem)
+  //  new AutoStraight(m_drivebase, m_masterSubsystem, 0.5), 
+    
+  
+
+    // new WaitCommand(2),
+     
+    
+
+       // negative = robot reversed
         // new AutoTesting(m_drivebase, m_masterSubsystem, m_turret,
         // -0.4).withTimeout(6),
-        new AutoStraight(m_drivebase, m_masterSubsystem, -0.5).withTimeout(5), // forward Drivebase
-        new WaitCommand(2),
-        new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(5), // reverse drivebase
-        new WaitCommand(2),
-        new AutoRotateCommand(m_drivebase, 90.0), // ClocCounterkwise
-        new WaitCommand(2),
-        new AutoRotateCommand(m_drivebase, -90.0), // Clockwise
-        new WaitCommand(2),
-        new AutoStraight(m_drivebase, m_masterSubsystem, 0.5),
-        new WaitCommand(2),
+        // new AutoStraight(m_drivebase, m_masterSubsystem, -0.5).withTimeout(2), // forward Drivebase
+        // new WaitCommand(2),
+        // new AutoStraight(m_drivebase, m_masterSubsystem, 0.5), // reverse drivebase
+        // new WaitCommand(2),
+        // new AutoRotateCommand(m_drivebase, 90.0), // ClocCounterkwise
+        // new WaitCommand(2),
+        // new AutoRotateCommand(m_drivebase, -90.0), // Clockwise
+        // new WaitCommand(2),
+        // new AutoStraight(m_drivebase, m_masterSubsystem, 0.5),
+        // new WaitCommand(2),
+        // new AutoShoot(m_turret, m_masterSubsystem)
         // going to run both auto commands at the same time here
-        new ParallelCommandGroup( // both should run straight and shoot at the same time
-            new AutoShoot(m_turret, m_masterSubsystem),
-            new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(3)
+        // new ParallelCommandGroup( // both should run straight and shoot at the same time
+        //     new AutoShoot(m_turret, m_masterSubsystem),
+        //     new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(3)
 
-        )
+        // )
         
         
 
-    );
+    
 
   }
 

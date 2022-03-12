@@ -38,11 +38,12 @@ public class Shoot extends CommandBase {
       }*/
       
       
-      if(3970 < m_shooter.m_encoder.getVelocity()){
-        m_index.indexOn();
-      } else {
-        m_index.indexOff();
-      }
+      // if(3970 < m_shooter.m_encoder.getVelocity()){
+      //   m_index.indexOn();
+      // } else {
+      //   m_index.reverseIndexOff();
+      //   m_index.indexOff();
+      // }
       
   }
 
@@ -53,8 +54,11 @@ public class Shoot extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
-    AutoIndexerTele();
+    m_index.IndexSet(RobotContainer.m_controller);
+   // m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
+    //m_index.ToggleReverseIndex(RobotContainer.m_controller);
+   // AutoIndexerTele();
+
   }
 
   @Override

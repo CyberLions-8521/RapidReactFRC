@@ -3,6 +3,7 @@ package frc.robot.subsystems.dreadsubsystem;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,7 +59,9 @@ public class Climber extends SubsystemBase {
             // if you are NOT pressing the dpap button or the position is greater than x or
             // the position is less than 0 then the motor does nothing
         } else if (controller.getPOV() == -1) {
-            m_elevatorMotor.setVoltage(0);}
+            m_elevatorMotor.stopMotor();
+            m_elevatorMotor.setIdleMode(IdleMode.kBrake);
+        }
     }
 
     @Override

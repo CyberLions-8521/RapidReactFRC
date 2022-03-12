@@ -69,16 +69,20 @@ public class Turret extends SubsystemBase {
 
   // For Auto
   public void setSpeed() {
-    while (true) {
+   
+      RobotContainer.m_masterSubsystem.m_frontIndexor.set(-0.55);
+      RobotContainer.m_masterSubsystem.m_backIndexor.set(-0.70);
+      RobotContainer.m_masterSubsystem.m_lowIndexor.set(-0.6);
       m_shooter.set(1);
 
-    }
+    
 
   }
 
   //Comment out if it doesnt work - Thien 
   public void setSpeedTurret(double speed) {
   m_shooter.set(speed);
+
   }
 
   public void stopShooter() {
