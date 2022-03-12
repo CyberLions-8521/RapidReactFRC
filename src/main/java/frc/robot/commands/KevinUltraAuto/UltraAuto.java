@@ -2,14 +2,15 @@ package frc.robot.commands.KevinUltraAuto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+//import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.IndexSubsystem;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 
 // Pneumatic Dependecies (API)
 
 public class UltraAuto extends CommandBase {
   Drivebase m_db;
-  MasterSubsystem m_index;
+  IndexSubsystem m_index;
   Turret m_turret; 
 
   double m_InitHeading;
@@ -18,7 +19,7 @@ public class UltraAuto extends CommandBase {
 
   boolean m_isDone = false;
 
-  public UltraAuto(Drivebase db, MasterSubsystem index, double speed, double feet) {
+  public UltraAuto(Drivebase db, IndexSubsystem index, double speed, double feet) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_index = index;

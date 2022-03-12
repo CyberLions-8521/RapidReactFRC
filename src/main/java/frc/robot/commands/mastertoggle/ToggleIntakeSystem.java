@@ -6,13 +6,14 @@ package frc.robot.commands.mastertoggle;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Intake;
+// import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class ToggleIntakeSystem extends CommandBase {
-  private final MasterSubsystem m_intakeSystem;
+  private final Intake m_intakeSystem;
   private boolean m_isDone;
 
-  public ToggleIntakeSystem(MasterSubsystem subsystem) {
+  public ToggleIntakeSystem(Intake subsystem) {
     m_intakeSystem = subsystem;
     m_isDone = false;
     addRequirements(subsystem);

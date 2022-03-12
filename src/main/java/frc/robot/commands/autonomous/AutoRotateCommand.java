@@ -3,15 +3,15 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
-import frc.robot.subsystems.dreadsubsystem.Turret;
+// import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Intake;
 import frc.robot.Constants.DriveConstants;
 
 
 
 public class AutoRotateCommand extends CommandBase {
   Drivebase m_db;
-  MasterSubsystem m_toggleIntakeSystem;
+  Intake m_toggleIntakeSystem;
 
   double currentAngle;
   double targetAngle;
@@ -29,7 +29,7 @@ public class AutoRotateCommand extends CommandBase {
   @Override
   public void initialize() {
     m_db.getGyro().reset();
-    currentAngle = m_db.getAngle(); // Comment this if this does not work - Thien
+    //currentAngle = m_db.getAngle(); // Comment this if this does not work - Thien
     targetAngle = currentAngle + turn;
   }
 

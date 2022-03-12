@@ -3,22 +3,23 @@
 
 package frc.robot.commands.autonomous.Trajectory;
 
-import edu.wpi.first.wpilibj.AddressableLED;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+// import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Intake;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.RobotContainer;
 
 public class AutoTesting extends CommandBase {
   Drivebase m_db;
-  MasterSubsystem m_master;
+  Intake m_master;
   Turret m_turret;
 
   double m_InitHeading;
   double m_speed;
 
-  public AutoTesting(Drivebase db, MasterSubsystem master, Turret turret, double speed) {
+  public AutoTesting(Drivebase db, Intake master, Turret turret, double speed) {
    
     m_db = db;
     m_speed = speed;

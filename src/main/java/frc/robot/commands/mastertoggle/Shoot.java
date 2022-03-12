@@ -4,15 +4,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.utilsubsystem.Limelight;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+// import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.IndexSubsystem;
 
 public class Shoot extends CommandBase {
   private final Turret m_shooter;
   private final Limelight m_vision;
-  private final MasterSubsystem m_index;
+  private final IndexSubsystem m_index;
   private boolean m_isDone;
 
-  public Shoot(Turret shooter, Limelight Vision, MasterSubsystem Mastersubsystem) {
+  public Shoot(Turret shooter, Limelight Vision, IndexSubsystem Mastersubsystem) {
     m_shooter = shooter;
     m_vision = Vision;
     m_index = Mastersubsystem;
@@ -38,12 +39,12 @@ public class Shoot extends CommandBase {
       }*/
       
       
-      // if(3970 < m_shooter.m_encoder.getVelocity()){
-      //   m_index.indexOn();
-      // } else {
-      //   m_index.reverseIndexOff();
-      //   m_index.indexOff();
-      // }
+      if(3970 < m_shooter.m_encoder.getVelocity()){
+        m_index.indexOn();
+      } else {
+        m_index.reverseIndexOff();
+        m_index.indexOff();
+      }
       
   }
 

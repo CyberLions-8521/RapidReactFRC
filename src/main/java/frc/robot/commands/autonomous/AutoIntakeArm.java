@@ -6,19 +6,17 @@ package frc.robot.commands.autonomous;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
-import frc.robot.subsystems.dreadsubsystem.Turret;
-import frc.robot.subsystems.utilsubsystem.Limelight;
-import edu.wpi.first.math.controller.PIDController;
+// import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 public class AutoIntakeArm extends CommandBase {
-  MasterSubsystem m_arm;
+  Intake m_arm;
  
  
 
-  public AutoIntakeArm(MasterSubsystem subsystem) {
+  public AutoIntakeArm(Intake subsystem) {
     m_arm = subsystem;
     addRequirements(subsystem);
   }
@@ -31,7 +29,7 @@ public class AutoIntakeArm extends CommandBase {
   @Override
   public void execute() {
     //m_arm.extendArms(); //Toggles Shooter + indexor after speed is reached  
-    m_arm.indexOn();
+  
   
     
     

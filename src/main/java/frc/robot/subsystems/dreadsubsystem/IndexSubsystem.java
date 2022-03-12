@@ -18,8 +18,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CAN;
 import frc.robot.commands.mastertoggle.LowerIndexor;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.XBOX;
+import edu.wpi.first.wpilibj.XboxController;
 
-public class IndexOnly extends SubsystemBase {
+public class IndexSubsystem extends SubsystemBase {
 
   
   
@@ -29,7 +32,7 @@ public class IndexOnly extends SubsystemBase {
 
 // adawakwdmkwadwadkawdjakd
 
-CANSparkMax m_intake = new CANSparkMax(CAN.INTAKE, MotorType.kBrushed);
+
 
  
   CANSparkMax m_frontIndexor = new CANSparkMax(Constants.CAN.INDEXOR_FRONT, MotorType.kBrushless);
@@ -38,7 +41,6 @@ CANSparkMax m_intake = new CANSparkMax(CAN.INTAKE, MotorType.kBrushed);
  
 
   boolean m_autoStatus;
-  boolean m_gearStatus;
   boolean m_lowindexorStatus;
   boolean m_indexorStatus;
   boolean m_intakeStatus;
@@ -46,11 +48,11 @@ CANSparkMax m_intake = new CANSparkMax(CAN.INTAKE, MotorType.kBrushed);
   boolean m_final;
   boolean m_reverseIndexStatus;
 
-  public IndexOnly() {
+  public IndexSubsystem() {
     // stop all subsystem toggle here
   
     AutoUpperindexOff();
-    AutolowerIndexOff();
+    //AutolowerIndexOff();
     
     // setGearOff();
 
@@ -61,41 +63,99 @@ CANSparkMax m_intake = new CANSparkMax(CAN.INTAKE, MotorType.kBrushed);
     m_backIndexor.set(speed);
   }
 
-  // Both Intake Arm and Intake Motor Status;
- 
-
+  //Autonomous Mode Only!
   public void AutoUpperindexOn() {
     m_frontIndexor.set(-0.55);
     m_backIndexor.set(-0.70);
     m_indexorStatus = true;
   }
 
+  //Autonomous Mode Only!
   public void AutoUpperindexOff(){
     m_frontIndexor.set(-0.55);
     m_backIndexor.set(-0.70);
-
     m_indexorStatus = false;
-
   }
 
 
+  //Autonomous Mode Only!
   public void AutolowerIndexOn() {
     m_lowIndexor.set(-0.6);
     m_lowindexorStatus = true;
   }
 
+  //Autonomous Mode Only!
   public void AutolowerIndexOff() {
     m_lowIndexor.set(0.0);
     m_lowindexorStatus = false;
   }
 
-  public void autointakeOn() {
-    m_intake.set(0.85);
+  //Autonomous Mode Only!
+  public void SuperAutoindexOn() {
+    m_frontIndexor.set(-0.55);
+    m_backIndexor.set(-0.70);
+    m_lowIndexor.set(-0.6);
   }
 
-  // boolean status check
-  
+  public void reverseIndexOn() {
+    m_frontIndexor.set(0.55);
+    m_backIndexor.set(0.70);
+    m_lowIndexor.set(0.7);
+    m_reverseIndexStatus = true;
+  }
+  public void reverseIndexOff() {
+    m_frontIndexor.set(0.0);
+    m_backIndexor.set(0.0);
+    m_lowIndexor.set(0.0);
+    m_reverseIndexStatus = false;
+  }
 
+  public void lowerIndexOn() {
+    m_lowIndexor.set(-0.7);
+    m_lowindexorStatus = true;
+  }
+
+  public void lowerIndexOff() {
+    m_lowIndexor.set(0.0);
+    m_lowindexorStatus = false;
+  }
+
+
+    //for controller
+    public void IndexSet(XboxController controller){
+      if (controller.getRawButton(XBOX.LB)){
+        m_frontIndexor.set(0.55);
+        m_backIndexor.set(0.70);
+      } else if (controller.getRawButton(XBOX.RB)){
+        m_frontIndexor.set(-0.55);
+        m_backIndexor.set(-0.70);
+       m_lowIndexor.set(-0.6);
+      }  else if(controller.getRawButton(XBOX.RB) == false && controller.getRawButton(XBOX.LB) == false){
+        m_frontIndexor.set(0.0);
+        m_backIndexor.set(0.0);
+        m_lowIndexor.set(0.0);
+  
+      }
+    }
+
+    public void indexOn() {
+      m_frontIndexor.set(-0.55);
+      m_backIndexor.set(-0.70);
+      m_lowIndexor.set(-0.6);
+  
+      m_indexorStatus = true;
+    }
+
+
+    public void indexOff() {
+      m_frontIndexor.set(0.0);
+      m_backIndexor.set(0.0);
+      m_indexorStatus = false;
+    }
+    
+
+
+  // boolean status check
   public boolean getAutoStatus() {
     return m_autoStatus;
   }
@@ -116,10 +176,6 @@ CANSparkMax m_intake = new CANSparkMax(CAN.INTAKE, MotorType.kBrushed);
     return m_reverseIndexStatus;
   }
 
-
-
-
-  
   @Override
   public void periodic() {
    

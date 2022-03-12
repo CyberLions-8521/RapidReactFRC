@@ -1,13 +1,14 @@
 package frc.robot.commands.mastertoggle.dstoggle;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+//import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Intake;
 
 public class ToggleGear extends CommandBase {
-  private final MasterSubsystem m_solenoids;
+  private final Intake m_solenoids;
   private boolean m_isDone;
 
-  public ToggleGear(MasterSubsystem subsystem) {
+  public ToggleGear(Intake subsystem) {
     m_solenoids = subsystem;
     m_isDone = false;
     addRequirements(subsystem);

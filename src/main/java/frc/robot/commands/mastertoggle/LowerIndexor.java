@@ -1,13 +1,14 @@
 package frc.robot.commands.mastertoggle;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+// import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.IndexSubsystem;
 
 public class LowerIndexor extends CommandBase {
-  private final MasterSubsystem m_lowIndexMotor;
+  private final IndexSubsystem m_lowIndexMotor;
   private boolean m_returnStatus;
 
-  public LowerIndexor(MasterSubsystem subsystem) {
+  public LowerIndexor(IndexSubsystem subsystem) {
     m_lowIndexMotor = subsystem;
     addRequirements(subsystem);
   }
