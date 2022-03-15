@@ -49,10 +49,10 @@ public class Turret extends SubsystemBase {
   }
 
   public void ControllerBindSpeed(XboxController controller, double speed) {
-    if (controller.getRawButton(XBOX.RB)) {
+    if (controller.getRawButton(XBOX.RIGHT_TRIGGER)) {
       m_shooter.set(speed);
       m_shooterStatus = true;
-    } else if (controller.getRawButton(XBOX.RB) == false)
+    } else if (controller.getRawButton(XBOX.RIGHT_TRIGGER) == false)
       stopShooter();
   }
 

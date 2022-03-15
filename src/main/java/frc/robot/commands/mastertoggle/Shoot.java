@@ -8,25 +8,21 @@ import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class Shoot extends CommandBase {
   private final Turret m_shooter;
-  private final Limelight m_vision;
   private final MasterSubsystem m_index;
   private boolean m_isDone;
 
-  public Shoot(Turret shooter, Limelight Vision, MasterSubsystem Mastersubsystem) {
+  public Shoot(Turret shooter, MasterSubsystem masterSubsystem) {
     m_shooter = shooter;
-    m_vision = Vision;
-    m_index = Mastersubsystem;
+    m_index = masterSubsystem;
     m_isDone = false;
-    addRequirements(Vision);
     addRequirements(shooter);
-    addRequirements(Mastersubsystem);
+    addRequirements(masterSubsystem);
   }
 
   private final int targetSpeed = 500;
   private final int maxtargetSpeed = 600;
 
   public void AutoIndexerTele(){
-    double setpoint = m_vision.getDistanceToMotorVelocity();
       //For testing
       /*
 
@@ -43,6 +39,8 @@ public class Shoot extends CommandBase {
       } else {
         m_index.indexOff();
       }
+
+
       
   }
 

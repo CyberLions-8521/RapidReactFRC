@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 // Pneumatic Dependecies (API)
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -26,18 +27,21 @@ import frc.robot.Constants.CAN;
 public class AutoStraight extends CommandBase {
   Drivebase m_db;
   MasterSubsystem m_toggleIntakeSystem;
+  Turret shooter;
 
   double m_InitHeading;
   double m_speed;
 
-  public AutoStraight(Drivebase db, MasterSubsystem intakeSystem, double speed) {
+  public AutoStraight(Drivebase db, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speed;
-    m_toggleIntakeSystem = intakeSystem;
+   
 
     addRequirements(db);
-    addRequirements(intakeSystem);
+    //addRequirements(turret);
+    //addRequirements(subsystem);
+  
   }
 
   @Override
@@ -48,17 +52,20 @@ public class AutoStraight extends CommandBase {
 
   @Override
   public void execute() {
-   m_toggleIntakeSystem.autoIntakeSystemOn();
-   if (m_toggleIntakeSystem.getAutoStatus() == true)
-   {
-    m_db.moveForward(-m_speed, -m_db.getAngle());
-   }
-   
+    //shooter.setSpeed();
+    //if(Timer.getFPGATimestamp()>5){
+     // m_toggleIntakeSystem.indexOn();
+      //System.out.println(Timer.getFPGATimestamp());
+   // }
+    //else if(Timer.getFPGATimestamp()>7)
+    m_db.moveForward(-m_speed, -m_db.getAngle());  
 
+  
+   
 
     // m_db.moveForward(-0.2);
     // NOTE: may or may not be positive not sure
-   // m_db.moveForward(-m_speed, -m_db.getAngle()); //comment or check this out later
+   //comment or check this out later
   }
 
   @Override

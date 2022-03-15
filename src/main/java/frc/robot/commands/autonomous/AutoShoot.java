@@ -20,7 +20,6 @@ public class AutoShoot extends CommandBase {
     m_Turret = turret;
     m_SubsystemBase = subsystem;
     addRequirements(turret);
-    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -30,7 +29,6 @@ public class AutoShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_SubsystemBase.setMotor(0.7);
     m_Turret.setSpeed(); //Toggles Shooter + indexor after speed is reached
 
   }

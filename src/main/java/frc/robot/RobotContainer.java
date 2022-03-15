@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -12,6 +14,7 @@ import frc.robot.Constants.XBOX;
 // Commands
 import frc.robot.commands.Drive;
 import frc.robot.commands.autonomous.AutoStraight;
+//import frc.robot.commands.autonomous.RevShooter;
 import frc.robot.commands.autonomous.AutoRotateCommand;
 import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.Trajectory.AutoTesting;
@@ -39,7 +42,7 @@ public class RobotContainer {
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  private final Shoot m_shoot = new Shoot(m_turret, m_vision, m_masterSubsystem);
+  private final Shoot m_shoot = new Shoot(m_turret, m_masterSubsystem);
   private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_masterSubsystem);
   private final LowerIndexor m_lowindex = new LowerIndexor(m_masterSubsystem);
   private final toggleReverseIndexSystem m_indextoggle = new toggleReverseIndexSystem(m_masterSubsystem);
@@ -55,7 +58,7 @@ public class RobotContainer {
     m_Climber.setDefaultCommand(m_climb);
     m_turret.setDefaultCommand(m_shoot);
     m_masterSubsystem.setDefaultCommand(m_shoot);
-    m_vision.setDefaultCommand(m_shoot);
+    //m_vision.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
 
@@ -74,24 +77,33 @@ public class RobotContainer {
 
     // Working (Run each command by line based on time)
     return new SequentialCommandGroup(
+      // new ParallelDeadlineGroup(new WaitCommand(3), new Shoot(m_turret, m_masterSubsystem)),
+      // new ParallelDeadlineGroup(new WaitCommand(3), new AutoStraight(m_drivebase, 0.3)).with
+     new AutoStraight(m_drivebase, -0.3).withTimeout(0.3)
+    //  new ParallelDeadlineGroup(new WaitCommand(0.2), new AutoShoot(m_turret, m_masterSubsystem)),
+    //  new AutoStraight(m_drivebase, -0.3).withTimeout(1.7)
+
+  
+
+
         // new AutoTesting(m_drivebase, m_masterSubsystem, m_turret,
         // -0.4).withTimeout(6),
-        new AutoStraight(m_drivebase, m_masterSubsystem, -0.5).withTimeout(5), // forward Drivebase
-        new WaitCommand(2),
-        new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(5), // reverse drivebase
-        new WaitCommand(2),
-        new AutoRotateCommand(m_drivebase, 90.0), // ClocCounterkwise
-        new WaitCommand(2),
-        new AutoRotateCommand(m_drivebase, -90.0), // Clockwise
-        new WaitCommand(2),
-        new AutoStraight(m_drivebase, m_masterSubsystem, 0.5),
-        new WaitCommand(2),
-        // going to run both auto commands at the same time here
-        new ParallelCommandGroup( // both should run straight and shoot at the same time
-            new AutoShoot(m_turret, m_masterSubsystem),
-            new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(3)
+        // new AutoStraight(m_drivebase, m_masterSubsystem, -0.5).withTimeout(5), // forward Drivebase
+        // new WaitCommand(2),
+        // new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(5), // reverse drivebase
+        // new WaitCommand(2),
+        // new AutoRotateCommand(m_drivebase, 90.0), // ClocCounterkwise
+        // new WaitCommand(2),
+        // new AutoRotateCommand(m_drivebase, -90.0), // Clockwise
+        // new WaitCommand(2),
+        // new AutoStraight(m_drivebase, m_masterSubsystem, 0.5),
+        // new WaitCommand(2),
+        // // going to run both auto commands at the same time here
+        // new ParallelCommandGroup( // both should run straight and shoot at the same time
+        //     new AutoShoot(m_turret, m_masterSubsystem),
+        //     new AutoStraight(m_drivebase, m_masterSubsystem, 0.5).withTimeout(3)
 
-        )
+        // )
         
         
 

@@ -34,8 +34,8 @@ public class Drivebase extends SubsystemBase {
   double m_lastAngle = 0;
 
   // Constants to control joystick input
-  double m_speedReducer = 0.2;
-  double m_turnReducer = 0.3;
+  double m_speedReducer = 0.0;
+  double m_turnReducer = 0.2;
 
   // Encoders stuff
   private final Counter m_rightEncoder = new Counter();
@@ -220,8 +220,8 @@ public class Drivebase extends SubsystemBase {
 
 
   public void arcadeDrive(XboxController controller) {
-    m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
-    m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
+    m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.5 : 0.8;
+    m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.8;
     double offset = 0;
 
     m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
