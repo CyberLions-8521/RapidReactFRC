@@ -24,6 +24,7 @@ public class toggleReverseIndexSystem extends CommandBase {
     }
     m_returnStatus = true;
   }
+  
 
   
 

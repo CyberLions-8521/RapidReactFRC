@@ -66,7 +66,7 @@ public class Limelight extends SubsystemBase {
     boolean inRange;
     boolean TargetDetected = getHasTarget();
     double distance = getDistanceToHub();
-    if (distance >= 12 && distance <= 14 && TargetDetected) {
+    if (distance >= 7 && distance <= 14 && TargetDetected) {
       inRange = true;
     } else {
       inRange = false;

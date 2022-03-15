@@ -54,7 +54,7 @@ public class UltraAuto extends CommandBase {
       m_db.autoArcade(-m_speed, 0);
     } else {
       m_db.autoArcade(0, 0);
-      m_turret.setSpeed();
+      m_turret.setSpeed(); 
     }
 
  //   m_db.moveForward(-m_speed, -m_db.getAngle());

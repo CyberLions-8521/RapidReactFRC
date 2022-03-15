@@ -15,49 +15,54 @@ public class AutoStraight extends CommandBase {
   double m_speed;
   double m_feet;
   boolean m_isDone = false;
-  public AutoStraight(Drivebase db, Intake intakeSystem, double speed) {
-    
+
+  public AutoStraight(Drivebase db, double speed) {
+
     m_db = db;
-    m_toggleIntakeSystem = intakeSystem;
+    //m_toggleIntakeSystem = intakeSystem;
     m_speed = speed;
     // m_toggleIntakeSystem = intakeSystem;
 
     addRequirements(db);
-    addRequirements(intakeSystem);
+  //  addRequirements(intakeSystem);
   }
 
   @Override
   public void initialize() {
     m_db.getGyro().reset();
     m_InitHeading = m_db.getAngle();
-   // m_db.resetEncoders();
+    // m_db.resetEncoders();
   }
 
   // public void ForTesting(){
-  //   if (m_feet > m_db.getAverageEncoderDistance()){
-  //     m_db.moveForward(-m_speed, -m_db.getAngle());
+  // if (m_feet > m_db.getAverageEncoderDistance()){
+  // m_db.moveForward(-m_speed, -m_db.getAngle());
 
-  //   } else {
-  //     m_db.autoArcade(0, 0);
-  //     m_isDone = true;
-  //   }
-  //}
+  // } else {
+  // m_db.autoArcade(0, 0);
+  // m_isDone = true;
+  // }
+  // }
 
   @Override
   public void execute() {
-   // ForTesting();
+    // ForTesting();
     // m_toggleIntakeSystem.autoIntakeSystemOn();
     // while (m_toggleIntakeSystem.getAutoStatus() == true)
     // {
     // for (int i = 0; i < 10; i++)
 
-
-    m_toggleIntakeSystem.setMotor(0.5);
-    m_db.moveForward(-m_speed, -m_db.getAngle());
+    // if (true) {
+    //   m_toggleIntakeSystem.setMotor(0.5);
+    //   m_toggleIntakeSystem.autoIntakeSystemOn();
+    // } else {
+    //   m_db.moveForward(-m_speed, -m_db.getAngle());
+    // }
+    // m_toggleIntakeSystem.setMotor(0.5);
+     m_db.moveForward(-m_speed, -m_db.getAngle());
     // }
 
-
- //   m_db.moveForward(-m_speed, -m_db.getAngle());
+    // m_db.moveForward(-m_speed, -m_db.getAngle());
 
   }
 

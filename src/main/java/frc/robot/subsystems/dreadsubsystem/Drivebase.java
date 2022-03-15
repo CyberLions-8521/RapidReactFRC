@@ -95,12 +95,12 @@ public class Drivebase extends SubsystemBase {
      * from neutral to full throttle.
      */
     // Therefore higher values give slower acceleration.
-    m_leftMaster.setOpenLoopRampRate(0.2);
-    m_rightMaster.setOpenLoopRampRate(0.2);
-    m_leftSlave.setOpenLoopRampRate(0.2);
-    m_leftMiddleSlave.setOpenLoopRampRate(0.2);
-    m_rightSlave.setOpenLoopRampRate(0.2);
-    m_rightMiddleSlave.setOpenLoopRampRate(0.2);
+    m_leftMaster.setOpenLoopRampRate(0.15);
+    m_rightMaster.setOpenLoopRampRate(0.15);
+    m_leftSlave.setOpenLoopRampRate(0.15);
+    m_leftMiddleSlave.setOpenLoopRampRate(0.15);
+    m_rightSlave.setOpenLoopRampRate(0.15);
+    m_rightMiddleSlave.setOpenLoopRampRate(0.15);
 
     // reset odometry in drive mode
     // resetEncoders();

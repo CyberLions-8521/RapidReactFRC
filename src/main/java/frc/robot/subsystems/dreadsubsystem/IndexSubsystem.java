@@ -30,9 +30,7 @@ public class IndexSubsystem extends SubsystemBase {
 
 
 
-// adawakwdmkwadwadkawdjakd
-
-
+// adawakwdmkwadwadkawdjak
 
  
   CANSparkMax m_frontIndexor = new CANSparkMax(Constants.CAN.INDEXOR_FRONT, MotorType.kBrushless);
@@ -72,8 +70,8 @@ public class IndexSubsystem extends SubsystemBase {
 
   //Autonomous Mode Only!
   public void AutoUpperindexOff(){
-    m_frontIndexor.set(-0.55);
-    m_backIndexor.set(-0.70);
+    m_frontIndexor.set(0.0);
+    m_backIndexor.set(0.0);
     m_indexorStatus = false;
   }
 
@@ -126,7 +124,7 @@ public class IndexSubsystem extends SubsystemBase {
       if (controller.getRawButton(XBOX.LB)){
         m_frontIndexor.set(0.55);
         m_backIndexor.set(0.70);
-      } else if (controller.getRawButton(XBOX.RB)){
+      } else if (RobotContainer.m_turret.m_encoder.getVelocity() > 3970){
         m_frontIndexor.set(-0.55);
         m_backIndexor.set(-0.70);
        m_lowIndexor.set(-0.6);

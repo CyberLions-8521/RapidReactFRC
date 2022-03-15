@@ -51,8 +51,8 @@ public class RobotContainer {
   private final Drive m_driveSystem = new Drive(m_drivebase);
   private final Shoot m_shoot = new Shoot(m_turret, m_vision, m_indexSubsystem);
   private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_intake);
-  private final LowerIndexor m_lowindex = new LowerIndexor(m_indexSubsystem);
-  private final toggleReverseIndexSystem m_indextoggle = new toggleReverseIndexSystem(m_indexSubsystem);
+  // private final LowerIndexor m_lowindex = new LowerIndexor(m_indexSubsystem);
+  private final toggleReverseIndexSystem m_reverseindextoggle = new toggleReverseIndexSystem(m_indexSubsystem);
   private static final Climb m_climb = new Climb(m_Climber);
 
   // Controller
@@ -65,7 +65,7 @@ public class RobotContainer {
     m_Climber.setDefaultCommand(m_climb);
     m_turret.setDefaultCommand(m_shoot);
     m_indexSubsystem.setDefaultCommand(m_shoot);
-    m_indexSubsystem.setDefaultCommand(m_indextoggle);
+    // m_indexSubsystem.setDefaultCommand(m_reverseindextoggle);
     m_vision.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
@@ -73,18 +73,20 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    //new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_intake));
+    // new JoystickButton(m_controller, XBOX.LB).whenPressed(new
+    // ToggleGear(m_intake));
     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_intake));
     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_indexSubsystem));
-    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_indexSubsystem)); // double
-                                                                                                          // check in
-                                                                                                          // testing
-                                                                                                          // phase -
-                                                                                                          // Thien
-                                                                                                          // (Inversed
-                                                                                                          // Index motor
-                                                                                                          // to fix
-                                                                                                          // stick ball)
+    // new JoystickButton(m_controller, XBOX.X).whenPressed(new
+    // toggleReverseIndexSystem(m_indexSubsystem)); // double
+    // check in
+    // testing
+    // phase -
+    // Thien
+    // (Inversed
+    // Index motor
+    // to fix
+    // stick ball)
 
   }
 
@@ -103,35 +105,39 @@ public class RobotContainer {
     // // new AutoIntakeArm(m_masterSubsystem)
     // // )
     // );
-    return new SequentialCommandGroup(
-      new ToggleIntakeSystem(m_intake),
-      new AutoStraight(m_drivebase, m_intake, -0.40).withTimeout(1.90),
-      new WaitCommand(1),
-      new AutoRotateCommand(m_drivebase, -90.0),
+    // return new SequentialCommandGroup(
 
-      new ParallelCommandGroup(
-        new AutoShoot(m_turret),
-        new SequentialCommandGroup(
-          new AutoStraight(m_drivebase,m_intake,-0.40),
-          new AutoLowerindex(m_indexSubsystem)
-        )
-      )
+    // new ToggleIntakeSystem(m_intake),
+    // new AutoStraight(m_drivebase, -0.35).withTimeout(1.90)
+    // new WaitCommand(1),
+    // new AutoRotateCommand(m_drivebase, -90.0),
+
+    // new ParallelCommandGroup(
+    // new AutoShoot(m_turret),
+    // new SequentialCommandGroup(
+    // new AutoStraight(m_drivebase,m_intake,-0.40),
+    // new AutoLowerindex(m_indexSubsystem)
+    // )
+
+    // return SequentialCommandGroup(
+    // new
+    // )
 
     // new ParallelCommandGroup(
     // new AutoShoot(m_turret),
     // new AutoIntakeArm(m_masterSubsystem)
     // )
-    );
 
     // Kevin Code
-    // return new SequentialCommandGroup(
-    // new UltraAuto(m_drivebase, m_masterSubsystem, 0.5, 20)
+    return new SequentialCommandGroup(
+        // new UltraAuto(m_drivebase, m_indexSubsystem, 0.5, 20)
+        new AutoStraight(m_drivebase, -0.3).withTimeout(1.93)
 
-    // );
+    );
 
-    // TIMMY: My code here
+    // // TIMMY: My code here
     // return new AutoStraight(m_drivebase, -0.40).withTimeout(1.90).andThen(
-    // new AutoShoot(m_turret).alongWith(new AutoIntakeArm(m_masterSubsystem))
+    // new AutoShoot(m_turret).alongWith(new AutoIntakeArm(m_intake))
     // );
 
     // return new SequentialCommandGroup(

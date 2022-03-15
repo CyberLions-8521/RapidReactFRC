@@ -12,6 +12,7 @@ public class Shoot extends CommandBase {
   private final Limelight m_vision;
   private final IndexSubsystem m_index;
   private boolean m_isDone;
+  private boolean m_shooterStatus;
 
   public Shoot(Turret shooter, Limelight Vision, IndexSubsystem Mastersubsystem) {
     m_shooter = shooter;
@@ -26,39 +27,47 @@ public class Shoot extends CommandBase {
   private final int targetSpeed = 500;
   private final int maxtargetSpeed = 600;
 
-  public void AutoIndexerTele(){
-    double setpoint = m_vision.getDistanceToMotorVelocity();
-      //For testing
-      /*
 
-        /*  if(setpoint-50 <  m_encoder.getVelocity()){
-             m_index.indexOn();
-        } else {
-        m_index.indexOff();
-       }
-      }*/
-      
-      
-      if(3970 < m_shooter.m_encoder.getVelocity()){
-        m_index.indexOn();
-      } else {
-        m_index.reverseIndexOff();
-        m_index.indexOff();
-      }
-      
+  public boolean getShootStatus() {
+    return m_shooterStatus;
   }
+  // public void AutoIndexerTele() {
+  //   double setpoint = m_vision.getDistanceToMotorVelocity();
+  //   // For testing
+  //   /*
+  //    * 
+  //    * /* if(setpoint-50 < m_encoder.getVelocity()){
+  //    * m_index.indexOn();
+  //    * } else {
+  //    * m_index.indexOff();
+  //    * }
+  //    * }
+  //    */
+
+  //   if (3970 < m_shooter.m_encoder.getVelocity()) {
+  //     m_index.indexOn();
+  //     m_shooterStatus = true;
+  //   } else {
+  //     m_index.indexOff();
+  //     m_shooterStatus = false;
+  //   }
+
+
+  // }
+
 
   @Override
   public void initialize() {
-    
+
   }
 
   @Override
   public void execute() {
-    m_index.IndexSet(RobotContainer.m_controller);
-   // m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
-    //m_index.ToggleReverseIndex(RobotContainer.m_controller);
-   // AutoIndexerTele();
+    // m_index.IndexSet(RobotContainer.m_controller);
+    //m_index.IndexSet(RobotContainer.m_controller);
+    m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
+    // m_index.ToggleReverseIndex(RobotContainer.m_controller);
+   //  AutoIndexerTele();
 
   }
 
@@ -67,4 +76,3 @@ public class Shoot extends CommandBase {
     return m_isDone;
   }
 }
-
