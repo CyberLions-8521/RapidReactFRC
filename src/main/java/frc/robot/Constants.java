@@ -157,6 +157,7 @@ public final class Constants {
   }
 
   public static class CAN {
+    // looking front of drive base
     // Left + right Cim Motors Slave Masters
     public static final int LEFT_MASTER = 3;
     public static final int RIGHT_MASTER = 4;
