@@ -38,11 +38,11 @@ public class AutoRotateCommand extends CommandBase {
     currentAngle=m_db.getAngle();
     if(currentAngle<targetAngle)
     {
-      m_db.turnInPlace(-0.35);
+      m_db.turnInPlace(-0.45);
     } 
     else if (currentAngle> targetAngle)
     {
-      m_db.turnInPlace(0.35);
+      m_db.turnInPlace(0.45);
     }
 
   }

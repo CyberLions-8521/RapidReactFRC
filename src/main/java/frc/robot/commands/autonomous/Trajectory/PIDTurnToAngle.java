@@ -6,6 +6,7 @@ package frc.robot.commands.autonomous.Trajectory;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
@@ -33,11 +34,10 @@ public class PIDTurnToAngle extends CommandBase {
     m_db.getGyro().reset();
   }
 
-  
-  final double kP=0.1;
-  final double kI=0;
-  final double kD=0;
-  //Proportional System Control
+  final double kP=0.013;
+  final double kI=0.00; //0.005
+  final double kD=0.00;
+  //Proportional Syst1m Control
   //Set I,D to 0 to make it Proportional System
   //Proportinal equation output=measured-setpoint
   PIDController pid = new PIDController(kP, kI, kD);
@@ -49,7 +49,8 @@ public class PIDTurnToAngle extends CommandBase {
     double output = pid.calculate(measuredAngle, m_Setpoint);
     //Put output from PID into drivesystem
     m_db.turnInPlace(-output);
-
+    SmartDashboard.putNumber("output", output);
+    SmartDashboard.putNumber("Acutal Angle", measuredAngle);
  }
 
   // Called every time the scheduler runs while the command is scheduled.
