@@ -74,10 +74,11 @@ public class RobotContainer {
 
     // Working (Run each command by line based on time)
     return new SequentialCommandGroup(
+     // new MoveInFeet(m_drivebase, 0.4, 5)
       // new AutoStraight(m_drivebase, 0.3).withTimeout(1.20),
       // new WaitCommand(2),
-      new PIDTurnToAngle(m_drivebase, 180)
-      // new AutoRotateCommand(m_drivebase, -
+      new PIDTurnToAngle(m_drivebase, 180).withTimeout(10)
+      //new AutoRotateCommand(m_drivebase, 80.0)
       // 360.0)
         // // new AutoTesting(m_drivebase, m_masterSubsystem, m_turret,
         // // -0.4).withTimeout(6),

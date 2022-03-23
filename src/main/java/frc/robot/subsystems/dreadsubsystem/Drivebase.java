@@ -207,7 +207,7 @@ public class Drivebase extends SubsystemBase {
         double rightSpeed = controller.getRawAxis(XBOX.RIGHT_STICK_Y) * DriveConstants.MAX_OUTPUT;
         SmartDashboard.putNumber("Left Speed", leftSpeed);
         SmartDashboard.putNumber("Right Speed", rightSpeed);
-        m_drive.tankDrive(leftSpeed, rightSpeed, false);
+        m_drive.tankDrive(-leftSpeed, -rightSpeed, false);
         break;
       case ARCADE:
         arcadeDrive(controller);
@@ -239,7 +239,7 @@ public class Drivebase extends SubsystemBase {
       offset = 0;
     }
 
-    arcadeDrive(m_speed, -m_turnRate + offset, true);
+    arcadeDrive(m_speed, m_turnRate + offset, true);
 
     SmartDashboard.putNumber("Speed", -m_speed);
     SmartDashboard.putNumber("Turn Rate", m_turnRate);
@@ -318,7 +318,7 @@ public class Drivebase extends SubsystemBase {
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
     //double error = (getAngle() - m_lastAngle) - zRotation*SmartDashboard.getNumber("Joystick Correct Factor", 1.0);
    // SmartDashboard.putNumber("Turn Rate Error", error);
-    m_drive.arcadeDrive(xSpeed, zRotation, squareInputs);
+    m_drive.arcadeDrive(-xSpeed, -zRotation, squareInputs);
   
   }
 

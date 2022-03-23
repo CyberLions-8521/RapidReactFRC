@@ -8,24 +8,23 @@ public class MoveInFeet extends CommandBase {
   Drivebase m_db;
   MasterSubsystem m_toggleIntakeSystem;
 
-  double m_InitHeading;
+ 
   double m_feet;
-  double m_intakeFeet;
+  
   private double m_speed;
-  private boolean m_toggle;
 
-  public MoveInFeet(Drivebase db, MasterSubsystem m_Intake, double speedOffset, double distanceinFeet, boolean toggle) {
+
+  public MoveInFeet(Drivebase db, double speedOffset, double distanceinFeet) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speedOffset;
     m_feet = distanceinFeet;
-    m_toggle = toggle;
     
    //m_intakeFeet = activateFeet;
-    m_toggleIntakeSystem = m_Intake;
+    
 
     addRequirements(db);
-    addRequirements(m_Intake);
+
   //  addRequirements(intakeSystem);
   }
 

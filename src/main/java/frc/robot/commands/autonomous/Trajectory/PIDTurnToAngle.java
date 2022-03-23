@@ -34,9 +34,9 @@ public class PIDTurnToAngle extends CommandBase {
     m_db.getGyro().reset();
   }
 
-  final double kP=0.013;
-  final double kI=0.00; //0.005
-  final double kD=0.00;
+  final double kP=0.01476;
+  final double kI=0; //0.005
+  final double kD=0.0053985;
   //Proportional Syst1m Control
   //Set I,D to 0 to make it Proportional System
   //Proportinal equation output=measured-setpoint
