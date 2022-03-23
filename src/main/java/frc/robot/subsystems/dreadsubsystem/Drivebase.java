@@ -239,7 +239,7 @@ public class Drivebase extends SubsystemBase {
       offset = 0;
     }
 
-    arcadeDrive(m_speed, m_turnRate + offset, true);
+    arcadeDrive(m_speed, m_turnRate, true);
 
     SmartDashboard.putNumber("Speed", -m_speed);
     SmartDashboard.putNumber("Turn Rate", m_turnRate);
@@ -279,6 +279,8 @@ public class Drivebase extends SubsystemBase {
     return ((m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0)
         * (Math.PI * EncodersConstant.CIRCUMFERENCE);
   }
+
+  //public
 
   public double getLeftEncoderDistance() {
     return ((m_leftEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
