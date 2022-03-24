@@ -35,8 +35,8 @@ public class PIDTurnToAngle extends CommandBase {
   }
 
   final double kP=0.01134;
-  final double kI=0.0040; //0.005
-  final double kD=0.001969;
+  final double kI=0.0050; //0.005
+  final double kD=0.0042;
   //Proportional Syst1m Control
   //Set I,D to 0 to make it Proportional System
   //Proportinal equation output=measured-setpoint
