@@ -311,6 +311,41 @@
               "imageWidth": 320,
               "imageHeight": 240
             }
+          },
+          "10,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/In Range Of Hub",
+              "_title": "In Range Of Hub",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "11,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/output",
+              "_title": "output"
+            }
+          },
+          "12,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Acutal Angle",
+              "_title": "Acutal Angle"
+            }
           }
         }
       }

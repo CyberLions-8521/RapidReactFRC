@@ -30,7 +30,7 @@ public class Turret extends SubsystemBase {
   boolean m_shooterStatus;
   CANSparkMax m_shooter = new CANSparkMax(CAN.SHOOTER, MotorType.kBrushed);
   SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
-  public RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
+  public RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 8192);
 
   public Turret() {
     m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); // Allows wheels to move when motor is active
@@ -68,7 +68,7 @@ public class Turret extends SubsystemBase {
   }
 
   // For Auto
-  public void setSpeed() {
+  public synchronized void setSpeed() {
       m_shooter.set(1);
 
     }

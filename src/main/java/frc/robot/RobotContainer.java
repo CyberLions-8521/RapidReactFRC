@@ -73,22 +73,23 @@ public class RobotContainer {
 
 
     // ez
-    // return new WaitCommand(.2).andThen(new MoveInFeet (m_drivebase, 0.5, 3)).alongWith(new AutoShoot(m_turret));
+    return new WaitCommand(.2).andThen(new MoveInFeet (m_drivebase, 0.5, 30)).withTimeout(5).alongWith(new WaitCommand(5)).andThen(new AutoShoot(m_turret).withTimeout(5).andThen(new WaitCommand(0.5)));
     
 
 
     // Working (Run each command by line based on time)
-    return new SequentialCommandGroup(
-     new PIDTurnToAngle(m_drivebase, 90)
-   //  new MoveInFeet(m_drivebase, 0.5, 21)
-   
+    // return new SequentialCommandGroup(
+    //  new MoveInFeet(m_drivebase, 0.15, 23).withTimeout(15),
+    //  new PIDTurnToAngle(m_drivebase, 180).withTimeout(2.5),
+    //  new MoveInFeet(m_drivebase, 0.15, 21).withTimeout(15)
+
 
       
 
         
         
 
-   );
+  //  );
 
   }
 
