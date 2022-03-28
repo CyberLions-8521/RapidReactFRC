@@ -12,7 +12,6 @@ import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.utilsubsystem.ExampleSubsystem;
 import frc.robot.subsystems.utilsubsystem.Limelight;
 import frc.robot.utility.KevinLib;
-import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
 import java.util.Arrays;
 import java.util.List;
 
