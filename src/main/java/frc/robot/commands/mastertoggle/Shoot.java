@@ -62,4 +62,3 @@ public class Shoot extends CommandBase {
     return m_isDone;
   }
 }
-

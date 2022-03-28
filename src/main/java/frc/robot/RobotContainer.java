@@ -5,12 +5,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
 // Commands
 import frc.robot.commands.Drive;
+import frc.robot.commands.LimeLightAimAssist;
 import frc.robot.commands.autonomous.AutoShoot;
 //import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.Trajectory.AutoTesting;
@@ -34,7 +36,7 @@ public class RobotContainer {
   private static final Climber m_Climber = new Climber();
   public static final MasterSubsystem m_masterSubsystem = new MasterSubsystem();
   public static final Turret m_turret = new Turret();
-  private static final Limelight m_vision = new Limelight();
+  public static final Limelight m_vision = new Limelight();
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
@@ -71,9 +73,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     System.out.println("In get autonomous Command");
 
-
+    return new ScheduleCommand( new LimeLightAimAssist(m_vision, m_drivebase));
     // ez
-    return new WaitCommand(.2).andThen(new MoveInFeet (m_drivebase, 0.5, 30)).withTimeout(5).alongWith(new WaitCommand(5)).andThen(new AutoShoot(m_turret).withTimeout(5).andThen(new WaitCommand(0.5)));
+    //return new WaitCommand(.2).andThen(new MoveInFeet (m_drivebase, 0.5, 30)).withTimeout(5).alongWith(new WaitCommand(5)).andThen(new AutoShoot(m_turret).withTimeout(5).andThen(new WaitCommand(0.5)));
     
 
 
