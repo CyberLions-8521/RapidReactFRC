@@ -3,6 +3,7 @@ package frc.robot.commands.mastertoggle;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.utilsubsystem.Limelight;
+import frc.robot.utility.KevinLib;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
@@ -45,6 +46,21 @@ public class Shoot extends CommandBase {
       }
       
   }
+  double[] datapointsX ={1.38, 2.56, 4.3};
+  double[] datapointsY = {1.38, 2.56, 4.3};
+  public void RPMAdjust(){
+    double[] measured = {m_vision.getDistanceToHub()};
+    double[] interpolate = KevinLib.interpLinear(datapointsX, datapointsY, measured);
+    double rpm = interpolate[0];
+  m_shooter.SpaceStateControl(rpm);
+
+  }
+
+  public void SpaceStateTesting(double rpm){
+   m_shooter.SpaceStateControl(rpm);
+
+  }
+
 
   @Override
   public void initialize() {

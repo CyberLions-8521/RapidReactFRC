@@ -45,19 +45,10 @@ public class LimeLightAimAssist extends CommandBase {
   PIDController PIDTurn = new PIDController(Kp, Ki, Kd);
 
 
-  double[] datapointsX ={1.38, 2.56, 4.3};
-  double[] datapointsY = {1.38, 2.56, 4.3};
 
 
 
-  public void RPMAdjust(){
-    double[] measured = {m_vision.getDistanceToHub()};
-    double[] interpolate = KevinLib.interpLinear(datapointsX, datapointsY, measured);
-    double rpm = interpolate[0];
-
-
-
-  }
+  
 
   public void AimAssistWithDriveBase(){
     double xOffset = m_vision.getTx();
