@@ -39,36 +39,25 @@ public class LimeLightAimAssist extends CommandBase {
   public void initialize() {
   }
 
-  final double Kp = 0.0;
-  final double Ki = 0.0;
-  final double Kd = 0.0;
-  PIDController PIDTurn = new PIDController(Kp, Ki, Kd);
-
 
 
 
 
   
 
-  public void AimAssistWithDriveBase(){
-    double xOffset = m_vision.getTx();
-    if (RobotContainer.m_controller.getRawButton(XBOX.X)){
-    double output = PIDTurn.calculate(xOffset, 0.1);
-    m_drive.turnInPlace(output);
-    } else if(RobotContainer.m_controller.getRawButton(XBOX.X) == false){ 
-    m_drive.arcadeDrive(RobotContainer.m_controller);
-    }
+  // public void AimAssistWithDriveBase(){
+  //   double xOffset = m_vision.getTx();
+  //   if (RobotContainer.m_controller.getRawButton(XBOX.X)){
+  //   double output = PIDTurn.calculate(xOffset, 0.1);
+  //   m_drive.turnInPlace(output);
+  //   } else if(RobotContainer.m_controller.getRawButton(XBOX.X) == false){ 
+  //   m_drive.arcadeDrive(RobotContainer.m_controller);
+  //   }
 
 
-  }
+  // }
 
-  public void AimAssist(){
 
-    double xOffset = m_vision.getTx();
-    double output = PIDTurn.calculate(xOffset, 0.1);
-    m_drive.turnInPlace(output);
-
-  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.utilsubsystem;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -74,6 +75,22 @@ public class Limelight extends SubsystemBase {
  
     return inRange;
   }
+
+  final double Kp = 0.0;
+  final double Ki = 0.0;
+  final double Kd = 0.0;
+  PIDController PIDTurn = new PIDController(Kp, Ki, Kd);
+
+  public double AimAssist(){
+
+    double xOffset = getTx();
+    double output = PIDTurn.calculate(xOffset, 0.1);
+    SmartDashboard.putNumber("AimOutput", output);
+    return output;
+
+  }
+
+
 
   public double getDistanceToMotorVelocity() {
     double rad = .05088; // (meters)

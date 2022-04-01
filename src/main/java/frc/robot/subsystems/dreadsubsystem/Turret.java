@@ -93,7 +93,7 @@ public class Turret extends SubsystemBase {
         private final LinearQuadraticRegulator<N1, N1, N1> m_controller =
         new LinearQuadraticRegulator<>(
             m_flywheelPlant,
-            VecBuilder.fill(8.0), // qelms. Velocity error tolerance, in radians per second. Decrease
+            VecBuilder.fill(8.0), // qelms. Velocity error tolerance, in rotation per second. Decrease
             // this to more heavily penalize state excursion, or make the controller behave more
             // aggressively.
             VecBuilder.fill(12.0), // relms. Control effort (voltage) tolerance. Decrease this to more
