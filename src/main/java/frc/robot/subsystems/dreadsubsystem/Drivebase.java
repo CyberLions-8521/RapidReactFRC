@@ -95,12 +95,19 @@ public class Drivebase extends SubsystemBase {
      * from neutral to full throttle.
      */
     // Therefore higher values give slower acceleration.
-    m_leftMaster.setOpenLoopRampRate(0.2);
-    m_rightMaster.setOpenLoopRampRate(0.2);
-    m_leftSlave.setOpenLoopRampRate(0.2);
-    m_leftMiddleSlave.setOpenLoopRampRate(0.2);
-    m_rightSlave.setOpenLoopRampRate(0.2);
-    m_rightMiddleSlave.setOpenLoopRampRate(0.2);
+    m_leftMaster.setOpenLoopRampRate(0.1);
+    m_rightMaster.setOpenLoopRampRate(0.1);
+    m_leftSlave.setOpenLoopRampRate(0.1);
+    m_leftMiddleSlave.setOpenLoopRampRate(0.1);
+    m_rightSlave.setOpenLoopRampRate(0.1);
+    m_rightMiddleSlave.setOpenLoopRampRate(0.1);
+
+    m_rightMaster.setSmartCurrentLimit(70);
+    m_leftSlave.setSmartCurrentLimit(70);
+    m_leftMiddleSlave.setSmartCurrentLimit(70);
+    m_rightSlave.setSmartCurrentLimit(70);
+    m_rightMiddleSlave.setSmartCurrentLimit(70);
+    
 
     // reset odometry in drive mode
     // resetEncoders();
@@ -114,7 +121,6 @@ public class Drivebase extends SubsystemBase {
     SmartDashboard.putNumber("Turn Correct P", 0.03);
  
   }
-
 
 
   public Rotation2d getHeading() {
