@@ -25,7 +25,7 @@ public class Limelight extends SubsystemBase {
 
   }
 
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-sus");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
@@ -50,6 +50,8 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putBoolean("Target Detected", TargetDetected);
     SmartDashboard.putBoolean("In Range Of Hub", InRange());
     SmartDashboard.putNumber("Distance", getDistanceToHub());
+    SmartDashboard.putNumber("RotateOutput", AimAssist());
+
   }
 
   // Filters
@@ -76,16 +78,15 @@ public class Limelight extends SubsystemBase {
     return inRange;
   }
 
-  final double Kp = 0.0;
+  final double Kp = 1;
   final double Ki = 0.0;
   final double Kd = 0.0;
   PIDController PIDTurn = new PIDController(Kp, Ki, Kd);
 
   public double AimAssist(){
-
-    double xOffset = getTx();
-    double output = PIDTurn.calculate(xOffset, 0.1);
-    SmartDashboard.putNumber("AimOutput", output);
+    double x = tx.getDouble(0.0);
+    double output = PIDTurn.calculate(x, 0.1);
+    SmartDashboard.putNumber("X", x);
     return output;
 
   }

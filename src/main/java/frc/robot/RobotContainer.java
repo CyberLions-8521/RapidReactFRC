@@ -18,10 +18,10 @@ import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.Trajectory.AutoTesting;
 import frc.robot.commands.autonomous.Trajectory.MoveInFeet;
 import frc.robot.commands.autonomous.Trajectory.PIDTurnToAngle;
-//import frc.robot.commands.mastertoggle.Climb;
-//import frc.robot.commands.mastertoggle.LowerIndexor;
-//import frc.robot.commands.mastertoggle.Shoot;
-//import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
+import frc.robot.commands.mastertoggle.Climb;
+import frc.robot.commands.mastertoggle.LowerIndexor;
+import frc.robot.commands.mastertoggle.Shoot;
+import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
 //import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
 //import frc.robot.commands.mastertoggle.toggleReverseIndexSystem;
 import frc.robot.subsystems.dreadsubsystem.Climber;
@@ -40,11 +40,11 @@ public class RobotContainer {
 
   // Commands
   private final Drive m_driveSystem = new Drive(m_drivebase);
-  // private final Shoot m_shoot = new Shoot(m_turret, m_vision, m_masterSubsystem);
+   private final Shoot m_shoot = new Shoot(m_turret, m_vision, m_masterSubsystem);
   // private final ToggleIntakeSystem m_toggleintake = new ToggleIntakeSystem(m_masterSubsystem);
   // private final LowerIndexor m_lowindex = new LowerIndexor(m_masterSubsystem);
   // private final toggleReverseIndexSystem m_indextoggle = new toggleReverseIndexSystem(m_masterSubsystem);
-  // private static final Climb m_climb = new Climb(m_Climber);
+   private static final Climb m_climb = new Climb(m_Climber);
 
   // Controller
   public static final XboxController m_controller = new XboxController(Constants.IO.XBOX);
@@ -53,10 +53,10 @@ public class RobotContainer {
   public RobotContainer() {
     // Only setDefaultCommand When calling controller in subsystems.
     m_drivebase.setDefaultCommand(m_driveSystem);
-    // m_Climber.setDefaultCommand(m_climb);
-    // m_turret.setDefaultCommand(m_shoot);
-    // m_masterSubsystem.setDefaultCommand(m_shoot);
-    // m_vision.setDefaultCommand(m_shoot);
+    m_Climber.setDefaultCommand(m_climb);
+    m_turret.setDefaultCommand(m_shoot);
+    m_masterSubsystem.setDefaultCommand(m_shoot);
+ m_vision.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
 
@@ -64,8 +64,8 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
-    // new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem));
-    // new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
+     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem));
+     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
     // new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)); // double check in testing phase - Thien
 
   }
