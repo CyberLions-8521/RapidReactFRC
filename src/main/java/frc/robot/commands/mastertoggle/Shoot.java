@@ -39,7 +39,7 @@ public class Shoot extends CommandBase {
       }*/
       
       
-      if(3970 < m_shooter.m_encoder.getVelocity()){
+      if(3950 < m_shooter.m_encoder.getVelocity()){
         m_index.indexOn();
       } else {
         m_index.indexOff();
