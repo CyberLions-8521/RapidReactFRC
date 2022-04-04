@@ -60,7 +60,7 @@ public class Turret extends SubsystemBase {
   }
   
   //future stuff
-    // Volts per (radian per second)
+    // Volts per (rotation per second)
     //need to be change per sysid
     private static final double kFlywheelKv = 0.023;
 
