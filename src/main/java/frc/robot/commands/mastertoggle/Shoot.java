@@ -1,9 +1,13 @@
 package frc.robot.commands.mastertoggle;
 
+import java.util.Arrays;
+import java.util.List;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.utilsubsystem.Limelight;
 import frc.robot.utility.KevinLib;
+import frc.robot.utility.KevinLib.SplineInterpolator;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
@@ -26,45 +30,50 @@ public class Shoot extends CommandBase {
   private final int targetSpeed = 500;
   private final int maxtargetSpeed = 600;
 
-  public void AutoIndexerTele(){
+  List<Double> datapointsRPM = Arrays.asList(1.38, 2.56, 4.3);
+  List<Double> datapointsDistance = Arrays.asList(1.38, 2.56, 4.3);
+
+  SplineInterpolator shooterModel = SplineInterpolator.createMonotoneCubicSpline(datapointsDistance, datapointsRPM);
+
+  public void RPMAdjust() {
+    // double[] measured = {m_vision.getDistanceToHub()};
+    // double[] interpolate = KevinLib.interpLinear(datapointsX, datapointsY,
+    // measured);
+    // double rpm = interpolate[0];
+    double rpm = shooterModel.interpolate(m_vision.getDistanceToHub());
+    m_shooter.SpaceStateControl(rpm);
+
+  }
+
+  public void SpaceStateTesting(double rpm) {
+    m_shooter.SpaceStateControl(rpm);
+
+  }
+
+  public void AutoIndexerTele() {
     double setpoint = m_vision.getDistanceToMotorVelocity();
-      //For testing
-      /*
+    // For testing
+    /*
+     * 
+     * /* if(setpoint-50 < m_encoder.getVelocity()){
+     * m_index.indexOn();
+     * } else {
+     * m_index.indexOff();
+     * }
+     * }
+     */
 
-        /*  if(setpoint-50 <  m_encoder.getVelocity()){
-             m_index.indexOn();
-        } else {
-        m_index.indexOff();
-       }
-      }*/
-      
-      
-      if(3950 < m_shooter.m_encoder.getVelocity()){
-        m_index.indexOn();
-      } else {
-        m_index.indexOff();
-      }
-      
-  }
-  double[] datapointsX ={1.38, 2.56, 4.3};
-  double[] datapointsY = {1.38, 2.56, 4.3};
-  public void RPMAdjust(){
-    double[] measured = {m_vision.getDistanceToHub()};
-    double[] interpolate = KevinLib.interpLinear(datapointsX, datapointsY, measured);
-    double rpm = interpolate[0];
-  m_shooter.SpaceStateControl(rpm);
+    if (3950 < m_shooter.m_encoder.getVelocity()) {
+      m_index.indexOn();
+    } else {
+      m_index.indexOff();
+    }
 
   }
-
-  public void SpaceStateTesting(double rpm){
-   m_shooter.SpaceStateControl(rpm);
-
-  }
-
 
   @Override
   public void initialize() {
-    
+
   }
 
   @Override
