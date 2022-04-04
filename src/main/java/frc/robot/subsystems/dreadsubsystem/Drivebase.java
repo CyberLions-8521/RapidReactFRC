@@ -226,30 +226,35 @@ public class Drivebase extends SubsystemBase {
 
 
   public void arcadeDrive(XboxController controller) {
-    m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
-    m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
-    double offset = 0;
+    // if(controller.getRawButton(XBOX.LB)){
+    //   turnInPlace(RobotContainer.m_vision.AimAssist());
+    // } else if (controller.getRawButton(XBOX.LB) == false){
+    //   m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
+    //   m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
+    //   m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
+    //   m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
+    //   m_speed = clampSpeed(m_speed);
+    //   m_turnRate = clampSpeed(m_turnRate);
+    //   arcadeDrive(m_speed, m_turnRate, true);
+    //   SmartDashboard.putNumber("Speed", -m_speed);
+    //   SmartDashboard.putNumber("Turn Rate", m_turnRate);
+    //   }
 
-    m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
-    m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
+      m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
+      m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
+      m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
+      m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
+      m_speed = clampSpeed(m_speed);
+      m_turnRate = clampSpeed(m_turnRate);
+      arcadeDrive(m_speed, m_turnRate, true);
+      SmartDashboard.putNumber("Speed", -m_speed);
+      SmartDashboard.putNumber("Turn Rate", m_turnRate);
 
-    m_speed = clampSpeed(m_speed);
-    m_turnRate = clampSpeed(m_turnRate);
-
-    //testing imagine it works
-    if(controller.getRawAxis(XBOX.LEFT_STICK_Y) > 0){
-      offset = 0.01;
-    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) < 0){
-      offset = -0.01;
-    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) == 0){
-      offset = 0;
     }
 
-    arcadeDrive(m_speed, m_turnRate, true);
 
-    SmartDashboard.putNumber("Speed", -m_speed);
-    SmartDashboard.putNumber("Turn Rate", m_turnRate);
-  }
+
+  
 
   public void autoArcade(double speed, double turn) {
     m_drive.arcadeDrive(speed, turn, false);

@@ -88,10 +88,7 @@ public class Limelight extends SubsystemBase {
     double output = PIDTurn.calculate(x, 0.1);
     SmartDashboard.putNumber("X", x);
     return output;
-
   }
-
-
 
   public double getDistanceToMotorVelocity() {
     double rad = .05088; // (meters)

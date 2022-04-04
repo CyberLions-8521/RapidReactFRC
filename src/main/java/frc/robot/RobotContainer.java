@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
 // Commands
@@ -23,7 +24,7 @@ import frc.robot.commands.mastertoggle.LowerIndexor;
 import frc.robot.commands.mastertoggle.Shoot;
 import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
 //import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
-//import frc.robot.commands.mastertoggle.toggleReverseIndexSystem;
+import frc.robot.commands.mastertoggle.toggleReverseIndexSystem;
 import frc.robot.subsystems.dreadsubsystem.Climber;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
@@ -56,17 +57,20 @@ public class RobotContainer {
     m_Climber.setDefaultCommand(m_climb);
     m_turret.setDefaultCommand(m_shoot);
     m_masterSubsystem.setDefaultCommand(m_shoot);
- m_vision.setDefaultCommand(m_shoot);
+    m_vision.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
 
   }
 
   private void configureButtonBindings() {
+     new JoystickButton(m_controller, XBOX.RB).whenHeld(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem));
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
      new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem));
      new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
-    // new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)); // double check in testing phase - Thien
+     new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
+     (new Shoot(m_turret, m_vision, m_masterSubsystem));// double check in testing phase - Thien
+     new JoystickButton(m_controller, XBOX.X).cancelWhenActive(new LowerIndexor(m_masterSubsystem));
 
   }
 
