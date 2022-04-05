@@ -77,7 +77,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     System.out.println("In get autonomous Command");
 
-    return new ScheduleCommand( new LimeLightAimAssist(m_vision, m_drivebase));
+    return new SequentialCommandGroup( new LimeLightAimAssist(m_vision, m_drivebase));
     // ez
     //return new WaitCommand(.2).andThen(new MoveInFeet (m_drivebase, 0.5, 30)).withTimeout(5).alongWith(new WaitCommand(5)).andThen(new AutoShoot(m_turret).withTimeout(5).andThen(new WaitCommand(0.5)));
     

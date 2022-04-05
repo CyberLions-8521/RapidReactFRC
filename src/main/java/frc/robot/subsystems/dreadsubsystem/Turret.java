@@ -62,10 +62,10 @@ public class Turret extends SubsystemBase {
   //future stuff
     // Volts per (rotation per second)
     //need to be change per sysid
-    private static final double kFlywheelKv = 0.023;
+    private static final double kFlywheelKv = 0.22269;
 
     // Volts per (radian per second squared)
-    private static final double kFlywheelKa = 0.001;
+    private static final double kFlywheelKa = 0.015519;
   
     // The plant holds a state-space model of our flywheel. This system has the following properties:
     //
@@ -107,12 +107,22 @@ public class Turret extends SubsystemBase {
         new LinearSystemLoop<>(m_flywheelPlant, m_controller, m_observer, 12.0, 0.020);
   
   //experimental 
-  public void SpaceStateControl(double setpoint){
+  public synchronized void SpaceStateControl(double setpoint){
     m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
     m_loop.setNextR(setpoint);
     double nextVoltage = m_loop.getU(0);
     m_shooter.setVoltage(nextVoltage);
     }
+
+
+    double rpm;
+
+    public synchronized void SpaceStateControlTest(){
+      m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
+      m_loop.setNextR(rpm);
+      double nextVoltage = m_loop.getU(0);
+      m_shooter.setVoltage(nextVoltage);
+      }
 
   public void ControllerBindSpeed(XboxController controller, double speed) {
     if (controller.getRawButton(XBOX.RB)) {
@@ -159,6 +169,9 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
+   double  m_rpm = SmartDashboard.getNumber("rpm", 0);
+    if((m_rpm != rpm)) rpm = m_rpm; 
+
     SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
     SmartDashboard.putBoolean("ShooterStatus", m_shooterStatus);
