@@ -26,7 +26,7 @@ public class Limelight extends SubsystemBase {
 
   }
 
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-sus");
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
@@ -51,11 +51,26 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putBoolean("Target Detected", TargetDetected);
     SmartDashboard.putBoolean("In Range Of Hub", InRange());
     SmartDashboard.putNumber("Distance", getDistanceToHub());
-    SmartDashboard.putNumber("RotateOutput", AimAssist());
-
+    SmartDashboard.putNumber("DistanceToRPM", getDistanceToMotorVelocity());
   }
 
   // Filters
+
+  final double Kp = 0.033; //0.04
+  final double Ki = 0.0;
+  final double Kd = 0.0;
+  PIDController PIDTurn = new PIDController(Kp, Ki, Kd);
+
+  MedianFilter test = new MedianFilter(2);
+  //Filt test = new LinearFilter(ffGains, fbGains)
+  public double AimAssist(){
+    double x = tx.getDouble(0.0);
+    SmartDashboard.putNumber("X", x);
+    double m_x = test.calculate(x);
+    double output = PIDTurn.calculate(m_x, 0.1);
+    return output;
+  }
+
 
   public double getDistanceToHub() {
     LinearFilter yFilter =LinearFilter.movingAverage(10);
@@ -77,19 +92,6 @@ public class Limelight extends SubsystemBase {
     }
  
     return inRange;
-  }
-
-  final double Kp = 0.029; //0.04
-  final double Ki = 0.0;
-  final double Kd = 0.0;
-  PIDController PIDTurn = new PIDController(Kp, Ki, Kd);
-  MedianFilter test = new MedianFilter(2);
-  //Filt test = new LinearFilter(ffGains, fbGains)
-  public double AimAssist(){
-    double x = tx.getDouble(0.0);
-    double m_x = test.calculate(x);
-    double output = PIDTurn.calculate(m_x, 0.1);
-    return output;
   }
 
   public double getDistanceToMotorVelocity() {
