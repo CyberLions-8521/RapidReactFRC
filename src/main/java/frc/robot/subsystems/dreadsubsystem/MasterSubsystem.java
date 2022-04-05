@@ -133,6 +133,8 @@ public class MasterSubsystem extends SubsystemBase {
   public void reverseIndexOn() {
     m_frontIndexor.set(0.55);
     m_backIndexor.set(0.70);
+    m_intake.set(-0.6);
+    m_lowIndexor.set(0.6);
     m_reverseIndexStatus = true;
   }
   public void reverseIndexOff() {

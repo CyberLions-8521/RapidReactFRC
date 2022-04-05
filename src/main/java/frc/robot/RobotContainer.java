@@ -20,9 +20,10 @@ import frc.robot.commands.autonomous.Trajectory.AutoTesting;
 import frc.robot.commands.autonomous.Trajectory.MoveInFeet;
 import frc.robot.commands.autonomous.Trajectory.PIDTurnToAngle;
 import frc.robot.commands.mastertoggle.Climb;
-import frc.robot.commands.mastertoggle.LowerIndexor;
+import frc.robot.commands.mastertoggle.ToggleIndexor;
 import frc.robot.commands.mastertoggle.Shoot;
 import frc.robot.commands.mastertoggle.ToggleIntakeSystem;
+import frc.robot.commands.mastertoggle.ToggleLowerIndexor;
 //import frc.robot.commands.mastertoggle.dstoggle.ToggleGear;
 import frc.robot.commands.mastertoggle.toggleReverseIndexSystem;
 import frc.robot.subsystems.dreadsubsystem.Climber;
@@ -64,13 +65,17 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    //  new JoystickButton(m_controller, XBOX.RB).whenHeld(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem));
     // new JoystickButton(m_controller, XBOX.LB).whenPressed(new ToggleGear(m_masterSubsystem));
-     new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem));
-     new JoystickButton(m_controller, XBOX.A).whenPressed(new LowerIndexor(m_masterSubsystem));
+  //   new JoystickButton(m_controller, XBOX.B).whenPressed(new ToggleIntakeSystem(m_masterSubsystem));
+   //  new JoystickButton(m_controller, XBOX.A).whenPressed(new ToggleLowerIndexor(m_masterSubsystem));
+
+
+    //for testing
+     new JoystickButton(m_controller, XBOX.RB).whileHeld(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
      new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
-     (new Shoot(m_turret, m_vision, m_masterSubsystem));// double check in testing phase - Thien
-     new JoystickButton(m_controller, XBOX.X).cancelWhenActive(new LowerIndexor(m_masterSubsystem));
+     (new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new ToggleIndexor(m_masterSubsystem));;// double check in testing phase - Thien
+     new JoystickButton(m_controller, XBOX.A).whenPressed(new ToggleIndexor(m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive(new Shoot(m_turret, m_vision, m_masterSubsystem));
+
 
   }
 
