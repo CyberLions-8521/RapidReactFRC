@@ -79,10 +79,8 @@ public class Shoot extends CommandBase {
       m_shooter.m_shooter.set(1);
     } else {
       m_shooter.m_shooter.set(0);
-
-
     }
-    
+    m_returnStatus = true;
    
 
 
