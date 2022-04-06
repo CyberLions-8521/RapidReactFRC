@@ -144,6 +144,9 @@ public class Turret extends SubsystemBase {
 
   }
 
+  public boolean getShooterStatus(){
+    return m_shooterStatus;
+  }
 
 
   
@@ -151,6 +154,7 @@ public class Turret extends SubsystemBase {
   //Comment out if it doesnt work - Thien 
   public void setSpeedTurret(double speed) {
   m_shooter.set(speed);
+  m_shooterStatus = true;
   }
 
   public void stopShooter() {

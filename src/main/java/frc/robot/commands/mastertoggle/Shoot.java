@@ -75,9 +75,13 @@ public class Shoot extends CommandBase {
 
   @Override
   public void initialize() {
+    if(m_shooter.getShooterStatus() == false){
+      m_shooter.m_shooter.set(1);
+    } else {
+      m_shooter.m_shooter.set(0);
 
-    //m_shooter.m_shooter.set(1);
 
+    }
     
    
 
@@ -88,7 +92,7 @@ public class Shoot extends CommandBase {
   public void execute() {
     //m_shooter.SpaceStateControl(40);
     //m_shooter.SpaceStateControl(4000);
-    m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
+   // m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
    // AutoIndexerTele();
 
   }
