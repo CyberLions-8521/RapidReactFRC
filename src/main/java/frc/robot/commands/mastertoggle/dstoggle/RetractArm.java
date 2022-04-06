@@ -15,12 +15,10 @@ public class RetractArm extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_solenoids.getTransmissionStatus() == false) {
-      m_solenoids.setGearOn();
-    } else {
-      m_solenoids.setGearOff();
-    }
+    m_solenoids.retractArms();
+  
     m_isDone = true;
+  
   }
 
   @Override

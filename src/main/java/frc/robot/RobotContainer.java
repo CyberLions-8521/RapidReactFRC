@@ -76,7 +76,7 @@ public class RobotContainer {
     new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem).alongWith(new RetractArm(m_masterSubsystem))).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
     new JoystickButton(m_controller, XBOX.RB).whenReleased(new StopShooter(m_turret));
 
-    //new JoystickButton(m_controller, XBOX.Y).whenPressed(new RetractArm(m_masterSubsystem));
+   // new JoystickButton(m_controller, XBOX.Y).whenPressed(new RetractArm(m_masterSubsystem)).debounce(0.5);
     //for testing
     // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem))).whenInactive(new StopShooter(m_turret));
     new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
@@ -84,6 +84,7 @@ public class RobotContainer {
     new JoystickButton(m_controller, XBOX.A).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
     (new Shoot(m_turret, m_vision, m_masterSubsystem));
 
+    
 
      new JoystickButton(m_controller, XBOX.X).and(new JoystickButton(m_controller,XBOX.A).whenReleased(new StopIndexorAndIntake(m_masterSubsystem)));
 
