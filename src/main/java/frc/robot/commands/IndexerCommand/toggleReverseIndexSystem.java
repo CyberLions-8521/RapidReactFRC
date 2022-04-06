@@ -1,4 +1,4 @@
-package frc.robot.commands.mastertoggle;
+package frc.robot.commands.IndexerCommand;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
