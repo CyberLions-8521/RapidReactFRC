@@ -209,11 +209,11 @@ public class Drivebase extends SubsystemBase {
     switch (m_mode) {
       case TANK:
         // left speed, right speed, squared inputs
-        double leftSpeed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * DriveConstants.MAX_OUTPUT;
-        double rightSpeed = controller.getRawAxis(XBOX.RIGHT_STICK_Y) * DriveConstants.MAX_OUTPUT;
+        double rightSpeed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * DriveConstants.MAX_OUTPUT;
+        double  leftSpeed = controller.getRawAxis(XBOX.RIGHT_STICK_Y) * DriveConstants.MAX_OUTPUT;
         SmartDashboard.putNumber("Left Speed", leftSpeed);
         SmartDashboard.putNumber("Right Speed", rightSpeed);
-        m_drive.tankDrive(-leftSpeed, -rightSpeed, false);
+        m_drive.tankDrive(leftSpeed, rightSpeed, false);
         break;
       case ARCADE:
         arcadeDrive(controller);
@@ -235,8 +235,9 @@ public class Drivebase extends SubsystemBase {
       m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
       m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
       m_speed = clampSpeed(m_speed);
-      m_turnRate = clampSpeed(m_turnRate);  
+       
       }
+      m_turnRate = clampSpeed(m_turnRate);
       arcadeDrive(m_speed, m_turnRate, true);
       SmartDashboard.putNumber("Speed", -m_speed);
       SmartDashboard.putNumber("Turn Rate", m_turnRate);
