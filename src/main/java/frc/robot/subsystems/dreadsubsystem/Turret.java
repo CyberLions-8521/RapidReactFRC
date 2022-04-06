@@ -108,8 +108,8 @@ public class Turret extends SubsystemBase {
   
   //experimental 
   public synchronized void SpaceStateControl(double setpoint){
-    m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
     m_loop.setNextR(setpoint);
+    m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
     double nextVoltage = m_loop.getU(0);
     m_shooter.setVoltage(nextVoltage);
     SmartDashboard.putNumber("volts", nextVoltage);
@@ -119,8 +119,8 @@ public class Turret extends SubsystemBase {
     double rpm;
 
     public void SpaceStateControlTest(){
-      m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
       m_loop.setNextR(40);
+      m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
       double nextVoltage = m_loop.getU(0);
       m_shooter.setVoltage(nextVoltage);
       }
@@ -144,11 +144,7 @@ public class Turret extends SubsystemBase {
 
   }
 
-  // For Auto
-  public synchronized void setSpeed() {
-      m_shooter.set(1);
 
-    }
 
   
 

@@ -23,7 +23,8 @@ public class AutoShoot extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {  
-    m_Turret.setSpeed();
+    m_Turret.m_shooter.set(1);
+  
 
   }
 
