@@ -58,7 +58,7 @@ public class RobotContainer {
     m_Climber.setDefaultCommand(m_climb);
     m_turret.setDefaultCommand(m_shoot);
     m_masterSubsystem.setDefaultCommand(m_shoot);
-    m_vision.setDefaultCommand(m_shoot);
+    //m_vision.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
 
@@ -71,10 +71,10 @@ public class RobotContainer {
 
 
     //for testing
-     new JoystickButton(m_controller, XBOX.RB).whileHeld(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
-     new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
-     (new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new ToggleIndexor(m_masterSubsystem));;// double check in testing phase - Thien
-     new JoystickButton(m_controller, XBOX.A).whenPressed(new ToggleIndexor(m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive(new Shoot(m_turret, m_vision, m_masterSubsystem));
+    //new JoystickButton(m_controller, XBOX.RB).whenActive(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
+    new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
+    (new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new ToggleIndexor(m_masterSubsystem));;// double check in testing phase - Thien
+     new JoystickButton(m_controller, XBOX.A).whenPressed(new ToggleIndexor(m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem));
 
 
   }

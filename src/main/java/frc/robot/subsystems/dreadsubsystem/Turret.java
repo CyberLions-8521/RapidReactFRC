@@ -39,7 +39,7 @@ import java.util.Calendar;
 
 public class Turret extends SubsystemBase {
   boolean m_shooterStatus;
-  CANSparkMax m_shooter = new CANSparkMax(CAN.SHOOTER, MotorType.kBrushed);
+  public CANSparkMax m_shooter = new CANSparkMax(CAN.SHOOTER, MotorType.kBrushed);
   SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
   public RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 8192);
 
@@ -62,10 +62,10 @@ public class Turret extends SubsystemBase {
   //future stuff
     // Volts per (rotation per second)
     //need to be change per sysid
-    private static final double kFlywheelKv = 0.22269;
+    private static final double kFlywheelKv = 0.16417;
 
     // Volts per (radian per second squared)
-    private static final double kFlywheelKa = 0.015519;
+    private static final double kFlywheelKa = 0.01428;
   
     // The plant holds a state-space model of our flywheel. This system has the following properties:
     //
@@ -112,14 +112,15 @@ public class Turret extends SubsystemBase {
     m_loop.setNextR(setpoint);
     double nextVoltage = m_loop.getU(0);
     m_shooter.setVoltage(nextVoltage);
+    SmartDashboard.putNumber("volts", nextVoltage);
     }
 
 
     double rpm;
 
-    public synchronized void SpaceStateControlTest(){
+    public void SpaceStateControlTest(){
       m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
-      m_loop.setNextR(rpm);
+      m_loop.setNextR(40);
       double nextVoltage = m_loop.getU(0);
       m_shooter.setVoltage(nextVoltage);
       }

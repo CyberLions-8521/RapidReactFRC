@@ -9,6 +9,7 @@ import frc.robot.subsystems.utilsubsystem.Limelight;
 import frc.robot.utility.KevinLib;
 import frc.robot.utility.KevinLib.SplineInterpolator;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.XBOX;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
 
 public class Shoot extends CommandBase {
@@ -16,6 +17,7 @@ public class Shoot extends CommandBase {
   private final Limelight m_vision;
   private final MasterSubsystem m_index;
   private boolean m_isDone;
+  private boolean m_returnStatus;
 
   public Shoot(Turret shooter, Limelight Vision, MasterSubsystem Mastersubsystem) {
     m_shooter = shooter;
@@ -74,16 +76,24 @@ public class Shoot extends CommandBase {
   @Override
   public void initialize() {
 
+    //m_shooter.m_shooter.set(1);
+
+    
+   
+
+
   }
 
   @Override
   public void execute() {
+    //m_shooter.SpaceStateControl(40);
+    //m_shooter.SpaceStateControl(4000);
     m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
-    AutoIndexerTele();
-  }
+   // AutoIndexerTele();
 
+  }
   @Override
   public boolean isFinished() {
-    return m_isDone;
+    return m_returnStatus;
   }
 }

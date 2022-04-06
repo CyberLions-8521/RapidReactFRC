@@ -131,16 +131,22 @@ public class MasterSubsystem extends SubsystemBase {
   }
 
   public void reverseIndexOn() {
-    m_frontIndexor.set(0.55);
-    m_backIndexor.set(0.70);
-    m_intake.set(-0.6);
-    m_lowIndexor.set(0.6);
+    m_frontIndexor.set(1);
+    m_backIndexor.set(1);
+    m_intake.set(-1);
+    m_lowIndexor.set(1);
+    m_intakeStatus = true;
+    m_indexorStatus = true;
+    m_lowindexorStatus = true;
     m_reverseIndexStatus = true;
   }
   public void reverseIndexOff() {
     m_frontIndexor.set(0.0);
     m_backIndexor.set(0.0);
     m_reverseIndexStatus = false;
+    m_intakeStatus = false;
+    m_indexorStatus = false;
+    m_lowindexorStatus = false;
   }
 
   public void lowerIndexOn() {

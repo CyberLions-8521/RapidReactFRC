@@ -14,7 +14,7 @@ public class toggleReverseIndexSystem extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_reverseIndex.getIndexStatus() == false) {
+    if (m_reverseIndex.getLowerIndexStatus() == false && m_reverseIndex.getIndexStatus() == false && m_reverseIndex.getIntakeStatus() == false) {
       m_reverseIndex.reverseIndexOn();
 
     } else {
