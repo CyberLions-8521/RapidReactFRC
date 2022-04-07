@@ -95,12 +95,12 @@ public class Drivebase extends SubsystemBase {
      * from neutral to full throttle.
      */
     // Therefore higher values give slower acceleration.
-    m_leftMaster.setOpenLoopRampRate(0.2);
-    m_rightMaster.setOpenLoopRampRate(0.2);
-    m_leftSlave.setOpenLoopRampRate(0.2);
-    m_leftMiddleSlave.setOpenLoopRampRate(0.2);
-    m_rightSlave.setOpenLoopRampRate(0.2);
-    m_rightMiddleSlave.setOpenLoopRampRate(0.2);
+    m_leftMaster.setOpenLoopRampRate(0.15);
+    m_rightMaster.setOpenLoopRampRate(0.15);
+    m_leftSlave.setOpenLoopRampRate(0.15);
+    m_leftMiddleSlave.setOpenLoopRampRate(0.15);
+    m_rightSlave.setOpenLoopRampRate(0.15);
+    m_rightMiddleSlave.setOpenLoopRampRate(0.15);
 
     m_rightMaster.setSmartCurrentLimit(70);
     m_leftSlave.setSmartCurrentLimit(70);
@@ -213,7 +213,7 @@ public class Drivebase extends SubsystemBase {
         double  leftSpeed = controller.getRawAxis(XBOX.RIGHT_STICK_Y) * DriveConstants.MAX_OUTPUT;
         SmartDashboard.putNumber("Left Speed", leftSpeed);
         SmartDashboard.putNumber("Right Speed", rightSpeed);
-        m_drive.tankDrive(leftSpeed, rightSpeed, false);
+        m_drive.tankDrive(-leftSpeed, -rightSpeed, false);
         break;
       case ARCADE:
         arcadeDrive(controller);
@@ -230,8 +230,8 @@ public class Drivebase extends SubsystemBase {
       m_turnRate = (-RobotContainer.m_vision.AimAssist());
       m_speed = 0;
     } else if (controller.getRawButton(XBOX.LB) == false){
-      m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
-      m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
+      m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.65;
+      m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 1;
       m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
       m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
       m_speed = clampSpeed(m_speed);

@@ -75,6 +75,7 @@ public class Shoot extends CommandBase {
 
   @Override
   public void initialize() {
+    AutoIndexerTele();
     if(m_shooter.getShooterStatus() == false){
       m_shooter.m_shooter.set(1);
     } else {

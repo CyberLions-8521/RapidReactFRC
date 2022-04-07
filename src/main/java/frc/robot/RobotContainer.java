@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.XBOX;
@@ -24,6 +25,7 @@ import frc.robot.commands.autonomous.AutoShoot;
 //import frc.robot.commands.autonomous.AutoShoot;
 import frc.robot.commands.autonomous.Trajectory.AutoTesting;
 import frc.robot.commands.autonomous.Trajectory.MoveInFeet;
+import frc.robot.commands.autonomous.Trajectory.MoveSeconds;
 import frc.robot.commands.autonomous.Trajectory.PIDTurnToAngle;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.Shoot;
@@ -59,8 +61,8 @@ public class RobotContainer {
     // Only setDefaultCommand When calling controller in subsystems.
     m_drivebase.setDefaultCommand(m_driveSystem);
     m_Climber.setDefaultCommand(m_climb);
-    m_turret.setDefaultCommand(m_shoot);
-    m_masterSubsystem.setDefaultCommand(m_shoot);
+    //m_turret.setDefaultCommand(m_shoot);
+    //m_masterSubsystem.setDefaultCommand(m_shoot);
     //m_vision.setDefaultCommand(m_shoot);
 
     configureButtonBindings();
@@ -73,9 +75,9 @@ public class RobotContainer {
    //  new JoystickButton(m_controller, XBOX.A).whenPressed(new ToggleLowerIndexor(m_masterSubsystem));
 
     //for more testing
-    new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem).alongWith(new RetractArm(m_masterSubsystem))).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
-    new JoystickButton(m_controller, XBOX.RB).whenReleased(new StopShooter(m_turret));
-
+    //new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem).alongWith(new RetractArm(m_masterSubsystem))).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
+   // new JoystickButton(m_controller, XBOX.RB).whenReleased(new StopShooter(m_turret));
+    new JoystickButton(m_controller, XBOX.RB).whileHeld(new Shoot(m_turret, m_vision, m_masterSubsystem)).whenReleased(new StopShooter(m_turret)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
    // new JoystickButton(m_controller, XBOX.Y).whenPressed(new RetractArm(m_masterSubsystem)).debounce(0.5);
     //for testing
     // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem))).whenInactive(new StopShooter(m_turret));
@@ -86,7 +88,7 @@ public class RobotContainer {
 
     
 
-     new JoystickButton(m_controller, XBOX.X).and(new JoystickButton(m_controller,XBOX.A).whenReleased(new StopIndexorAndIntake(m_masterSubsystem)));
+  //   new JoystickButton(m_controller, XBOX.X).and(new JoystickButton(m_controller,XBOX.A).whenReleased(new StopIndexorAndIntake(m_masterSubsystem)));
 
 
 
@@ -95,7 +97,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     System.out.println("In get autonomous Command");
 
-    return new WaitCommand(.2).andThen(new MoveInFeet (m_drivebase, -0.3, 12)).withTimeout(5).alongWith(new WaitCommand(1)).andThen(new AutoShoot(m_turret).alongWith(new ToggleIndexor(m_masterSubsystem)).withTimeout(5).andThen(new WaitCommand(0.5)));
+    return new WaitCommand(.2).andThen(new MoveSeconds(m_drivebase, -0.6)).withTimeout(3).withTimeout(1).alongWith(new WaitCommand(1)).andThen(new AutoShoot(m_turret).alongWith(new ToggleIndexor(m_masterSubsystem)).withTimeout(5).andThen(new WaitCommand(0.5)));
 
    // return new SequentialCommandGroup( new LimeLightAimAssist(m_vision, m_drivebase));
     // ez
