@@ -2,12 +2,13 @@ package frc.robot.commands.mastertoggle.dstoggle;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Solenoids;
 
-public class ToggleGear extends CommandBase {
-  private final MasterSubsystem m_solenoids;
+public class ExtendArm extends CommandBase {
+  private final Solenoids m_solenoids;
   private boolean m_isDone;
 
-  public ToggleGear(MasterSubsystem subsystem) {
+  public ExtendArm(Solenoids subsystem) {
     m_solenoids = subsystem;
     m_isDone = false;
     addRequirements(subsystem);
@@ -15,12 +16,10 @@ public class ToggleGear extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_solenoids.getTransmissionStatus() == false) {
-      m_solenoids.setGearOn();
-    } else {
-      m_solenoids.setGearOff();
-    }
+    m_solenoids.extendArms();
+  
     m_isDone = true;
+  
   }
 
   @Override

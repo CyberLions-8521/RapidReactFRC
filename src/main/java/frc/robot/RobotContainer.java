@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,16 +31,19 @@ import frc.robot.commands.autonomous.Trajectory.PIDTurnToAngle;
 import frc.robot.commands.mastertoggle.Climb;
 import frc.robot.commands.mastertoggle.Shoot;
 import frc.robot.commands.mastertoggle.StopShooter;
+import frc.robot.commands.mastertoggle.dstoggle.ExtendArm;
 import frc.robot.commands.mastertoggle.dstoggle.RetractArm;
 import frc.robot.subsystems.dreadsubsystem.Climber;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
+import frc.robot.subsystems.dreadsubsystem.Solenoids;
 import frc.robot.subsystems.dreadsubsystem.Turret;
 import frc.robot.subsystems.utilsubsystem.Limelight;
 
 public class RobotContainer {
   // Subsystems
   public static Drivebase m_drivebase = new Drivebase();
+  public static Solenoids m_solenoid = new Solenoids();
   private static final Climber m_Climber = new Climber();
   public static final MasterSubsystem m_masterSubsystem = new MasterSubsystem();
   public static final Turret m_turret = new Turret();
@@ -77,14 +81,17 @@ public class RobotContainer {
     //for more testing
     //new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem).alongWith(new RetractArm(m_masterSubsystem))).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
    // new JoystickButton(m_controller, XBOX.RB).whenReleased(new StopShooter(m_turret));
-    new JoystickButton(m_controller, XBOX.RB).whileHeld(new Shoot(m_turret, m_vision, m_masterSubsystem)).whenReleased(new StopShooter(m_turret)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
-   // new JoystickButton(m_controller, XBOX.Y).whenPressed(new RetractArm(m_masterSubsystem)).debounce(0.5);
-    //for testing
-    // new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem))).whenInactive(new StopShooter(m_turret));
+   new JoystickButton(m_controller, XBOX.RB).whileHeld(new Shoot(m_turret, m_vision, m_masterSubsystem)).whenReleased(new StopShooter(m_turret)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem)));
+  // new JoystickButton(m_controller, XBOX.Y).whenPressed(new RetractArm(m_masterSubsystem)).debounce(0.5);
+   // for testing
+    new JoystickButton(m_controller, XBOX.RB).whenPressed(new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive((new ToggleIndexor(m_masterSubsystem))).whenInactive(new StopShooter(m_turret));
     new JoystickButton(m_controller, XBOX.X).whenPressed(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
     (new Shoot(m_turret, m_vision, m_masterSubsystem)).cancelWhenActive(new ToggleIndexor(m_masterSubsystem));;// double check in testing phase - Thien
     new JoystickButton(m_controller, XBOX.A).whenPressed(new ToggleIntakeSystem(m_masterSubsystem)).cancelWhenActive(new toggleReverseIndexSystem(m_masterSubsystem)).cancelWhenActive
     (new Shoot(m_turret, m_vision, m_masterSubsystem));
+    
+    new JoystickButton(m_controller, XBOX.B).whenPressed(new RetractArm(m_solenoid));
+    new JoystickButton(m_controller, XBOX.A).whenPressed(new ExtendArm(m_solenoid));
 
     
 
@@ -97,7 +104,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     System.out.println("In get autonomous Command");
 
-    return new WaitCommand(.2).andThen(new MoveSeconds(m_drivebase, -0.6)).withTimeout(3).withTimeout(1).alongWith(new WaitCommand(1)).andThen(new AutoShoot(m_turret).alongWith(new ToggleIndexor(m_masterSubsystem)).withTimeout(5).andThen(new WaitCommand(0.5)));
+    return new WaitCommand(.2).andThen(new MoveSeconds(m_drivebase, -0.6)).withTimeout(3).withTimeout(1).alongWith(new WaitCommand(1)).andThen(new AutoShoot(m_turret).alongWith(new ToggleIndexor(m_masterSubsystem)).withTimeout(3).andThen(new StopIndexorAndIntake(m_masterSubsystem)).andThen(new WaitCommand(0.5)));
 
    // return new SequentialCommandGroup( new LimeLightAimAssist(m_vision, m_drivebase));
     // ez

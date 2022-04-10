@@ -19,7 +19,7 @@ public class ToggleIntakeSystem extends CommandBase {
       
       m_IndexMotor.indexOn();
       m_IndexMotor.intakeOn();
-      m_IndexMotor.extendArms();
+     // m_IndexMotor.extendArms();
 
 
     } else {

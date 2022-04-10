@@ -37,7 +37,7 @@ public class IntakeDown extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.extendArms();
+   // m_intake.extendArms();
    
 
   }
