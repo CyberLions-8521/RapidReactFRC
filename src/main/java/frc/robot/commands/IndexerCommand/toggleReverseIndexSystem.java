@@ -19,6 +19,7 @@ public class toggleReverseIndexSystem extends CommandBase {
 
     } else {
       m_reverseIndex.reverseIndexOff();
+      m_reverseIndex.indexOff();
     }
     m_returnStatus = true;
   }
