@@ -220,8 +220,8 @@ public class Drivebase extends SubsystemBase {
 
 
   public void arcadeDrive(XboxController controller) {
-    m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.65;
-    m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 1;
+    m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.2 : 0.4;
+    m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.1 : 0.5;
     double offset = 0;
 
     m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
@@ -231,15 +231,9 @@ public class Drivebase extends SubsystemBase {
     m_turnRate = clampSpeed(m_turnRate);
 
     //testing imagine it works
-    if(controller.getRawAxis(XBOX.LEFT_STICK_Y) > 0){
-      offset = 0.01;
-    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) < 0){
-      offset = -0.01;
-    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) == 0){
-      offset = 0;
-    }
 
-    arcadeDrive(m_speed, -m_turnRate + offset, true);
+
+    arcadeDrive(m_speed, -m_turnRate, true);
 
     SmartDashboard.putNumber("Speed", -m_speed);
     SmartDashboard.putNumber("Turn Rate", m_turnRate);
