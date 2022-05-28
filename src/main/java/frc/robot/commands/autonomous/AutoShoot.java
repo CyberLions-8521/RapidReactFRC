@@ -14,24 +14,23 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoShoot extends CommandBase {
   Turret m_Turret;
-  MasterSubsystem m_SubsystemBase;
 
-  public AutoShoot(Turret turret, MasterSubsystem subsystem) {
+  public AutoShoot(Turret turret) {
     m_Turret = turret;
-    m_SubsystemBase = subsystem;
     addRequirements(turret);
-    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {  }
+  public void initialize() {  
+    m_Turret.m_shooter.set(1);
+  
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_SubsystemBase.setMotor(0.7);
-    m_Turret.setSpeed(); //Toggles Shooter + indexor after speed is reached
 
   }
 

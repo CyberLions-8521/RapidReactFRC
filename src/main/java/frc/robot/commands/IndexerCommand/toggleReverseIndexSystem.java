@@ -1,4 +1,4 @@
-package frc.robot.commands.mastertoggle;
+package frc.robot.commands.IndexerCommand;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.MasterSubsystem;
@@ -14,11 +14,12 @@ public class toggleReverseIndexSystem extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_reverseIndex.getIndexStatus() == false) {
+    if (m_reverseIndex.getLowerIndexStatus() == false && m_reverseIndex.getIndexStatus() == false && m_reverseIndex.getIntakeStatus() == false) {
       m_reverseIndex.reverseIndexOn();
 
     } else {
       m_reverseIndex.reverseIndexOff();
+      m_reverseIndex.indexOff();
     }
     m_returnStatus = true;
   }

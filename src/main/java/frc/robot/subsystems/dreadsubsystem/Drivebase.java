@@ -95,12 +95,19 @@ public class Drivebase extends SubsystemBase {
      * from neutral to full throttle.
      */
     // Therefore higher values give slower acceleration.
-    m_leftMaster.setOpenLoopRampRate(0.2);
-    m_rightMaster.setOpenLoopRampRate(0.2);
-    m_leftSlave.setOpenLoopRampRate(0.2);
-    m_leftMiddleSlave.setOpenLoopRampRate(0.2);
-    m_rightSlave.setOpenLoopRampRate(0.2);
-    m_rightMiddleSlave.setOpenLoopRampRate(0.2);
+    m_leftMaster.setOpenLoopRampRate(0.15);
+    m_rightMaster.setOpenLoopRampRate(0.15);
+    m_leftSlave.setOpenLoopRampRate(0.15);
+    m_leftMiddleSlave.setOpenLoopRampRate(0.15);
+    m_rightSlave.setOpenLoopRampRate(0.15);
+    m_rightMiddleSlave.setOpenLoopRampRate(0.15);
+
+    m_rightMaster.setSmartCurrentLimit(70);
+    m_leftSlave.setSmartCurrentLimit(70);
+    m_leftMiddleSlave.setSmartCurrentLimit(70);
+    m_rightSlave.setSmartCurrentLimit(70);
+    m_rightMiddleSlave.setSmartCurrentLimit(70);
+    
 
     // reset odometry in drive mode
     // resetEncoders();
@@ -114,7 +121,6 @@ public class Drivebase extends SubsystemBase {
     SmartDashboard.putNumber("Turn Correct P", 0.03);
  
   }
-
 
 
   public Rotation2d getHeading() {
@@ -203,11 +209,11 @@ public class Drivebase extends SubsystemBase {
     switch (m_mode) {
       case TANK:
         // left speed, right speed, squared inputs
-        double leftSpeed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * DriveConstants.MAX_OUTPUT;
-        double rightSpeed = controller.getRawAxis(XBOX.RIGHT_STICK_Y) * DriveConstants.MAX_OUTPUT;
+        double rightSpeed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * DriveConstants.MAX_OUTPUT;
+        double  leftSpeed = controller.getRawAxis(XBOX.RIGHT_STICK_Y) * DriveConstants.MAX_OUTPUT;
         SmartDashboard.putNumber("Left Speed", leftSpeed);
         SmartDashboard.putNumber("Right Speed", rightSpeed);
-        m_drive.tankDrive(leftSpeed, rightSpeed, false);
+        m_drive.tankDrive(-leftSpeed, -rightSpeed, false);
         break;
       case ARCADE:
         arcadeDrive(controller);
@@ -219,31 +225,39 @@ public class Drivebase extends SubsystemBase {
 
 
 
+
   public void arcadeDrive(XboxController controller) {
-    m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.65;
-    m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 1;
-    double offset = 0;
+    if(controller.getRawButton(XBOX.LB)){
+      m_turnRate = (-RobotContainer.m_vision.AimAssist());
+      m_speed = 0;
+    } else if (controller.getRawButton(XBOX.LB) == false){
+      m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.65;
+      m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 1;
+      m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
+      m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
+      m_speed = clampSpeed(m_speed);
+       
+      }
+      m_turnRate = clampSpeed(m_turnRate);
+      arcadeDrive(m_speed, m_turnRate, true);
+      SmartDashboard.putNumber("Speed", -m_speed);
+      SmartDashboard.putNumber("Turn Rate", m_turnRate);
 
-    m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
-    m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
-
-    m_speed = clampSpeed(m_speed);
-    m_turnRate = clampSpeed(m_turnRate);
-
-    //testing imagine it works
-    if(controller.getRawAxis(XBOX.LEFT_STICK_Y) > 0){
-      offset = 0.01;
-    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) < 0){
-      offset = -0.01;
-    } else if(controller.getRawAxis(XBOX.LEFT_STICK_Y) == 0){
-      offset = 0;
+      // m_turnReducer = (controller.getRawAxis(XBOX.RIGHT_TRIGGER) > 0) ? 0.4 : 0.5;
+      // m_speedReducer = (controller.getRawAxis(XBOX.LEFT_TRIGGER) > 0) ? 0.5 : 0.65;
+      // m_speed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * m_speedReducer;
+      // m_turnRate = controller.getRawAxis(XBOX.RIGHT_STICK_X) * m_turnReducer;
+      // m_speed = clampSpeed(m_speed);
+      // m_turnRate = clampSpeed(m_turnRate);
+      // arcadeDrive(m_speed, m_turnRate, true);
+      // SmartDashboard.putNumber("Speed", -m_speed);
+      // SmartDashboard.putNumber("Turn Rate", m_turnRate);
     }
 
-    arcadeDrive(m_speed, -m_turnRate + offset, true);
 
-    SmartDashboard.putNumber("Speed", -m_speed);
-    SmartDashboard.putNumber("Turn Rate", m_turnRate);
-  }
+
+
+  
 
   public void autoArcade(double speed, double turn) {
     m_drive.arcadeDrive(speed, turn, false);
@@ -279,6 +293,8 @@ public class Drivebase extends SubsystemBase {
     return ((m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0)
         * (Math.PI * EncodersConstant.CIRCUMFERENCE);
   }
+
+  //public
 
   public double getLeftEncoderDistance() {
     return ((m_leftEncoder.getDistance()) * (Math.PI * EncodersConstant.CIRCUMFERENCE));
@@ -318,8 +334,7 @@ public class Drivebase extends SubsystemBase {
   public void arcadeDrive(double xSpeed, double zRotation, boolean squareInputs) {
     //double error = (getAngle() - m_lastAngle) - zRotation*SmartDashboard.getNumber("Joystick Correct Factor", 1.0);
    // SmartDashboard.putNumber("Turn Rate Error", error);
-    m_drive.arcadeDrive(-xSpeed, zRotation, squareInputs);
-  
+    m_drive.arcadeDrive(-xSpeed, -zRotation, squareInputs);
   }
 
   public AHRS getGyro() {

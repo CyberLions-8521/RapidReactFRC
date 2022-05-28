@@ -17,22 +17,8 @@ import frc.robot.Constants;
 import frc.robot.Constants.CAN;
 
 public class MasterSubsystem extends SubsystemBase {
-  // DoubleSolenoid m_leftArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 5, 4);
-  // DoubleSolenoid m_rightArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
-  // DoubleSolenoid m_transLeftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 7, 8);
-  // DoubleSolenoid m_transRightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
 
-  DoubleSolenoid m_leftArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 2, 3);
-  DoubleSolenoid m_rightArmDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 6, 7);
-  
-  DoubleSolenoid m_transLeftDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
-  DoubleSolenoid m_transRightDS = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 4, 5);
-
-  
-  
-
-
-
+ 
 
 // adawakwdmkwadwadkawdjakd
 
@@ -56,7 +42,6 @@ public class MasterSubsystem extends SubsystemBase {
     autoIntakeSystemOff();
     indexOff();
     lowerIndexOff();
-    // setGearOff();
 
   }
 
@@ -69,51 +54,17 @@ public class MasterSubsystem extends SubsystemBase {
 
   // Both Intake Arm and Intake Motor Status;
   public void autoIntakeSystemOn() {
-    m_leftArmDS.set(kReverse);
-    m_rightArmDS.set(kReverse);
     m_intake.set(0.85);
     m_autoStatus = true;
   }
 
   public void autoIntakeSystemOff() {
-    m_leftArmDS.set(kForward);
-    m_rightArmDS.set(kForward);
     m_intake.set(0.0);
     m_autoStatus = false;
   }
 
-  public void extendArms() {
-    m_leftArmDS.set(kForward);
-    m_rightArmDS.set(kForward);
-  }
-
-  public void retractArms() {
-    m_leftArmDS.set(kReverse);
-    m_rightArmDS.set(kReverse);
-  }
-
-  public void disableArms() {
-    m_leftArmDS.set(kOff);
-    m_rightArmDS.set(kOff);
-  }
 
   // Double solenoid transmission gear
-
-  public void setGearOn() {
-    m_transLeftDS.set(kForward);
-    m_transRightDS.set(kForward);
-    m_gearStatus = true;
-  }
-
-  public void setGearOff() {
-    m_transLeftDS.set(kReverse);
-    m_transRightDS.set(kReverse);
-    m_gearStatus = false;
-  }
-
-  public boolean getTransmissionStatus() {
-    return m_gearStatus;
-  }
 
   // Indexor
 
@@ -131,14 +82,23 @@ public class MasterSubsystem extends SubsystemBase {
   }
 
   public void reverseIndexOn() {
-    m_frontIndexor.set(0.55);
-    m_backIndexor.set(0.70);
+    m_frontIndexor.set(1);
+    m_backIndexor.set(1);
+    m_intake.set(-1);
+    m_lowIndexor.set(1);
+    m_intakeStatus = true;
+    m_indexorStatus = true;
+    m_lowindexorStatus = true;
     m_reverseIndexStatus = true;
   }
   public void reverseIndexOff() {
     m_frontIndexor.set(0.0);
     m_backIndexor.set(0.0);
+    m_lowIndexor.set(0.0);
     m_reverseIndexStatus = false;
+    m_intakeStatus = false;
+    m_indexorStatus = false;
+    m_lowindexorStatus = false;
   }
 
   public void lowerIndexOn() {
@@ -169,9 +129,6 @@ public class MasterSubsystem extends SubsystemBase {
   }
 
   // boolean status check
-  public Value getArmStatus() {
-    return m_rightArmDS.get();
-  }
 
   public boolean getAutoStatus() {
     return m_autoStatus;
@@ -209,7 +166,6 @@ public class MasterSubsystem extends SubsystemBase {
     // SmartDashboard.putBoolean("Intake Status", getIntakeStatus());
     // SmartDashboard.putBoolean("Upper Index Status", getIndexStatus());
     //SmartDashboard.putNumber("Toggle Gear", getGearStatus());
-    SmartDashboard.putBoolean("Gear Change", getTransmissionStatus());
     SmartDashboard.putBoolean("Lower Index Status", getLowerIndexStatus());
     SmartDashboard.putBoolean("Toggle Intake System", getAutoStatus());
   }

@@ -4,7 +4,9 @@
 
 package frc.robot.subsystems.utilsubsystem;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,12 +21,11 @@ public class Limelight extends SubsystemBase {
   public Limelight() {
     PortForwarder.add(5800, "10.85.21.103", 5800);
     PortForwarder.add(5801, "10.85.21.103", 5801);
-
     
 
   }
 
-  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-sus");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
@@ -49,9 +50,27 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putBoolean("Target Detected", TargetDetected);
     SmartDashboard.putBoolean("In Range Of Hub", InRange());
     SmartDashboard.putNumber("Distance", getDistanceToHub());
+    SmartDashboard.putNumber("DistanceToRPM", getDistanceToMotorVelocity());
   }
 
   // Filters
+
+  final double Kp = 0.45; //0.04
+  final double Ki = 0.021;
+  final double Kd = 0.0;
+  PIDController PIDTurn = new PIDController(Kp, Ki, Kd);
+
+  MedianFilter test = new MedianFilter(2);
+  //Filt test = new LinearFilter(ffGains, fbGains)
+
+  public double AimAssist(){
+    double x = tx.getDouble(0.0);
+    double m_x = test.calculate(x);
+    double output = PIDTurn.calculate(m_x, 0.1);
+    SmartDashboard.putNumber("output", output);
+    return output;
+  }
+
 
   public double getDistanceToHub() {
     LinearFilter yFilter =LinearFilter.movingAverage(10);

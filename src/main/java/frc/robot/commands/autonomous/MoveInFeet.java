@@ -1,4 +1,4 @@
-package frc.robot.commands.autonomous.Trajectory;
+package frc.robot.commands.autonomous;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.dreadsubsystem.Drivebase;
@@ -8,61 +8,39 @@ public class MoveInFeet extends CommandBase {
   Drivebase m_db;
   MasterSubsystem m_toggleIntakeSystem;
 
- 
+  double m_InitHeading;
   double m_feet;
-  
   private double m_speed;
 
-
-  public MoveInFeet(Drivebase db, double speedOffset, double distanceinFeet) {
+  public MoveInFeet(Drivebase db, double speedOffset, double feet) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_db = db;
     m_speed = speedOffset;
-    m_feet = distanceinFeet;
-    
-   //m_intakeFeet = activateFeet;
-    
+    m_feet = feet;
+    //m_toggleIntakeSystem = intakeSystem;
 
     addRequirements(db);
-
   //  addRequirements(intakeSystem);
   }
 
   @Override
   public void initialize() {
+    m_db.getGyro().reset();
     m_db.resetEncoders();
     //m_InitHeading = m_db.getAngle();
   }
 
   public void BooleanDriveToDistance(){
     if (m_feet > m_db.getAverageEncoderDistance()){
-      //m_db.moveForwardStraight(0.2);
       m_db.autoArcade(m_speed, 0);
     } else {
       m_db.autoArcade(0, 0);
       isFinished();
     }
-    
-
-
 
   }
 
-  /*
-  public void IntakeActivate(){
-    if (m_intakeFeet > m_db.getAverageEncoderDistance()){
-      m_toggleIntakeSystem.extendArms();
-      m_toggleIntakeSystem.autoIntakeSystemOn();
-    } else if(m_intakeFeet + 2 > m_db.getAverageEncoderDistance()) {
-      m_toggleIntakeSystem.autoIntakeSystemOff();
-      m_toggleIntakeSystem.retractArms();
-    }*/
-    
-
-
-
   
-
   public void BooleanDriveToDistanceSelfCorrecting(){
     double speed = 0;
     if (m_feet > m_db.getAverageEncoderDistance()){
@@ -76,12 +54,15 @@ public class MoveInFeet extends CommandBase {
     m_db.autoArcade(speed, 0);
   }
 
-  double distance_P = 0.05;
-  double distance_I = 0.0;
-  double distance_D = 0.0;
-  PIDController DistancePID = new PIDController(distance_P, distance_I, distance_D);
+
+  
 
   public void PIDMoveinFeet(){
+    double distance_P = 0.05;
+    double distance_I = 0.0;
+    double distance_D = 0.0;
+    PIDController DistancePID = new PIDController(distance_P, distance_I, distance_D);
+     
    double output = DistancePID.calculate(m_db.getAverageEncoderDistance(), m_feet);
    if(m_speed + 0.01 < output && m_feet < m_db.getAverageEncoderDistance()){ 
     m_db.autoArcade(output+m_speed, 0);
@@ -91,21 +72,11 @@ public class MoveInFeet extends CommandBase {
   }
   
   }
-
-  public void ToggleIntake(boolean m_toggle){
-    if(m_toggle){
-      m_toggleIntakeSystem.autoIntakeSystemOn();
-    } else {
-      m_toggleIntakeSystem.autoIntakeSystemOff();
-    }
-
-  }
   
   @Override
   public void execute() {
-    //BooleanDriveToDistanceSelfCorrecting();
+   // BooleanDriveToDistanceSelfCorrecting();
     //m_toggleIntakeSystem.autoIntakeSystemOn();
-    BooleanDriveToDistance();
     
 
   }

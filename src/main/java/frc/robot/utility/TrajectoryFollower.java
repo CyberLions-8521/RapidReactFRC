@@ -1,4 +1,4 @@
-package frc.robot.commands.autonomous.Trajectory;
+package frc.robot.utility;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;

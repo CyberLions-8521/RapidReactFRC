@@ -11,7 +11,16 @@ import frc.robot.Constants.PIDConstants;
 //XBOX Controller Imports
 import frc.robot.Constants.XBOX;
 import frc.robot.subsystems.utilsubsystem.Limelight;
+import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.LinearQuadraticRegulator;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.KalmanFilter;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.system.LinearSystem;
+import edu.wpi.first.math.system.LinearSystemLoop;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.XboxController;
 
 // Rev Robotics Imports
@@ -26,11 +35,13 @@ import com.revrobotics.CANSparkMax.ControlType;
 import static frc.robot.Constants.CAN.*;
 import static frc.robot.Constants.PIDConstants.*;
 
+import java.util.Calendar;
+
 public class Turret extends SubsystemBase {
   boolean m_shooterStatus;
-  CANSparkMax m_shooter = new CANSparkMax(CAN.SHOOTER, MotorType.kBrushed);
+  public CANSparkMax m_shooter = new CANSparkMax(CAN.SHOOTER, MotorType.kBrushed);
   SparkMaxPIDController m_shooterPID = m_shooter.getPIDController();
-  public RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 4096);
+  public RelativeEncoder m_encoder = m_shooter.getEncoder(Type.kQuadrature, 8192);
 
   public Turret() {
     m_shooter.setIdleMode(CANSparkMax.IdleMode.kCoast); // Allows wheels to move when motor is active
@@ -47,6 +58,72 @@ public class Turret extends SubsystemBase {
     } else if (controller.getRawButton(XBOX.RB) == false)
       stopShooter();
   }
+  
+  //future stuff
+    // Volts per (rotation per second)
+    //need to be change per sysid
+    private static final double kFlywheelKv = 0.16417;
+
+    // Volts per (radian per second squared)
+    private static final double kFlywheelKa = 0.01428;
+  
+    // The plant holds a state-space model of our flywheel. This system has the following properties:
+    //
+    // States: [velocity], in rotation per second.
+    // Inputs (what we can "put in"): [voltage], in volts.
+    // Outputs (what we can measure): [velocity], in rotation per second.
+    //
+    // The Kv and Ka constants are found using the FRC Characterization toolsuite.
+    private final LinearSystem<N1, N1, N1> m_flywheelPlant =
+        LinearSystemId.identifyVelocitySystem(kFlywheelKv, kFlywheelKa);
+
+        //filter  need to be setup
+        private final KalmanFilter<N1, N1, N1> m_observer =
+        new KalmanFilter<>(
+            Nat.N1(),
+            Nat.N1(),
+            m_flywheelPlant,
+            VecBuilder.fill(3.0), // How accurate we think our model is
+            VecBuilder.fill(0.01), // How accurate we think our encoder
+            // data is
+            0.020);
+  
+        
+        //PID is like dogwater compared to this
+        private final LinearQuadraticRegulator<N1, N1, N1> m_controller =
+        new LinearQuadraticRegulator<>(
+            m_flywheelPlant,
+            VecBuilder.fill(8.0), // qelms. Velocity error tolerance, in rotation per second. Decrease
+            // this to more heavily penalize state excursion, or make the controller behave more
+            // aggressively.
+            VecBuilder.fill(12.0), // relms. Control effort (voltage) tolerance. Decrease this to more
+            // heavily penalize control effort, or make the controller less aggressive. 12 is a good
+            // starting point because that is the (approximate) maximum voltage of a battery.
+            0.020); // Nominal time between loops. 0.020 for TimedRobot, but can be
+    // lower if using notifiers.
+
+    
+        private final LinearSystemLoop<N1, N1, N1> m_loop =
+        new LinearSystemLoop<>(m_flywheelPlant, m_controller, m_observer, 12.0, 0.020);
+  
+  //experimental 
+  public synchronized void SpaceStateControl(double setpoint){
+    m_loop.setNextR(setpoint);
+    m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
+    double nextVoltage = m_loop.getU(0);
+    m_shooter.setVoltage(nextVoltage);
+    SmartDashboard.putNumber("volts", nextVoltage);
+    }
+
+
+    double rpm;
+
+    public void SpaceStateControlTest(){
+      m_loop.setNextR(40);
+      m_loop.correct(VecBuilder.fill(m_encoder.getVelocity()));
+      double nextVoltage = m_loop.getU(0);
+      m_shooter.setVoltage(nextVoltage);
+      }
 
   public void ControllerBindSpeed(XboxController controller, double speed) {
     if (controller.getRawButton(XBOX.X)) {
@@ -67,18 +144,17 @@ public class Turret extends SubsystemBase {
 
   }
 
-  // For Auto
-  public void setSpeed() {
-    while (true) {
-      m_shooter.set(1);
-
-    }
-
+  public boolean getShooterStatus(){
+    return m_shooterStatus;
   }
+
+
+  
 
   //Comment out if it doesnt work - Thien 
   public void setSpeedTurret(double speed) {
   m_shooter.set(speed);
+  m_shooterStatus = true;
   }
 
   public void stopShooter() {
@@ -94,6 +170,9 @@ public class Turret extends SubsystemBase {
 
   @Override
   public void periodic() {
+   double  m_rpm = SmartDashboard.getNumber("rpm", 0);
+    if((m_rpm != rpm)) rpm = m_rpm; 
+
     SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
     SmartDashboard.putBoolean("ShooterStatus", m_shooterStatus);
