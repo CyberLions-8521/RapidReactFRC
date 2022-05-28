@@ -225,6 +225,7 @@ public class Drivebase extends SubsystemBase {
 
 
 
+
   public void arcadeDrive(XboxController controller) {
     if(controller.getRawButton(XBOX.LB)){
       m_turnRate = (-RobotContainer.m_vision.AimAssist());
@@ -252,6 +253,7 @@ public class Drivebase extends SubsystemBase {
       // SmartDashboard.putNumber("Speed", -m_speed);
       // SmartDashboard.putNumber("Turn Rate", m_turnRate);
     }
+
 
 
 
@@ -333,7 +335,6 @@ public class Drivebase extends SubsystemBase {
     //double error = (getAngle() - m_lastAngle) - zRotation*SmartDashboard.getNumber("Joystick Correct Factor", 1.0);
    // SmartDashboard.putNumber("Turn Rate Error", error);
     m_drive.arcadeDrive(-xSpeed, -zRotation, squareInputs);
-  
   }
 
   public AHRS getGyro() {
