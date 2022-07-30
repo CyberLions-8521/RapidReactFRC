@@ -17,7 +17,7 @@ public class Indexer extends CommandBase {
   @Override
   public void execute() {
     m_IndexMotor.indexOn();
- 
+
   }
 
   @Override
