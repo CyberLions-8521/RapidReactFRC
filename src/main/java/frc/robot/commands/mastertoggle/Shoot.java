@@ -32,20 +32,17 @@ public class Shoot extends CommandBase {
   private final int targetSpeed = 500;
   private final int maxtargetSpeed = 600;
 
-  List<Double> datapointsRPM = Arrays.asList(1.38, 2.56, 4.3);
-  List<Double> datapointsDistance = Arrays.asList(1.38, 2.56, 4.3);
 
-  SplineInterpolator shooterModel = SplineInterpolator.createMonotoneCubicSpline(datapointsDistance, datapointsRPM);
 
-  public void RPMAdjust() {
-    // double[] measured = {m_vision.getDistanceToHub()};
-    // double[] interpolate = KevinLib.interpLinear(datapointsX, datapointsY,
-    // measured);
-    // double rpm = interpolate[0];
-    double rpm = shooterModel.interpolate(m_vision.getDistanceToHub());
-    m_shooter.SpaceStateControl(rpm);
+  // public void RPMAdjust() {
+  //   // double[] measured = {m_vision.getDistanceToHub()};
+  //   // double[] interpolate = KevinLib.interpLinear(datapointsX, datapointsY,
+  //   // measured);
+  //   // double rpm = interpolate[0];
+  //   double rpm = shooterModel.interpolate(m_vision.getDistanceToHub());
+  //   m_shooter.SpaceStateControl(rpm);
 
-  }
+  // }
 
   public void SpaceStateTesting(double rpm) {
     m_shooter.SpaceStateControl(rpm);

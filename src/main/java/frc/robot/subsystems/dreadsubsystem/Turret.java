@@ -5,12 +5,14 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 //Additional Imports
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.CAN;
 import frc.robot.Constants.PIDConstants;
 //XBOX Controller Imports
 import frc.robot.Constants.XBOX;
 import frc.robot.subsystems.utilsubsystem.Limelight;
+import frc.robot.utility.KevinLib.SplineInterpolator;
 import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.LinearQuadraticRegulator;
@@ -35,7 +37,9 @@ import com.revrobotics.CANSparkMax.ControlType;
 import static frc.robot.Constants.CAN.*;
 import static frc.robot.Constants.PIDConstants.*;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 public class Turret extends SubsystemBase {
   boolean m_shooterStatus;
@@ -49,11 +53,15 @@ public class Turret extends SubsystemBase {
     // stopShooter();
   }
 
+  List<Double> datapointsRPM = Arrays.asList(1.38, 2.56, 4.3);
+  List<Double> datapointsDistance = Arrays.asList(1.38, 2.56, 4.3);
+  SplineInterpolator shooterModel = SplineInterpolator.createMonotoneCubicSpline(datapointsDistance, datapointsRPM);
+
   // PID controller to compute output for motor
 
-  public void ControllerBindPID(XboxController controller, double setpoint) {
+  public void ControllerBindPID(XboxController controller) {
     if (controller.getRawButton(XBOX.RB)) {
-      m_shooterPID.setReference(setpoint, ControlType.kVelocity, 0);
+      m_shooterPID.setReference(shooterModel.interpolate(RobotContainer.m_vision.getDistanceToHub()), ControlType.kVelocity, 0);
       m_shooterStatus = true;
     } else if (controller.getRawButton(XBOX.RB) == false)
       stopShooter();
@@ -172,7 +180,7 @@ public class Turret extends SubsystemBase {
   public void periodic() {
    double  m_rpm = SmartDashboard.getNumber("rpm", 0);
     if((m_rpm != rpm)) rpm = m_rpm; 
-
+    SmartDashboard.putNumber("distancetorpm", shooterModel.interpolate(RobotContainer.m_vision.getDistanceToHub()));
     SmartDashboard.putNumber("Encoder Position", m_encoder.getPosition());
     SmartDashboard.putNumber("Encoder Velocity", m_encoder.getVelocity());
     SmartDashboard.putBoolean("ShooterStatus", m_shooterStatus);
