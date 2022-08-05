@@ -208,6 +208,12 @@ public class Drivebase extends SubsystemBase {
 
     switch (m_mode) {
       case TANK:
+      if(controller.getRawButton(XBOX.LB)){
+        m_turnRate = (-RobotContainer.m_vision.AimAssist());
+        m_speed = 0;
+        arcadeDrive(m_speed, m_turnRate, true);
+
+      }
         // left speed, right speed, squared inputs
         double rightSpeed = controller.getRawAxis(XBOX.LEFT_STICK_Y) * DriveConstants.MAX_OUTPUT;
         double  leftSpeed = controller.getRawAxis(XBOX.RIGHT_STICK_Y) * DriveConstants.MAX_OUTPUT;
