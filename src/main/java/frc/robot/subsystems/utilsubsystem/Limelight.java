@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.utilsubsystem;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.filter.MedianFilter;
@@ -21,7 +22,7 @@ public class Limelight extends SubsystemBase {
   public Limelight() {
     PortForwarder.add(5800, "10.85.21.103", 5800);
     PortForwarder.add(5801, "10.85.21.103", 5801);
-    
+    CameraServer.startAutomaticCapture();
 
   }
 
