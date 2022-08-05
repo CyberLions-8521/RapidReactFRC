@@ -106,7 +106,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     System.out.println("In get autonomous Command");
 
-    return new WaitCommand(.2).andThen(new MoveSeconds(m_drivebase, -0.6)).withTimeout(3).withTimeout(1).alongWith(new WaitCommand(1)).andThen(new AutoShoot(m_turret).alongWith(new indexOn(m_masterSubsystem)).withTimeout(3).andThen(new IndexOff(m_masterSubsystem)).andThen(new WaitCommand(0.5)));
+    return new WaitCommand(.2).andThen(new MoveSeconds(m_drivebase, -0.6)).withTimeout(3).withTimeout(1).alongWith(new WaitCommand(4)).andThen(new AutoShoot(m_turret).alongWith(new indexOn(m_masterSubsystem)).withTimeout(3).andThen(new IndexOff(m_masterSubsystem)).andThen(new WaitCommand(0.5)));
+   // return new WaitCommand(.2).andThen(new MoveSeconds(m_drivebase, -0.6)).withTimeout(3).withTimeout(1).alongWith(new WaitCommand(4)).andThen(new AutoShoot(m_turret).alongWith(new indexOn(m_masterSubsystem)).withTimeout(3).andThen(new IndexOff(m_masterSubsystem)).andThen(new WaitCommand(0.5)));
 
    // return new SequentialCommandGroup( new LimeLightAimAssist(m_vision, m_drivebase));
     // ez

@@ -137,8 +137,8 @@ public final class Constants {
   public static class VisionConstants {
     // Area of the ball in the camera view when the robot stops approaching it
     public static final double BALL_AREA = 0.7;
-    public static final double CAMERA_ANGLE = Math.toRadians(30);
-    public static final double CAMERA_HEIGHT = 2.788714;
+    public static final double CAMERA_ANGLE = Math.toRadians(35);
+    public static final double CAMERA_HEIGHT = 2.91;
     public static final double TARGET_HEIGHT = 8.67;
   }
 

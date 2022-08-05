@@ -53,19 +53,29 @@ public class Turret extends SubsystemBase {
     // stopShooter();
   }
 
-  List<Double> datapointsRPM = Arrays.asList(1.38, 2.56, 4.3);
-  List<Double> datapointsDistance = Arrays.asList(1.38, 2.56, 4.3);
+  List<Double> datapointsRPM = Arrays.asList(3300.0,3350.0,3450.0,3660.0,3760.0,4100.0,4500.0);
+  List<Double> datapointsDistance = Arrays.asList(5.0,6.0,7.0,8.0,10.0,11.0,13.0);
   SplineInterpolator shooterModel = SplineInterpolator.createMonotoneCubicSpline(datapointsDistance, datapointsRPM);
-
+  
+  public Double DistanceToRPM(){
+    return shooterModel.interpolate(RobotContainer.m_vision.getDistanceToHub());
+  }
   // PID controller to compute output for motor
+
 
   public void ControllerBindPID(XboxController controller) {
     if (controller.getRawButton(XBOX.RB)) {
-      m_shooterPID.setReference(shooterModel.interpolate(RobotContainer.m_vision.getDistanceToHub()), ControlType.kVelocity, 0);
+      m_shooterPID.setReference(DistanceToRPM(), ControlType.kVelocity, 0);
       m_shooterStatus = true;
     } else if (controller.getRawButton(XBOX.RB) == false)
       stopShooter();
+      m_shooterStatus = false;
   }
+ 
+  public void PIDSHOOT() {
+      m_shooterPID.setReference(DistanceToRPM(), ControlType.kVelocity, 0);
+
+  } 
   
   //future stuff
     // Volts per (rotation per second)

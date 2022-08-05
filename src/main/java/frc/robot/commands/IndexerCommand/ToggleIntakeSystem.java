@@ -31,9 +31,7 @@ public class ToggleIntakeSystem extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    m_IndexMotor.lowerIndexOff();
-    m_IndexMotor.indexOff();
-    m_IndexMotor.intakeOff();
+ 
   }
   @Override
   public boolean isFinished() {

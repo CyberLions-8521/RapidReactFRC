@@ -62,8 +62,9 @@ public class Shoot extends CommandBase {
      * }
      */
 
-    if (3950 < m_shooter.m_encoder.getVelocity()) {
+    if (m_shooter.DistanceToRPM()-10 < m_shooter.m_encoder.getVelocity()) {
       m_index.indexOn();
+  
     } else {
       m_index.indexOff();
     }
@@ -72,13 +73,13 @@ public class Shoot extends CommandBase {
 
   @Override
   public void initialize() {
-    AutoIndexerTele();
-    if(m_shooter.getShooterStatus() == false){
-      m_shooter.m_shooter.set(1);
-    } else {
-      m_shooter.m_shooter.set(0);
-    }
-    m_returnStatus = true;
+    m_shooter.PIDSHOOT();
+    // if(m_shooter.getShooterStatus() == false){
+    //   m_shooter.m_shooter.set(1);
+    // } else {
+    //   m_shooter.m_shooter.set(0);
+    // }
+    // m_returnStatus = true;
    
 
 
@@ -86,8 +87,12 @@ public class Shoot extends CommandBase {
 
   @Override
   public void execute() {
+    AutoIndexerTele();
+
+  //  m_shooter.ControllerBindPID(RobotContainer.m_controller);
     //m_shooter.SpaceStateControl(40);
     //m_shooter.SpaceStateControl(4000);
+
    // m_shooter.ControllerBindSpeed(RobotContainer.m_controller, 1);
    // AutoIndexerTele();
 
